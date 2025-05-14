@@ -12,17 +12,33 @@ x_code_valeur = "DE0007030009" # rheinmetal"'IT0003856405' # LEONARDO
 #x_code_valeur = "ES0144580Y14"   # "ES0144580Y14" iberdrola
 
 import streamlit as st
-#import yfinance as yf
+
+
+
+
+
 
 st.title("📈 Application Boursière")
 
+
+
+
+
 ticker = st.text_input("Entrez un ticker", "AAPL")
+x_code_valeur = ticker
 
 if ticker:
     stock = yf.Ticker(ticker)
     info = stock.info
     st.write("Nom complet :", info.get("longName"))
     st.write("Prix actuel :", info.get("currentPrice"))
+
+
+#Extraction d’historique avec Ticker.history EN DEUX LIGNES C EST MIEUX
+x_indice = yf.Ticker(x_code_valeur)
+x_close = x_indice.history(start="2025-05-01")['Close']
+
+print("mon xclose",x_close)
 
 #x_currency = 1.03
 
