@@ -29,7 +29,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
         # Vérifie que t_prix et x_qte sont bien utilisables
         if t_prix is not None and isinstance(x_qte, (int, float)):
-            total_prix = t_prix * x_qte
+            total_prix = t_prix * x_qte / x_currency
         else:
             total_prix = None  # ou 0 si vous préférez
 
