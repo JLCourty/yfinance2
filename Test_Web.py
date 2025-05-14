@@ -2,10 +2,10 @@ import yfinance as yf
 from datetime import datetime,time
 import streamlit as st
 import pandas as pd
+
+
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-
-st.table(df)
 
 x_date_jour="2025-05-14"
 x_cours_dollar = 1.131
