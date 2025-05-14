@@ -55,7 +55,7 @@ Get_tout('US6974351057','PALO ALTO',      x_date_jour,56  , x_cours_dollar)
 Get_tout('DE0007030009','RHEINMETALL',    x_date_jour, 12000 ,5   ,1)
 Get_tout('US79466L3024','SALESFORCE',     x_date_jour ,46  , x_cours_dollar)
 Get_tout('FR0000121329','THALES',         x_date_jour, 7000 ,24  ,1)
-Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,  ,111 ,1)
+Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour ,111 ,1)
 Get_tout('US92826C8394','VISA',           x_date_jour,40  , x_cours_dollar)
 Get_tout('FR0007054358','_ETF STOXX 50',  x_date_jour,1543,1)
 Get_tout('FR0010315770','_ ETF MSCI' ,    x_date_jour,305 ,1)      #VALEUR US FOURNIE EN EUROS
