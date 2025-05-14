@@ -43,6 +43,10 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_cours_1janv, x_cours_1m
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
 
+
+
+
+
 #LANCER LA FONCTION UNIQUE
 Get_tout('FR0000120404','ACCOR',          x_date_jour,47.39  ,43.15  , 12000 ,214 ,1)
 Get_tout('NL0000235190','AIRBUS',         x_date_jour,154.78 ,147.14 , 19000 ,95  ,1)
@@ -68,23 +72,6 @@ Get_tout('FR0010315770','_ ETF MSCI' ,    x_date_jour,359.41 ,318.64 , 112000,30
 Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  , 12000 ,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
 # À la fin : convertir en DataFrame et afficher
-columns = [ "Date", "Valeur", "Prix actuel", "variation_jour","Quantité", "Cours 1er janv", "Cours 1er mai", "Montant 31 déc", "Devise"]
-
-
-from st_aggrid import AgGrid, GridOptionsBuilder
-
-# Votre DataFrame
-df = pd.DataFrame(liste_donnees, columns=[    "Date", "Valeur", "Prix actuel", "variation_jour", "Quantité",  "Cours 1er janv", "Cours 1er mai",  "Montant 31 déc", "Devise"])
-
-# Construire les options de la grille
-#gb = GridOptionsBuilder.from_dataframe(df)
-#gb.configure_default_column(autoHeight=True, wrapText=True)
-#gb.configure_grid_options(domLayout='normal')  # ou 'autoHeight'
-#gridOptions = gb.build()
-
-#DEUX OPTIONS AU CHOIX
-#AgGrid(df, gridOptions=grid_options, fit_columns_on_grid_load=True)
-#AgGrid(df, gridOptions=grid_options, height=800, fit_columns_on_grid_load=True)
-
-# Affichage interactif avec largeur auto
-AgGrid(df, gridOptions=gridOptions, fit_columns_on_grid_load=True)
+columns = [ "Date", "Valeur", "Prix actuel", "variation_jour", "Quantité", "Cours 1er janv", "Cours 1er mai", "Montant 31 déc", "Devise"]
+df = pd.DataFrame(liste_donnees, columns=columns)
+st.table(df)
