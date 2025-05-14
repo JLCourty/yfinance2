@@ -6,34 +6,32 @@ import streamlit as st
 x_date_jour="2025-05-14"
 x_cours_dollar = 1.131
 
-
-# Définir le symbole de l'action (ticker)
-#x_code_valeur = "DE0007030009" # rheinmetal"'IT0003856405' # LEONARDO
-#x_code_valeur = "NVDA"
-#x_code_valeur = "FR0000120404"   #ACCOR
-#x_code_valeur = "US67066G1040" #NVIDIA
-#x_code_valeur = "ES0144580Y14"   # "ES0144580Y14" iberdrola
-#x_code_valeur = 'FR0000121014'  #LVMH
-
 #DEFINIR UN BEAU TITRE
 st.set_page_config(layout="wide")
 st.title("📈 Mon Application Boursière 12:36")
 
-
-#def get_tout(p_ticker):
+#MA FONCTION GET TOUT
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_cours_1janv, x_cours_1mai, cours_31dec, mt_31dec, x_qte, x_currency):
-
-    #x_date_jour = "2025-05-14"
-
-
-
     if x_code_valeur:
         stock = yf.Ticker(x_code_valeur)
         info = stock.info
         t_prix = info.get("currentPrice")
-        st.write(x_date_jour, x_nom_valeur,t_prix ,  x_qte, x_cours_1janv, x_cours_1mai, cours_31dec, mt_31dec, x_currency)
+
+        # Ajouter une ligne à la liste globale
+        liste_donnees.append([
+            x_date_jour,
+            x_nom_valeur,
+            t_prix,
+            x_qte,
+            x_cours_1janv,
+            x_cours_1mai,
+            cours_31dec,
+            mt_31dec,
+            x_currency
+        ])
     else:
-        print("Le Ticker ,'a pas été trouvé",x_code_valeur)
+        st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
+
 
 #LANCER LA FONCTION UNIQUE
 Get_tout('FR0000120404','ACCOR',          x_date_jour,47.39  ,43.15  ,55, 12000 ,214 ,1)
@@ -59,3 +57,19 @@ Get_tout('-',           '_ A ----------', x_date_jour,0      ,150    ,55, 0     
 Get_tout('FR0007054358','_ETF STOXX 50',  x_date_jour,53.33  ,56.41  ,55, 105000,1543,1)
 Get_tout('FR0010315770','_ ETF MSCI' ,    x_date_jour,359.41 ,318.64 ,55, 112000,305 ,1)      #VALEUR US FOURNIE EN EUROS
 Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  ,55, 12000 ,130 ,1)      #VALEUR US FOURNIE EN EUROS
+
+
+# Appels multiples de la fonction
+#Get_tout(...)  # 1re valeur
+#Get_tout(...)  # 2e valeur
+# etc. jusqu'à 20
+
+# À la fin : convertir en DataFrame et afficher
+columns = [
+    "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv",
+    "Cours 1er mai", "Cours 31 déc", "Montant 31 déc", "Devise"
+]
+
+df = pd.DataFrame(liste_donnees, columns=columns)
+
+st.dataframe(df, use_container_width=True)
