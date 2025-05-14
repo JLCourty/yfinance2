@@ -18,8 +18,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         stock = yf.Ticker(x_code_valeur)
         info = stock.info
 
-        t_prix = info.get("currentPrice")
-        t_prix=t_prix*x_qte
+        t_prix      = info.get("currentPrice")
         t_ouverture = info.get("open")
 
         # Calcul de la variation journalière (%)
@@ -32,7 +31,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         liste_donnees.append([
             x_date_jour,
             x_nom_valeur,
-            t_prix,
+            t_prix*x_qte,
             variation_jour,         # ✅ Nouvelle colonne ajoutée ici
             x_qte,x_currency   ])
     else:
