@@ -10,7 +10,7 @@ x_cours_dollar = 1.1187
 
 #DEFINIR UN BEAU TITRE
 st.set_page_config(layout="wide")
-st.title("📈 Mon Application Boursière 554 000€")
+#st.title("📈 Mon Application Boursière 554 000€")
 
 
 #FONCTION DE FORMATAGE UN MONTANT EN EUROS SANS DECIMALES
@@ -73,8 +73,6 @@ columns = [ "Date", "Valeur", "Prix actuel", "variation_jour"]   #, "Quantité",
 df = pd.DataFrame(liste_donnees, columns=columns)
 st.table(df)
 
-
-
 # Totalisation
 total_prix = df["Prix actuel"].sum()
-st.write(total_prix)
+st.write(total_prix+131619)
