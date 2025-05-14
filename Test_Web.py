@@ -33,7 +33,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
         variation_jour = format_pc(t_prix , t_ouverture)
-        total_prix = format_euro4(t_prix * x_qte / x_currency)
+        total_prix = (t_prix * x_qte / x_currency)   #format_euro4
 
         # Ajouter une ligne à la liste globale
         liste_donnees.append([
