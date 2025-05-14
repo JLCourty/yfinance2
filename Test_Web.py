@@ -36,7 +36,6 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
-
 #LANCER LA FONCTION UNIQUE
 Get_tout('FR0000120404','ACCOR',          x_date_jour ,214 ,1)
 Get_tout('NL0000235190','AIRBUS',         x_date_jour ,95  ,1)
@@ -52,7 +51,7 @@ Get_tout('US5949181045','MICROSOFT',      x_date_jour ,48  , x_cours_dollar)
 Get_tout('US64110L1061','NETFLIX',        x_date_jour ,10  , x_cours_dollar)
 Get_tout('US67066G1040','NVDIA',          x_date_jour,160 , x_cours_dollar)
 Get_tout('US6974351057','PALO ALTO',      x_date_jour,56  , x_cours_dollar)
-Get_tout('DE0007030009','RHEINMETALL',    x_date_jour,12000 ,5   ,1)
+Get_tout('DE0007030009','RHEINMETALL',    x_date_jour,5   ,1)
 Get_tout('US79466L3024','SALESFORCE',     x_date_jour,46  , x_cours_dollar)
 Get_tout('FR0000121329','THALES',         x_date_jour,7000 ,24  ,1)
 Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111 ,1)
