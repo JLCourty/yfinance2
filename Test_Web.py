@@ -6,7 +6,7 @@ import pandas as pd
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
 x_date_jour="2025-05-14"
-x_cours_dollar = 1.131
+x_cours_dollar = 1.1187
 
 #DEFINIR UN BEAU TITRE
 st.set_page_config(layout="wide")
