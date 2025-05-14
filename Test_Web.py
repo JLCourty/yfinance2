@@ -3,6 +3,10 @@ from datetime import datetime,time
 import streamlit as st
 
 
+# Liste globale pour stocker toutes les lignes
+liste_donnees = []
+
+
 x_date_jour="2025-05-14"
 x_cours_dollar = 1.131
 
