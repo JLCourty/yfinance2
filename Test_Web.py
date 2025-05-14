@@ -77,4 +77,4 @@ st.table(df)
 
 # Totalisation
 total_prix = df["Prix actuel"].sum()
-st.write(f"Total du prix actuel : {total_prix:.2f}")
+st.write(total_prix)
