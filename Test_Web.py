@@ -71,8 +71,10 @@ Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FO
 # À la fin : convertir en DataFrame et afficher
 columns = [ "Date", "Valeur", "Prix actuel", "variation_jour"]   #, "Quantité", "Devise"
 df = pd.DataFrame(liste_donnees, columns=columns)
-st.table(df)
+#st.table(df)
 
 # Totalisation
 total_prix = df["Prix actuel"].sum()
 st.write(total_prix+131619)
+
+st.table(df)
