@@ -19,10 +19,10 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-05-11")['Close']
 
-        t_prix = data.iloc[-1] / x_currency  # AVANT IL Y AVAIT 3
+        t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
 
 
-        t_ouverture = t_prix #info.get("open")
+        t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
         variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
         total_prix = t_prix * x_qte / x_currency
 
