@@ -71,7 +71,6 @@ Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  , 12000 ,13
 columns = [ "Date", "Valeur", "Prix actuel", "variation_jour","Quantité", "Cours 1er janv", "Cours 1er mai", "Montant 31 déc", "Devise"]
 
 
-
 from st_aggrid import AgGrid, GridOptionsBuilder
 
 # Votre DataFrame
@@ -83,7 +82,7 @@ gb.configure_default_column(autoHeight=True, wrapText=True)
 gb.configure_grid_options(domLayout='normal')  # ou 'autoHeight'
 gridOptions = gb.build()
 
-*DEUX OPTIONS AU CHOIX
+#DEUX OPTIONS AU CHOIX
 AgGrid(df, gridOptions=grid_options, fit_columns_on_grid_load=True, height=len(df) * 35)
 #AgGrid(df, gridOptions=grid_options, height=800, fit_columns_on_grid_load=True)
 
