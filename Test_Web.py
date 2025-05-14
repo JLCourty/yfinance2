@@ -66,7 +66,7 @@ Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111 ,1)
 Get_tout('US92826C8394','VISA',           x_date_jour,40  , x_cours_dollar)
 Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)      #VALEUR US FOURNIE EN EUROS
-Get_tout('UU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FOURNIE EN EUROS
+Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
 # À la fin : convertir en DataFrame et afficher
 columns = [ "Date", "Valeur", "Prix actuel", "variation_jour", "Quantité", "Devise"]
