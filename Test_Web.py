@@ -5,6 +5,7 @@ import pandas as pd
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
 
+st.table(df)
 
 x_date_jour="2025-05-14"
 x_cours_dollar = 1.131
@@ -61,12 +62,6 @@ Get_tout('FR0007054358','_ETF STOXX 50',  x_date_jour,53.33  ,56.41  ,55, 105000
 Get_tout('FR0010315770','_ ETF MSCI' ,    x_date_jour,359.41 ,318.64 ,55, 112000,305 ,1)      #VALEUR US FOURNIE EN EUROS
 Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  ,55, 12000 ,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
-
-# Appels multiples de la fonction
-#Get_tout(...)  # 1re valeur
-#Get_tout(...)  # 2e valeur
-# etc. jusqu'à 20
-
 # À la fin : convertir en DataFrame et afficher
 columns = [
     "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv",
@@ -75,4 +70,5 @@ columns = [
 
 df = pd.DataFrame(liste_donnees, columns=columns)
 
-st.dataframe(df, use_container_width=True)
+#st.dataframe(df, use_container_width=True)
+st.table(df)
