@@ -1,5 +1,4 @@
 import yfinance as yf
-from datetime import datetime,time
 import streamlit as st
 import pandas as pd
 
@@ -29,11 +28,9 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_cours_1janv, x_cours_1m
             x_cours_1janv,
             x_cours_1mai,
             mt_31dec,
-            x_currency
-        ])
+            x_currency ])
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
-
 
 #LANCER LA FONCTION UNIQUE
 Get_tout('FR0000120404','ACCOR',          x_date_jour,47.39  ,43.15  , 12000 ,214 ,1)
@@ -55,15 +52,12 @@ Get_tout('US79466L3024','SALESFORCE',     x_date_jour,322.96 ,237.00 , 14000 ,46
 Get_tout('FR0000121329','THALES',         x_date_jour,262.93 ,244.90 , 7000 ,24  ,1)
 Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,53.37  ,51.16  , 7000  ,111 ,1)
 Get_tout('US92826C8394','VISA',           x_date_jour,305.29 ,305.73 , 14000 ,40  , x_cours_dollar)
-#Get_tout('-',           '_ A ----------', x_date_jour,0      ,150    , 0     ,0   ,1)
 Get_tout('FR0007054358','_ETF STOXX 50',  x_date_jour,53.33  ,56.41  , 105000,1543,1)
 Get_tout('FR0010315770','_ ETF MSCI' ,    x_date_jour,359.41 ,318.64 , 112000,305 ,1)      #VALEUR US FOURNIE EN EUROS
 Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  , 12000 ,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
 # À la fin : convertir en DataFrame et afficher
-columns = [ "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv", "Cours 1er mai", "---", "Montant 31 déc", "Devise"]
-
+columns = [ "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv", "Cours 1er mai", "Montant 31 déc", "Devise"]
 df = pd.DataFrame(liste_donnees, columns=columns)
-
 #st.dataframe(df, use_container_width=True)
 st.table(df)
