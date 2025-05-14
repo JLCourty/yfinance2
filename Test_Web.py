@@ -76,4 +76,3 @@ gridOptions = gb.build()
 
 # Affichage interactif avec largeur auto
 AgGrid(df, gridOptions=gridOptions, fit_columns_on_grid_load=True)
-"""
