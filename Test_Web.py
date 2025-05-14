@@ -64,7 +64,7 @@ Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  ,55, 12000 
 # À la fin : convertir en DataFrame et afficher
 columns = [
     "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv",
-    "Cours 1er mai",  "Montant 31 déc", "Devise"
+    "Cours 1er mai", "---", "Montant 31 déc", "Devise"
 ]
 
 df = pd.DataFrame(liste_donnees, columns=columns)
