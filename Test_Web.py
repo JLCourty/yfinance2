@@ -58,6 +58,22 @@ Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  , 12000 ,13
 
 # À la fin : convertir en DataFrame et afficher
 columns = [ "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv", "Cours 1er mai", "Montant 31 déc", "Devise"]
-df = pd.DataFrame(liste_donnees, columns=columns)
-#st.dataframe(df, use_container_width=True)
-st.table(df)
+#df = pd.DataFrame(liste_donnees, columns=columns)
+#st.table(df)
+
+
+from st_aggrid import AgGrid, GridOptionsBuilder
+#import pandas as pd
+
+# Votre DataFrame
+df = pd.DataFrame(liste_donnees, columns=[    "Date", "Valeur", "Prix actuel", "Quantité",  "Cours 1er janv", "Cours 1er mai",  "Montant 31 déc", "Devise"])
+
+# Construire les options de la grille
+gb = GridOptionsBuilder.from_dataframe(df)
+gb.configure_default_column(autoHeight=True, wrapText=True)
+gb.configure_grid_options(domLayout='normal')  # ou 'autoHeight'
+gridOptions = gb.build()
+
+# Affichage interactif avec largeur auto
+AgGrid(df, gridOptions=gridOptions, fit_columns_on_grid_load=True)
+"""
