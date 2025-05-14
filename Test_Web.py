@@ -22,7 +22,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
         # Calcul de la variation journalière (%)
         if t_prix is not None and t_ouverture:
-            variation_jour = 2#((t_prix - t_ouverture) / t_ouverture) * 100
+            variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
         else:
             variation_jour = None  # ou 0 ou "N/A"
 
