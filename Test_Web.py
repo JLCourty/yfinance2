@@ -6,13 +6,12 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-
 x_date_jour="2025-05-14"
 x_cours_dollar = 1.131
 
 #DEFINIR UN BEAU TITRE
 st.set_page_config(layout="wide")
-st.title("📈 Mon Application Boursière 12:36")
+#st.title("📈 Mon Application Boursière 12:36")
 
 #MA FONCTION GET TOUT
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_cours_1janv, x_cours_1mai, cours_31dec, mt_31dec, x_qte, x_currency):
@@ -65,7 +64,7 @@ Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  ,55, 12000 
 # À la fin : convertir en DataFrame et afficher
 columns = [
     "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv",
-    "Cours 1er mai", "Cours 31 déc", "Montant 31 déc", "Devise"
+    "Cours 1er mai",  "Montant 31 déc", "Devise"
 ]
 
 df = pd.DataFrame(liste_donnees, columns=columns)
