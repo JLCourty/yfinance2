@@ -83,5 +83,9 @@ gb.configure_default_column(autoHeight=True, wrapText=True)
 gb.configure_grid_options(domLayout='normal')  # ou 'autoHeight'
 gridOptions = gb.build()
 
+*DEUX OPTIONS AU CHOIX
+AgGrid(df, gridOptions=grid_options, fit_columns_on_grid_load=True, height=len(df) * 35)
+#AgGrid(df, gridOptions=grid_options, height=800, fit_columns_on_grid_load=True)
+
 # Affichage interactif avec largeur auto
 AgGrid(df, gridOptions=gridOptions, fit_columns_on_grid_load=True)
