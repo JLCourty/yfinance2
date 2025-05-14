@@ -1,8 +1,7 @@
 import yfinance as yf
 from datetime import datetime,time
 import streamlit as st
-
-
+import pandas as pd
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
 
