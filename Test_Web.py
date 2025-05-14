@@ -5,7 +5,7 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-x_date_jour="2025-05-14"
+x_date_jour="05-14"
 x_cours_dollar = 1.1187
 
 #DEFINIR UN BEAU TITRE
@@ -23,23 +23,19 @@ def format_euro4(num_brut):
 def format_pc(t_P1,t_P2):
     return str(    round((t_P1-t_P2)/t_P2*100,2 )  ) + " %"
 
-
 #MA FONCTION GET TOUT
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
     if x_code_valeur:
 
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-05-11")['Close']
-
         t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
-
-
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
-        #variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
+
         variation_jour = format_pc(t_prix , t_ouverture)
 
-        total_prix = t_prix * x_qte / x_currency
-        total_prix = format_euro4(total_prix)
+        total_prix = format_euro4(t_prix * x_qte / x_currency)
+        #total_prix = format_euro4(total_prix)
 
 
         # Ajouter une ligne à la liste globale
