@@ -5,12 +5,12 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-x_date_jour="05-14"
+x_date_jour="-"
 x_cours_dollar = 1.1187
 
 #DEFINIR UN BEAU TITRE
 st.set_page_config(layout="wide")
-#st.title("📈 Mon Application Boursière 12:36")
+st.title("📈 Mon Application Boursière 554 000€")
 
 
 #FONCTION DE FORMATAGE UN MONTANT EN EUROS SANS DECIMALES
@@ -33,10 +33,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
         variation_jour = format_pc(t_prix , t_ouverture)
-
         total_prix = format_euro4(t_prix * x_qte / x_currency)
-        #total_prix = format_euro4(total_prix)
-
 
         # Ajouter une ligne à la liste globale
         liste_donnees.append([
