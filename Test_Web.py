@@ -19,6 +19,11 @@ def format_euro4(num_brut):
     num_brut = num_brut.replace('.00',' ')
     return num_brut + "€"
 
+#FONCTION DE FORMATAGE UN MONTANT EN POURCENTAGE
+def format_pc(t_P1,t_P2):
+    return str(    round((t_P1-t_P2)/t_P2*100,2 )  ) + " %"
+
+
 #MA FONCTION GET TOUT
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
     if x_code_valeur:
@@ -30,9 +35,10 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
 
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
-        variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
-        total_prix = t_prix * x_qte / x_currency
+        #variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
+        variation_jour = format_pc(t_prix , t_ouverture)
 
+        total_prix = t_prix * x_qte / x_currency
         total_prix = format_euro4(total_prix)
 
 
