@@ -77,13 +77,13 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 df = pd.DataFrame(liste_donnees, columns=[    "Date", "Valeur", "Prix actuel", "variation_jour", "Quantité",  "Cours 1er janv", "Cours 1er mai",  "Montant 31 déc", "Devise"])
 
 # Construire les options de la grille
-gb = GridOptionsBuilder.from_dataframe(df)
-gb.configure_default_column(autoHeight=True, wrapText=True)
-gb.configure_grid_options(domLayout='normal')  # ou 'autoHeight'
-gridOptions = gb.build()
+#gb = GridOptionsBuilder.from_dataframe(df)
+#gb.configure_default_column(autoHeight=True, wrapText=True)
+#gb.configure_grid_options(domLayout='normal')  # ou 'autoHeight'
+#gridOptions = gb.build()
 
 #DEUX OPTIONS AU CHOIX
-AgGrid(df, gridOptions=grid_options, fit_columns_on_grid_load=True)
+#AgGrid(df, gridOptions=grid_options, fit_columns_on_grid_load=True)
 #AgGrid(df, gridOptions=grid_options, height=800, fit_columns_on_grid_load=True)
 
 # Affichage interactif avec largeur auto
