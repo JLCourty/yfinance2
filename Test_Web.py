@@ -72,6 +72,6 @@ Get_tout('FR0010315770','_ ETF MSCI' ,    x_date_jour,359.41 ,318.64 , 112000,30
 Get_tout('LU1829221024','_ ETF NASDAQ',   x_date_jour,82.73  ,69.06  , 12000 ,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
 # À la fin : convertir en DataFrame et afficher
-columns = [ "Date", "Valeur", "Prix actuel", "Quantité", "Cours 1er janv", "Cours 1er mai", "Montant 31 déc", "Devise"]
+columns = [ "Date", "Valeur", "Prix actuel", "variation_jour", "Quantité", "Cours 1er janv", "Cours 1er mai", "Montant 31 déc", "Devise"]
 df = pd.DataFrame(liste_donnees, columns=columns)
 st.table(df)
