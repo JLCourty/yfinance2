@@ -15,24 +15,16 @@ st.set_page_config(layout="wide")
 #MA FONCTION GET TOUT
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
     if x_code_valeur:
-        stock = yf.Ticker(x_code_valeur)
-        info = stock.info
 
-        t_prix      = info.get("currentPrice")
-        t_ouverture = info.get("open")
+        x_ticker = yf.Ticker(x_code_valeur)
+        data = x_ticker.history(start="2025-05-11")['Close']
 
-        # Calcul de la variation journalière (%)
-        if t_prix is not None and t_ouverture:
-            variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
-        else:
-            variation_jour = None  # ou 0 ou "N/A"
+        t_prix = data.iloc[-1] / x_currency  # AVANT IL Y AVAIT 3
 
-        # Vérifie que t_prix et x_qte sont bien utilisables
-        if t_prix is not None and isinstance(x_qte, (int, float)):
-            total_prix = t_prix * x_qte / x_currency
-        else:
-            total_prix = None  # ou 0 si vous préférez
 
+        t_ouverture = t_prix #info.get("open")
+        variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
+        total_prix = t_prix * x_qte / x_currency
 
         # Ajouter une ligne à la liste globale
         liste_donnees.append([
