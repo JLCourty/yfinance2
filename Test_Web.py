@@ -17,20 +17,35 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_cours_1janv, x_cours_1m
     if x_code_valeur:
         stock = yf.Ticker(x_code_valeur)
         info = stock.info
+
         t_prix = info.get("currentPrice")
+        t_ouverture = info.get("open")
+
+        # Calcul de la variation journalière (%)
+        if t_prix is not None and t_ouverture:
+            variation_jour = ((t_prix - t_ouverture) / t_ouverture) * 100
+        else:
+            variation_jour = None  # ou 0 ou "N/A"
 
         # Ajouter une ligne à la liste globale
         liste_donnees.append([
             x_date_jour,
             x_nom_valeur,
             t_prix,
+            variation_jour,         # ✅ Nouvelle colonne ajoutée ici
             x_qte,
             x_cours_1janv,
             x_cours_1mai,
             mt_31dec,
-            x_currency ])
+            x_currency
+        ])
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
+
+
+
+
+
 
 #LANCER LA FONCTION UNIQUE
 Get_tout('FR0000120404','ACCOR',          x_date_jour,47.39  ,43.15  , 12000 ,214 ,1)
