@@ -72,18 +72,16 @@ Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FO
 
 # À la fin : convertir en DataFrame et afficher
 columns = [ "Date", "Valeur", "Prix actuel", "Variation_Jour"]   #, "Quantité", "Devise"
+
 #df = pd.DataFrame(liste_donnees, columns=columns)
 
 df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation_Jour"])
+#df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace("%", "").str.replace(",", ".").astype(float)
 
-df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace("%", "").str.replace(",", ".").astype(float)
 
-
+df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace(",", ".").astype(float)
 
 df_sorted = df.sort_values(by="Variation_Jour", ascending=False).reset_index(drop=True)
-
-
-
 
 
 
