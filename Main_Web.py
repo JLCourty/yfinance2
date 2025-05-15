@@ -16,7 +16,7 @@ usd_eur_data = yf.Ticker("EURUSD=X")
 x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1],4)
 
 #FONCTION DE FORMATAGE UN MONTANT EN EUROS SANS DECIMALES
-def format_euro4(num_brut):
+def format_euro(num_brut):
     num_brut = str("{:,.2f}".format(int(num_brut)).replace(',',' '))
     num_brut = num_brut.replace('.00',' ')
     return num_brut + "€"
@@ -34,13 +34,8 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
-
-
         variation_jour = (t_prix - t_ouverture) * x_qte
-
-
-
-        total_prix = (t_prix * x_qte / x_currency)   #format_euro4
+        total_prix = t_prix * x_qte / x_currency
 
         # Ajouter une ligne à la liste globale
         liste_donnees.append([
@@ -91,7 +86,7 @@ total_prog = df["Variation"].sum()
 
 
 st.markdown(f"## Total : {total_prix+131619:,.2f}")
-st.markdown(f"### Gains ou pertes : {total_prog}")
+st.markdown(f"### Gains ou pertes : {format_euro(total_prog)}")
 
 
 #AFFICHER LE TABLEAU
