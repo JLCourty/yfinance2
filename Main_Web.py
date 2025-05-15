@@ -112,5 +112,5 @@ styled_df = df_sorted.style.applymap(color_progression, subset=["Progression"])
 #st.dataframe(styled_df, use_container_width=True, height=800)
 
 
-styled_df = styled_df.hide(axis="index")
+#styled_df = styled_df.hide(axis="index")
 st.dataframe(styled_df, use_container_width=True, height=800)
