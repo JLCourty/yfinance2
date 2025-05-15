@@ -71,8 +71,17 @@ Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)      #VALEUR US FO
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
 # À la fin : convertir en DataFrame et afficher
-columns = [ "Date", "Valeur", "Prix actuel", "Variation"]   #, "Quantité", "Devise"
-df = pd.DataFrame(liste_donnees, columns=columns)
+#columns = [ "Date", "Valeur", "Prix actuel", "Variation"]   #, "Quantité", "Devise"
+#df = pd.DataFrame(liste_donnees, columns=columns)
+
+df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation"])
+df["Variation"] = df["Variation"].str.replace("%", "").str.replace(",", ".").astype(float)
+df_sorted = df.sort_values(by="Variation", ascending=False).reset_index(drop=True)
+
+
+
+
+
 
 #TOTALISATION DU PRIX FINAL
 total_prix = df["Prix actuel"].sum()
