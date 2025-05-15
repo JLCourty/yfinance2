@@ -6,7 +6,6 @@ import pandas as pd
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
 x_date_jour="-"
-x_cours_dollar = 1.1187
 
 #DEFINIR UN BEAU TITRE
 #st.set_page_config(layout="wide")
@@ -35,7 +34,12 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
-        variation_jour = format_pc(t_prix , t_ouverture)
+
+
+        variation_jour = (t_prix , t_ouverture)  #format_pc
+
+
+
         total_prix = (t_prix * x_qte / x_currency)   #format_euro4
 
         # Ajouter une ligne à la liste globale
@@ -74,16 +78,17 @@ Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FO
 # À la fin : convertir en DataFrame et afficher
 columns = [ "Date", "Valeur", "Prix actuel", "variation_jour"]   #, "Quantité", "Devise"
 df = pd.DataFrame(liste_donnees, columns=columns)
-#st.table(df)
 
-# Totalisation
+#TOTALISATION DU PRIX FINAL
 total_prix = df["Prix actuel"].sum()
+
+#TOTALISATION DES GAINS
 #st.write(total_prix+131619)
 #st.write(x_cours_dollar)
 
 
 st.markdown(f"## Total : {total_prix+131619:,.2f}")
-st.markdown(f"### Cours dollar : {x_cours_dollar}")
+st.markdown(f"### Gains ou pertes : {x_cours_dollar}")
 
 
 
