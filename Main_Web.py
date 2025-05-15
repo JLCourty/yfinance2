@@ -93,7 +93,7 @@ else:
     st.markdown(f"### Pertes : {format_euro(total_prog)}")
 
 
-st.markdown(latest_date)
+st.markdown(latest_date_fr)
 
 
 #AFFICHER LE TABLEAU
