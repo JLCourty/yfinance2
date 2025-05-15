@@ -9,9 +9,12 @@ x_date_jour="-"
 x_cours_dollar = 1.1187
 
 #DEFINIR UN BEAU TITRE
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 #st.title("📈 Mon Application Boursière 554 000€")
 
+#CREER LES TICKERS DES COURS DU DOLLAR  PLNTAGE MARDI
+usd_eur_data = yf.Ticker("EURUSD=X")
+x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1],4)
 
 #FONCTION DE FORMATAGE UN MONTANT EN EUROS SANS DECIMALES
 def format_euro4(num_brut):
@@ -76,5 +79,7 @@ df = pd.DataFrame(liste_donnees, columns=columns)
 # Totalisation
 total_prix = df["Prix actuel"].sum()
 st.write(total_prix+131619)
+st.write(x_cours_dollar)
 
+#AFFICHER LE TABLEAU
 st.table(df)
