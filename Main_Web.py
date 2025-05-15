@@ -120,7 +120,7 @@ def df_to_html(df):
 
 
             # Aligner à droite si colonne numérique
-            if col in ["Valeur", "Prix actuel", "Progression"]:
+            if col in ["Prix actuel", "Progression"]:
                 style += " text-align: right;"
             #****************************************
 
