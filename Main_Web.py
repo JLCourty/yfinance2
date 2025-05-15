@@ -105,12 +105,18 @@ else:
 def color_progression(val):
     return "color: red;" if val > 0 else "color: green;"
 
-styled_df = df_sorted.style.applymap(color_progression, subset=["Progression"])
-
-# AFFICHAGE AVEC st.dataframe
-#st.dataframe(styled_df, use_container_width=True)
+#styled_df = df_sorted.style.applymap(color_progression, subset=["Progression"])
 #st.dataframe(styled_df, use_container_width=True, height=800)
 
+# STYLE : gras pour toutes les cellules
+def style_bold(val):
+    return "font-weight: bold;"
 
-#styled_df = styled_df.hide(axis="index")
+# Appliquer le style
+styled_df = df_sorted.style\
+    .applymap(style_bold)\
+    .applymap(style_progression, subset=["Progression"])\
+    .hide(axis="index")  # Masquer l’index
+
+# AFFICHAGE
 st.dataframe(styled_df, use_container_width=True, height=800)
