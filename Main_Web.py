@@ -98,9 +98,9 @@ total_prog = df["Progression"].sum()
 
 # Affichage total
 if total_prog > 0:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Gains : " + format_euro(total_prog))
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog))
 else:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Pertes : " + format_euro(total_prog))
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog))
 
 # Création du tableau HTML avec style personnalisé
 def df_to_html(df):
@@ -129,6 +129,8 @@ def df_to_html(df):
             #****************************************
 
             if col == "Progression": style += "color: green;" if val > 0 else "color: red;"
+            #if col == "Valeur": style += "color: green;" if val > 0 else "color: red;"
+
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
