@@ -11,6 +11,9 @@ x_date_jour="2025-05-15"
 #st.set_page_config(layout="wide")
 #st.title("📈 Mon Application Boursière 554 000€")
 
+
+st.dataframe(styled_df, use_container_width=True, height=800)
+
 #CREER LES TICKERS DES COURS DU DOLLAR  PLNTAGE MARDI
 usd_eur_data = yf.Ticker("EURUSD=X")
 x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1],4)
