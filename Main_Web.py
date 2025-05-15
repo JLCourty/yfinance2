@@ -95,14 +95,16 @@ df_sorted = df.sort_values(by="Variation_Jour", ascending=False).reset_index(dro
 
 #TOTALISATION DU PRIX FINAL
 total_prix = df["Prix actuel"].sum()
-st.markdown(f"## Total : {total_prix+131619:,.2f}")
+#st.markdown(f"## Total : {total_prix+131619:,.2f}")
 
 #TOTALISATION DES GAINS
 total_prog = df["Variation_Jour"].sum()
+
+#AFFICHAGE DES DEUX INFOS
 if total_prog>0:
     st.markdown(f"### Gains : {format_euro(total_prog)}")
 else:
-    st.markdown(    "## Total : " + str(total_prix+131619) +    f"### Pertes : {format_euro(total_prog)}"+    "Total ")
+    st.markdown("## Total : " + format_euro(total_prix+131619) +    f"- Pertes : {format_euro(total_prog)}"  )
 
 
 #st.markdown(latest_date_fr)
