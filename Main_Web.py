@@ -80,29 +80,32 @@ Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
-#CONVERTIR LES DONNEES EN TABLEAU
-columns = [ "Date", "Valeur", "Prix actuel", "Progression"]
-df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Progression"])
 
-df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)  #float
 
-#TRIER SUR LA PROGRESSION
+# CONVERTIR LES DONNÉES EN TABLEAU
+columns = ["Date", "Valeur", "Prix actuel", "Progression"]
+df = pd.DataFrame(liste_donnees, columns=columns)
+
+df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
+
+# TRIER SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
-#TOTALISATION DU PRIX FINAL
+# TOTALISATION
 total_prix = df["Prix actuel"].sum()
-#st.markdown(f"## Total : {total_prix+131619:,.2f}")
-
-#TOTALISATION DES GAINS
 total_prog = df["Progression"].sum()
 
-#AFFICHAGE DES DEUX INFOS
-if total_prog>0:
-    st.markdown("# Total : " + format_euro(total_prix+131619) + " - Gains : "+format_euro(total_prog)  )
+# AFFICHAGE
+if total_prog > 0:
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Gains : " + format_euro(total_prog))
 else:
-    st.markdown("# Total : " + format_euro(total_prix+131619) + " - Pertes : "+format_euro(total_prog)  )
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Pertes : " + format_euro(total_prog))
 
-#st.markdown(latest_date_fr)
+# COLORATION EN ROUGE DE LA COLONNE "Progression"
+def color_progression(val):
+    return "color: red;"  # Appliquer à toutes les cellules de cette colonne
 
-#AFFICHER LE TABLEAU
-st.table(df_sorted)
+styled_df = df_sorted.style.applymap(color_progression, subset=["Progression"])
+
+# AFFICHAGE AVEC st.dataframe
+st.dataframe(styled_df, use_container_width=True)
