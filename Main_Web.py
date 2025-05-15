@@ -76,6 +76,7 @@ df = pd.DataFrame(liste_donnees, columns=columns)
 
 #TOTALISATION DU PRIX FINAL
 total_prix = df["Prix actuel"].sum()
+st.markdown(f"## Total : {total_prix+131619:,.2f}")
 
 #TOTALISATION DES GAINS
 total_prog = df["Variation"].sum()
@@ -85,9 +86,12 @@ total_prog = df["Variation"].sum()
 #st.write(x_cours_dollar)
 
 
-st.markdown(f"## Total : {total_prix+131619:,.2f}")
-st.markdown(f"### Gains ou pertes : {format_euro(total_prog)}")
 
+
+if total_prog>0:
+    st.markdown(f"### Gains : {format_euro(total_prog)}")
+else:
+    st.markdown(f"### Pertes : {format_euro(total_prog)}")
 
 #AFFICHER LE TABLEAU
 st.table(df)
