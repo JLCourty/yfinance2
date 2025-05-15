@@ -103,7 +103,7 @@ else:
 
 # COLORATION EN ROUGE DE LA COLONNE "Progression"
 def color_progression(val):
-    return "color: red;"  # Appliquer à toutes les cellules de cette colonne
+    return "color: red;" if val > 0 else "color: green;"
 
 styled_df = df_sorted.style.applymap(color_progression, subset=["Progression"])
 
