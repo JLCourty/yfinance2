@@ -102,11 +102,14 @@ else:
     st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Pertes : " + format_euro(total_prog))
 
 # COLORATION EN ROUGE DE LA COLONNE "Progression"
-def color_progression(val):
-    return "color: red;" if val > 0 else "color: green;"
+#def color_progression(val):
+#    return "color: red;" if val > 0 else "color: green;"
 
-#styled_df = df_sorted.style.applymap(color_progression, subset=["Progression"])
-#st.dataframe(styled_df, use_container_width=True, height=800)
+
+
+# STYLE : rouge si progression > 0
+def style_progression(val):
+    return "color: red;" if val > 0 else ""
 
 # STYLE : gras pour toutes les cellules
 def style_bold(val):
