@@ -41,22 +41,18 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
         if x_date_jour == t_date_jour:
             x_date_jour = "OK"
-            variation_jour = (t_prix - t_ouverture) * x_qte
+            Progression = (t_prix - t_ouverture) * x_qte
         else:
             x_date_jour = "Hier"
-            variation_jour = 0
+            Progression = 0
 
         #latest_date_str = latest_date.strftime("%Y-%m-%d")
         #latest_date_fr = latest_date.strftime("%d-%m-%Y")
 
-
-
-
-        #variation_jour = (t_prix - t_ouverture) * x_qte
         total_prix = t_prix * x_qte / x_currency
 
         # Ajouter une ligne à la liste globale
-        liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix), round(variation_jour)  ])
+        liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix), round(Progression)  ])
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
@@ -86,19 +82,19 @@ Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
 #CONVERTIR LES DONNEES EN TABLEAU
 columns = [ "Date", "Valeur", "Prix actuel", "Progression"]
-df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation_Jour"])
+df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Progression"])
 
-df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace(",", ".").astype(int)  #float
+df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)  #float
 
 #TRIER SUR LA PROGRESSION
-df_sorted = df.sort_values(by="Variation_Jour", ascending=False).reset_index(drop=True)
+df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
 #TOTALISATION DU PRIX FINAL
 total_prix = df["Prix actuel"].sum()
 #st.markdown(f"## Total : {total_prix+131619:,.2f}")
 
 #TOTALISATION DES GAINS
-total_prog = df["Variation_Jour"].sum()
+total_prog = df["Progression"].sum()
 
 #AFFICHAGE DES DEUX INFOS
 if total_prog>0:
