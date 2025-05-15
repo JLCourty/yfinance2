@@ -36,7 +36,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
 
 
-        variation_jour = round(t_prix - t_ouverture)
+        variation_jour = (t_prix - t_ouverture)
 
 
 
@@ -76,7 +76,7 @@ Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)      #VALEUR US FO
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
 # À la fin : convertir en DataFrame et afficher
-columns = [ "Date", "Valeur", "Prix actuel", "variation_jour"]   #, "Quantité", "Devise"
+columns = [ "Date", "Valeur", "Prix actuel", "Variation_du__jour"]   #, "Quantité", "Devise"
 df = pd.DataFrame(liste_donnees, columns=columns)
 
 #TOTALISATION DU PRIX FINAL
