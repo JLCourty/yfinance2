@@ -38,10 +38,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         total_prix = t_prix * x_qte / x_currency
 
         # Ajouter une ligne à la liste globale
-        liste_donnees.append([
-            x_date_jour,x_nom_valeur,
-            round(total_prix),
-            variation_jour  ])    # ✅ Nouvelle colonne ajoutée ici    x_qte,x_currency
+        liste_donnees.append([   x_date_jour,x_nom_valeur,  round(total_prix),   round(variation_jour)  ])
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
