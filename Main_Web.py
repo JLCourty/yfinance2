@@ -75,7 +75,7 @@ columns = [ "Date", "Valeur", "Prix actuel", "Variation_Jour"]   #, "Quantité",
 #df = pd.DataFrame(liste_donnees, columns=columns)
 
 df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation_Jour"])
-df["Variation_Jour"] = df["Variation_Jour"].str.replace("%", "").str.replace(",", ".").astype(float)
+#df["Variation_Jour"] = df["Variation_Jour"].str.replace("%", "").str.replace(",", ".").astype(float)
 df_sorted = df.sort_values(by="Variation_Jour", ascending=False).reset_index(drop=True)
 
 
