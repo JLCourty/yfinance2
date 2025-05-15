@@ -85,7 +85,7 @@ Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
 #CONVERTIR LES DONNEES EN TABLEAU
-columns = [ "Date", "Valeur", "Prix actuel", "VariationXXX_Jour"]
+columns = [ "Date", "Valeur", "Prix actuel", "Progression"]
 df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation_Jour"])
 
 df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace(",", ".").astype(int)  #float
