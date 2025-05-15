@@ -81,8 +81,8 @@ Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
 
-import pandas as pd
-import streamlit as st
+#import pandas as pd
+#import streamlit as st
 
 # Exemple de données
 columns = ["Date", "Valeur", "Prix actuel", "Progression"]
@@ -104,15 +104,20 @@ else:
 
 # Création du tableau HTML avec style personnalisé
 def df_to_html(df):
+
+
     html = "<table style='width:100%; border-collapse: collapse;'>"
+
     # En-têtes
     html += "<thead><tr>"
     for col in df.columns:
         html += f"<th style='border: 1px solid #ccc; padding: 4px; background-color: #f0f0f0; font-weight: bold;'>{col}</th>"
     html += "</tr></thead><tbody>"
+
     # Lignes
     for _, row in df.iterrows():
         html += "<tr>"
+
         for col in df.columns:
             val = row[col]
             style = "font-weight: bold;"
@@ -125,9 +130,12 @@ def df_to_html(df):
             #****************************************
 
             if col == "Progression" and val > 0:
-                style += "color: red;"
+                style += "color: green;"
+
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
+
+#   FIN DE LA FOCTION HTML
     html += "</tbody></table>"
     return html
 
