@@ -5,7 +5,7 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-x_date_jour="-"
+x_date_jour="2025-05-15"
 
 #DEFINIR UN BEAU TITRE
 #st.set_page_config(layout="wide")
@@ -35,8 +35,15 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
         # Trouver la date la plus récente dans les données
-        x_date_jour = data.index[-1]  # Dernière date disponible
-        x_date_jour = x_date_jour.strftime("%Y-%m-%d")
+        t_date_jour = data.index[-1]  # Dernière date disponible
+
+        t_date_jour = t_date_jour.strftime("%Y-%m-%d")
+
+        if x_date_jour == t_date_jour:
+            x_date_jour = "Oui"
+        else:
+            x_date_jour = "Non"
+
         #latest_date_str = latest_date.strftime("%Y-%m-%d")
         #latest_date_fr = latest_date.strftime("%d-%m-%Y")
 
