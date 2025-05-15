@@ -34,11 +34,17 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
+        # Trouver la date la plus récente dans les données
+        latest_date = data.index[-1]  # Dernière date disponible
+        latest_date_str = latest_date.strftime("%Y-%m-%d")
+        latest_date_fr = latest_date.strftime("%d-%m-%Y")
+
+
         variation_jour = (t_prix - t_ouverture) * x_qte
         total_prix = t_prix * x_qte / x_currency
 
         # Ajouter une ligne à la liste globale
-        liste_donnees.append([   x_date_jour,x_nom_valeur,  round(total_prix),   round(variation_jour)  ])
+        liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix), round(variation_jour)  ])
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
@@ -63,17 +69,14 @@ Get_tout('FR0000121329','THALES',         x_date_jour,24  ,1)
 Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111 ,1)
 Get_tout('US92826C8394','VISA',           x_date_jour,40  , x_cours_dollar)
 Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
-Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)      #VALEUR US FOURNIE EN EUROS
-Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FOURNIE EN EUROS
+Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
+Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
 #CONVERTIR LES DONNEES EN TABLEAU
 columns = [ "Date", "Valeur", "Prix actuel", "VariationXXX_Jour"]
 df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation_Jour"])
 
 df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace(",", ".").astype(int)  #float
-
-
-
 
 #TRIER SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Variation_Jour", ascending=False).reset_index(drop=True)
@@ -88,6 +91,10 @@ if total_prog>0:
     st.markdown(f"### Gains : {format_euro(total_prog)}")
 else:
     st.markdown(f"### Pertes : {format_euro(total_prog)}")
+
+
+st.markdown(latest_date)
+
 
 #AFFICHER LE TABLEAU
 st.table(df_sorted)
