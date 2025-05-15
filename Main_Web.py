@@ -102,7 +102,7 @@ total_prog = df["Variation_Jour"].sum()
 if total_prog>0:
     st.markdown(f"### Gains : {format_euro(total_prog)}")
 else:
-    st.markdown(f"### Pertes : {format_euro(total_prog)}"+    "Total ")
+    st.markdown(    "## Total : " + str(total_prix+131619) +    f"### Pertes : {format_euro(total_prog)}"+    "Total ")
 
 
 #st.markdown(latest_date_fr)
