@@ -81,45 +81,47 @@ Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
 
+import pandas as pd
+import streamlit as st
 
-# CONVERTIR LES DONNÉES EN TABLEAU
+# Exemple de données
 columns = ["Date", "Valeur", "Prix actuel", "Progression"]
 df = pd.DataFrame(liste_donnees, columns=columns)
-
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 
-# TRIER SUR LA PROGRESSION
+# Trier
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
-# TOTALISATION
+# Totaux
 total_prix = df["Prix actuel"].sum()
 total_prog = df["Progression"].sum()
 
-# AFFICHAGE
+# Affichage total
 if total_prog > 0:
     st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Gains : " + format_euro(total_prog))
 else:
     st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Pertes : " + format_euro(total_prog))
 
-# COLORATION EN ROUGE DE LA COLONNE "Progression"
-#def color_progression(val):
-#    return "color: red;" if val > 0 else "color: green;"
+# Création du tableau HTML avec style personnalisé
+def df_to_html(df):
+    html = "<table style='width:100%; border-collapse: collapse;'>"
+    # En-têtes
+    html += "<thead><tr>"
+    for col in df.columns:
+        html += f"<th style='border: 1px solid #ccc; padding: 4px; background-color: #f0f0f0; font-weight: bold;'>{col}</th>"
+    html += "</tr></thead><tbody>"
+    # Lignes
+    for _, row in df.iterrows():
+        html += "<tr>"
+        for col in df.columns:
+            val = row[col]
+            style = "font-weight: bold;"
+            if col == "Progression" and val > 0:
+                style += "color: red;"
+            html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
+        html += "</tr>"
+    html += "</tbody></table>"
+    return html
 
-
-
-# STYLE : rouge si progression > 0
-def style_progression(val):
-    return "color: red;" if val > 0 else ""
-
-# STYLE : gras pour toutes les cellules
-def style_bold(val):
-    return "font-weight: bold;"
-
-# Appliquer le style
-styled_df = df_sorted.style\
-    .applymap(style_bold)\
-    .applymap(style_progression, subset=["Progression"])\
-    .hide(axis="index")  # Masquer l’index
-
-# AFFICHAGE
-st.dataframe(styled_df, use_container_width=True, height=800)
+# Affichage HTML
+st.markdown(df_to_html(df_sorted), unsafe_allow_html=True)
