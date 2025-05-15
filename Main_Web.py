@@ -70,20 +70,14 @@ Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)      #VALEUR US FOURNIE EN EUROS
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FOURNIE EN EUROS
 
-# À la fin : convertir en DataFrame et afficher
-columns = [ "Date", "Valeur", "Prix actuel", "Variation_Jour"]   #, "Quantité", "Devise"
-
-#df = pd.DataFrame(liste_donnees, columns=columns)
-
+#CONVERTIR LES DONNEES EN TABLEAU
+columns = [ "Date", "Valeur", "Prix actuel", "VariationXXX_Jour"]
 df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation_Jour"])
-#df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace("%", "").str.replace(",", ".").astype(float)
-
 
 df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace(",", ".").astype(float)
 
+#TRIER SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Variation_Jour", ascending=False).reset_index(drop=True)
-
-
 
 #TOTALISATION DU PRIX FINAL
 total_prix = df["Prix actuel"].sum()
@@ -91,14 +85,6 @@ st.markdown(f"## Total : {total_prix+131619:,.2f}")
 
 #TOTALISATION DES GAINS
 total_prog = df["Variation_Jour"].sum()
-
-
-#st.write(total_prix+131619)
-#st.write(x_cours_dollar)
-
-
-
-
 if total_prog>0:
     st.markdown(f"### Gains : {format_euro(total_prog)}")
 else:
