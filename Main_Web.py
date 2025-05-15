@@ -40,9 +40,9 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_date_jour = t_date_jour.strftime("%Y-%m-%d")
 
         if x_date_jour == t_date_jour:
-            x_date_jour = "Oui"
+            x_date_jour = ""
         else:
-            x_date_jour = "Non"
+            x_date_jour = "Hier"
 
         #latest_date_str = latest_date.strftime("%Y-%m-%d")
         #latest_date_fr = latest_date.strftime("%d-%m-%Y")
