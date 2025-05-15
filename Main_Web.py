@@ -78,8 +78,15 @@ df = pd.DataFrame(liste_donnees, columns=columns)
 
 # Totalisation
 total_prix = df["Prix actuel"].sum()
-st.write(total_prix+131619)
-st.write(x_cours_dollar)
+#st.write(total_prix+131619)
+#st.write(x_cours_dollar)
+
+
+st.markdown(f"## Total : {total_prix+131619:,.2f}")
+st.markdown(f"### Cours dollar : {x_cours_dollar}")
+
+
+
 
 #AFFICHER LE TABLEAU
 st.table(df)
