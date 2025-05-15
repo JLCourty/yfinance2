@@ -70,7 +70,10 @@ Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)      #VALEUR US FO
 columns = [ "Date", "Valeur", "Prix actuel", "VariationXXX_Jour"]
 df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Prix actuel", "Variation_Jour"])
 
-df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace(",", ".").astype(float)
+df["Variation_Jour"] = df["Variation_Jour"].astype(str).str.replace(",", ".").astype(int)  #float
+
+
+
 
 #TRIER SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Variation_Jour", ascending=False).reset_index(drop=True)
