@@ -40,7 +40,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_date_jour = t_date_jour.strftime("%Y-%m-%d")
 
         if x_date_jour == t_date_jour:
-            x_date_jour = ""
+            x_date_jour = "OK"
             variation_jour = (t_prix - t_ouverture) * x_qte
         else:
             x_date_jour = "Hier"
@@ -102,7 +102,7 @@ total_prog = df["Variation_Jour"].sum()
 if total_prog>0:
     st.markdown(f"### Gains : {format_euro(total_prog)}")
 else:
-    st.markdown(f"### Pertes : {format_euro(total_prog)}")
+    st.markdown(f"### Pertes : {format_euro(total_prog)}"+    "Total ")
 
 
 #st.markdown(latest_date_fr)
