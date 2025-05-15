@@ -41,8 +41,10 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
         if x_date_jour == t_date_jour:
             x_date_jour = ""
+            variation_jour = (t_prix - t_ouverture) * x_qte
         else:
             x_date_jour = "Hier"
+            variation_jour = 0
 
         #latest_date_str = latest_date.strftime("%Y-%m-%d")
         #latest_date_fr = latest_date.strftime("%d-%m-%Y")
@@ -50,7 +52,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
 
 
-        variation_jour = (t_prix - t_ouverture) * x_qte
+        #variation_jour = (t_prix - t_ouverture) * x_qte
         total_prix = t_prix * x_qte / x_currency
 
         # Ajouter une ligne à la liste globale
