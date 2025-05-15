@@ -116,6 +116,14 @@ def df_to_html(df):
         for col in df.columns:
             val = row[col]
             style = "font-weight: bold;"
+
+
+
+            # Aligner à droite si colonne numérique
+            if col in ["Valeur", "Prix actuel", "Progression"]:
+                style += " text-align: right;"
+            #****************************************
+
             if col == "Progression" and val > 0:
                 style += "color: red;"
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
