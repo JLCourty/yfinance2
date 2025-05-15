@@ -105,4 +105,4 @@ else:
     st.markdown(f"### Pertes : {format_euro(total_prog)}")
 
 #AFFICHER LE TABLEAU
-st.table(df)
+st.table(df_sorted)
