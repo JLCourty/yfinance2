@@ -128,7 +128,7 @@ def df_to_html(df):
                 style += " text-align: right;"
             #****************************************
 
-            if col == "Progression"    or col == "Valeur"                   :
+            if col == "Progression":
                 if val > 0:
                     style += "color: green;"
                 else:
