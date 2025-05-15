@@ -128,11 +128,7 @@ def df_to_html(df):
                 style += " text-align: right;"
             #****************************************
 
-            if col == "Progression":
-                if val > 0:
-                    style += "color: green;"
-                else:
-                    style += "color: red;"
+            if col == "Progression": style += "color: green;" if val > 0 else "color: red;"
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
