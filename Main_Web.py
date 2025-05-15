@@ -35,9 +35,13 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
         # Trouver la date la plus récente dans les données
-        latest_date = data.index[-1]  # Dernière date disponible
-        latest_date_str = latest_date.strftime("%Y-%m-%d")
-        latest_date_fr = latest_date.strftime("%d-%m-%Y")
+        x_date_jour = data.index[-1]  # Dernière date disponible
+
+
+        #latest_date_str = latest_date.strftime("%Y-%m-%d")
+        #latest_date_fr = latest_date.strftime("%d-%m-%Y")
+
+
 
 
         variation_jour = (t_prix - t_ouverture) * x_qte
@@ -93,7 +97,7 @@ else:
     st.markdown(f"### Pertes : {format_euro(total_prog)}")
 
 
-st.markdown(latest_date_fr)
+#st.markdown(latest_date_fr)
 
 
 #AFFICHER LE TABLEAU
