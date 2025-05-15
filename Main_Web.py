@@ -111,4 +111,5 @@ def color_progression(val):
 styled_df = df_sorted.style.applymap(color_progression, subset=["Progression"])
 
 # AFFICHAGE AVEC st.dataframe
-st.dataframe(styled_df, use_container_width=True)
+#st.dataframe(styled_df, use_container_width=True)
+st.dataframe(styled_df, use_container_width=True, height=800)
