@@ -36,7 +36,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
 
 
-        variation_jour = (t_prix , t_ouverture)  #format_pc
+        variation_jour = round(t_prix - t_ouverture)
 
 
 
