@@ -88,7 +88,7 @@ total_prix = df["Prix actuel"].sum()
 st.markdown(f"## Total : {total_prix+131619:,.2f}")
 
 #TOTALISATION DES GAINS
-total_prog = df["Variation"].sum()
+total_prog = df["Variation_Jour"].sum()
 
 
 #st.write(total_prix+131619)
