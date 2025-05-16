@@ -107,10 +107,11 @@ if total_prog > 0:
         f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'>"
         f"<strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp;"
         f"<strong>Gains :</strong> {format_euro(total_prog)}"
-        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 16px;'>"
-        f"<br><br>Le {x_date_jour} à {t_heure_actuelle}"
+        f"</p>"
+        f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
+        f"Le {x_date_jour} à {t_heure_actuelle}"
         f"</p>",
-        unsafe_allow_html=True     )
+        unsafe_allow_html=True    )
 
 else:
     st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour +"-" + t_heure_actuelle)
