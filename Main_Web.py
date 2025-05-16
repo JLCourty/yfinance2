@@ -3,22 +3,9 @@ import streamlit as st
 import pandas as pd
 
 
-#DEFINIR UNE LISTE
+# Liste globale pour stocker toutes les lignes
 liste_donnees = []
-
-
-#x_date_jour="2025-05-16"
-#x_date_jour   = str(datetime.now())[00:10]
-#x_date_jour = pd.Timestamp.today()
-#print(date_du_jour)
-
-# Date du jour
-date_jour = pd.Timestamp.today()
-
-# Format texte
-x_date_jour = date_jour.strftime("%d/%m/%Y")
-
-
+x_date_jour="2025-05-15"
 
 #DEFINIR UN BEAU TITRE
 #st.set_page_config(layout="wide")
@@ -40,17 +27,15 @@ def format_pc(t_P1,t_P2):
 
 #MA FONCTION GET TOUT
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
-
     if x_code_valeur:
 
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-05-11")['Close']
-
-        #EXTRAIRE LES DONNEES
         t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
-        t_date_jour = data.index[-1]  # Dernière date disponible dans les données
+        # Trouver la date la plus récente dans les données
+        t_date_jour = data.index[-1]  # Dernière date disponible
 
         t_date_jour = t_date_jour.strftime("%Y-%m-%d")
 
@@ -61,12 +46,14 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             x_date_jour = "Hier"
             Progression = 0
 
+        #latest_date_str = latest_date.strftime("%Y-%m-%d")
+        #latest_date_fr = latest_date.strftime("%d-%m-%Y")
+
         total_prix = t_prix * x_qte / x_currency
 
-        #AJOUTER UNE LIGNE A LA LISTE
+        # Ajouter une ligne à la liste globale
         liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix), round(Progression)  ])
     else:
-
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
 #LANCER LA FONCTION UNIQUE
@@ -93,6 +80,10 @@ Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
+
+import pandas as pd
+import streamlit as st
+
 # Exemple de données
 columns = ["Date", "Valeur", "Prix actuel", "Progression"]
 df = pd.DataFrame(liste_donnees, columns=columns)
@@ -107,32 +98,25 @@ total_prog = df["Progression"].sum()
 
 # Affichage total
 if total_prog > 0:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Gains : " + format_euro(total_prog))
 else:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
-
-
-
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " - Pertes : " + format_euro(total_prog))
 
 # Création du tableau HTML avec style personnalisé
 def df_to_html(df):
-
-
     html = "<table style='width:100%; border-collapse: collapse;'>"
-
     # En-têtes
     html += "<thead><tr>"
     for col in df.columns:
         html += f"<th style='border: 1px solid #ccc; padding: 4px; background-color: #f0f0f0; font-weight: bold;'>{col}</th>"
     html += "</tr></thead><tbody>"
-
     # Lignes
     for _, row in df.iterrows():
         html += "<tr>"
-
         for col in df.columns:
             val = row[col]
             style = "font-weight: bold;"
+
 
 
             # Aligner à droite si colonne numérique
@@ -140,14 +124,10 @@ def df_to_html(df):
                 style += " text-align: right;"
             #****************************************
 
-            if col == "Progression": style += "color: green;" if val > 0 else "color: red;"
-            #if col == "Valeur": style += "color: green;" if val > 0 else "color: red;"
-
-
+            if col == "Progression" and val > 0:
+                style += "color: red;"
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
-
-#   FIN DE LA FOCTION HTML
     html += "</tbody></table>"
     return html
 
