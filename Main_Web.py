@@ -135,13 +135,11 @@ def df_to_html(df):
             #ALIGNER LES VALEURS NUMERIQUES A DROITE
             if col in ["Montant", "Progression"]: style += " text-align: right;"
 
-            #AFFICHER EN COULEUR CONDITIONNELLE
-            if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
-
             # FORMATTER LE MONTANT
             if col == "Montant":  val = format_euro(val)
 
             # FORMATTER LA PROGRESSION (EN EUROS)
+            if col == "Progression": style += "color: green;" if val > 0 else "color: red;"
             if col == "Progression":  val = f"{val:,.2f} €"
 
             #???
