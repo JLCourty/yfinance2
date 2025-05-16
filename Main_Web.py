@@ -6,16 +6,8 @@ import pandas as pd
 #DEFINIR UNE LISTE
 liste_donnees = []
 
-
-#x_date_jour="2025-05-16"
-#x_date_jour   = str(datetime.now())[00:10]
-#x_date_jour = pd.Timestamp.today()
-#print(date_du_jour)
-
 # Date du jour
 date_jour = pd.Timestamp.today()
-
-# Format texte
 x_date_jour = date_jour.strftime("%d/%m/%Y")
 
 
@@ -63,10 +55,10 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             Progression = 0
 
         total_prix = t_prix * x_qte / x_currency
-        prix_format = format_euro(total_prix)
+        #prix_format = format_euro(total_prix)
 
         #AJOUTER UNE LIGNE A LA LISTE
-        liste_donnees.append([  x_date_jour , x_nom_valeur, prix_format , round(Progression)  ])   #round(total_prix)
+        liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix) , round(Progression)  ])   #
 
     else:
 
@@ -104,10 +96,7 @@ df = pd.DataFrame(liste_donnees, columns=columns)
 
 #A SUPPRIMER
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
-
-
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
-
 
 #TRIER LE TABLEAU SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
