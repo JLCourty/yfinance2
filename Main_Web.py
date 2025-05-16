@@ -86,7 +86,7 @@ columns = ["Date", "Valeur", "Montant", "Progression"]
 df = pd.DataFrame(liste_donnees, columns=columns)
 
 #A SUPPRIMER
-#df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
+df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 #df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 
 #TRIER LE TABLEAU SUR LA PROGRESSION
@@ -136,7 +136,7 @@ def df_to_html(df):
             #if col == "Montant":  val = format_euro(val)
 
             # FORMATTER LA PROGRESSION
-            if col == "Progression":  val = f"{val:,.2f} %"
+            #if col == "Progression":  val = f"{val:,.2f} %"
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
