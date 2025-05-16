@@ -1,162 +1,121 @@
-import yfinance as yf
 import streamlit as st
+from streamlit_autorefresh import st_autorefresh
 import pandas as pd
+import yfinance as yf
 
+# Rafraîchir automatiquement toutes les 60 secondes
+st_autorefresh(interval=60000, key="refresh")
 
-
-#DEFINIR UNE LISTE
-liste_donnees = []
-
-# Date du jour
-date_jour = pd.Timestamp.today()
-x_date_jour = date_jour.strftime("%d/%m/%Y")
-
-#HEURE ACTUELLE
-t_heure_actuelle = pd.Timestamp.now(tz='Europe/Paris').strftime('%H:%M')
-
-#CREER LES TICKERS DES COURS DU DOLLAR  PLNTAGE MARDI
-usd_eur_data = yf.Ticker("EURUSD=X")
-x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1],4)
-
-#FONCTION DE FORMATAGE UN MONTANT EN EUROS SANS DECIMALES
+# Fonction de formatage
 def format_euro(num_brut):
-    num_brut = str("{:,.2f}".format(int(num_brut)).replace(',',' '))
-    num_brut = num_brut.replace('.00',' ')
+    num_brut = str("{:,.2f}".format(int(num_brut)).replace(',', ' '))
+    num_brut = num_brut.replace('.00', ' ')
     return num_brut + "€"
 
-#FONCTION DE FORMATAGE UN MONTANT EN POURCENTAGE
-def format_pc(t_P1,t_P2):
-    return str(    round((t_P1-t_P2)/t_P2*100,2 )  ) + " %"
+# Fonction principale d'affichage
+def afficher_tableau():
+    liste_donnees = []
 
-#MA FONCTION GET TOUT
-def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
+    # Date et heure actuelles
+    date_jour = pd.Timestamp.today()
+    x_date_jour = date_jour.strftime("%d/%m/%Y")
+    t_heure_actuelle = pd.Timestamp.now(tz='Europe/Paris').strftime('%H:%M')
 
-    if x_code_valeur:
+    # Cours USD
+    usd_eur_data = yf.Ticker("EURUSD=X")
+    x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1], 4)
 
-        x_ticker = yf.Ticker(x_code_valeur)
-        data = x_ticker.history(start="2025-05-11")['Close']
+    # Fonction pour chaque ligne
+    def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
+        if x_code_valeur:
+            x_ticker = yf.Ticker(x_code_valeur)
+            data = x_ticker.history(start="2025-05-11")['Close']
+            t_date_jour = data.index[-1].strftime("%d/%m/%Y")
+            t_prix = data.iloc[-1]
+            t_ouverture = data.iloc[-2]
 
-        #EXTRAIRE LES DONNEES DU TICKER
-        t_date_jour = data.index[-1]
-        t_date_jour = t_date_jour.strftime("%d/%m/%Y")
+            if x_date_jour == t_date_jour:
+                label_date = ""
+                progression = (t_prix - t_ouverture) * x_qte
+            else:
+                label_date = "Hier"
+                progression = 0
 
-        t_prix = data.iloc[-1]
-        t_ouverture = data.iloc[-2]
-
-        if x_date_jour == t_date_jour:
-            x_date_jour = ""
-            Progression = (t_prix - t_ouverture) * x_qte
+            total_prix = t_prix * x_qte / x_currency
+            liste_donnees.append([label_date, x_nom_valeur, round(total_prix), round(progression)])
         else:
-            x_date_jour = "Hier"
-            Progression = 0
+            st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
-        total_prix = t_prix * x_qte / x_currency
+    # Appels aux tickers
+    Get_tout('FR0000120404','ACCOR', x_date_jour ,214 ,1)
+    Get_tout('NL0000235190','AIRBUS', x_date_jour ,95  ,1)
+    Get_tout('GOOGL','ALPHABET', x_date_jour,79  , x_cours_dollar)
+    Get_tout('US0231351067','AMAZON', x_date_jour,52  , x_cours_dollar)
+    Get_tout('NL0010273215','ASML', x_date_jour ,18  ,1)
+    Get_tout('US11135F1012','BROADCOM', x_date_jour,73  , x_cours_dollar)
+    Get_tout('DE0005810055','DEUTSCHE BORSE', x_date_jour,42  ,1)
+    Get_tout('FR0000052292','HERMES', x_date_jour,4   ,1)
+    Get_tout('ES0144580Y14','IBERDROLA', x_date_jour,712 ,1)
+    Get_tout('IT0003856405','LEONARDO', x_date_jour,142  , 1)
+    Get_tout('US5949181045','MICROSOFT', x_date_jour ,48  , x_cours_dollar)
+    Get_tout('US64110L1061','NETFLIX', x_date_jour ,10  , x_cours_dollar)
+    Get_tout('US67066G1040','NVDIA', x_date_jour,160 , x_cours_dollar)
+    Get_tout('US6974351057','PALO ALTO', x_date_jour,56  , x_cours_dollar)
+    Get_tout('DE0007030009','RHEINMETALL', x_date_jour,5   ,1)
+    Get_tout('US79466L3024','SALESFORCE', x_date_jour,46  , x_cours_dollar)
+    Get_tout('FR0000121329','THALES', x_date_jour,24  ,1)
+    Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111 ,1)
+    Get_tout('US92826C8394','VISA', x_date_jour,40  , x_cours_dollar)
+    Get_tout('FR0007054358','ETF STOXX 50', x_date_jour,1543,1)
+    Get_tout('FR0010315770','ETF MSCI' , x_date_jour,305 ,1)
+    Get_tout('LU1829221024','ETF NASDAQ', x_date_jour,130 ,1)
 
-        #AJOUTER UNE LIGNE A LA LISTE
-        liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix) , round(Progression)  ])   #
+    # Création DataFrame
+    df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Montant", "Progression"])
+    df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
+    df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
+    # Totaux
+    total_prix = df["Montant"].sum()
+    total_prog = df["Progression"].sum()
+
+    # Affichage totaux
+    if total_prog > 0:
+        st.markdown(
+            f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'>"
+            f"<strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp;"
+            f"<strong>Gains :</strong> {format_euro(total_prog)}"
+            f"</p>"
+            f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
+            f"Le {x_date_jour} à {t_heure_actuelle}"
+            f"</p>",
+            unsafe_allow_html=True)
     else:
+        st.markdown(f"### Total : {format_euro(total_prix + 131619)} - Pertes : {format_euro(total_prog)} - {x_date_jour} - {t_heure_actuelle}")
 
-        st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
-
-#LANCER LA FONCTION UNIQUE
-Get_tout('FR0000120404','ACCOR',          x_date_jour ,214 ,1)
-Get_tout('NL0000235190','AIRBUS',         x_date_jour ,95  ,1)
-Get_tout('GOOGL'       ,'ALPHABET',       x_date_jour,79  , x_cours_dollar)
-Get_tout('US0231351067','AMAZON',         x_date_jour,52  , x_cours_dollar)
-Get_tout('NL0010273215','ASML',           x_date_jour ,18  ,1)
-Get_tout('US11135F1012','BROADCOM',       x_date_jour,73  , x_cours_dollar)
-Get_tout('DE0005810055','DEUTSCHE BORSE', x_date_jour,42  ,1)
-Get_tout('FR0000052292','HERMES',         x_date_jour,4   ,1)
-Get_tout('ES0144580Y14','IBERDROLA',      x_date_jour,712 ,1)
-Get_tout('IT0003856405','LEONARDO',       x_date_jour,142  , 1)
-Get_tout('US5949181045','MICROSOFT',      x_date_jour ,48  , x_cours_dollar)
-Get_tout('US64110L1061','NETFLIX',        x_date_jour ,10  , x_cours_dollar)
-Get_tout('US67066G1040','NVDIA',          x_date_jour,160 , x_cours_dollar)
-Get_tout('US6974351057','PALO ALTO',      x_date_jour,56  , x_cours_dollar)
-Get_tout('DE0007030009','RHEINMETALL',    x_date_jour,5   ,1)
-Get_tout('US79466L3024','SALESFORCE',     x_date_jour,46  , x_cours_dollar)
-Get_tout('FR0000121329','THALES',         x_date_jour,24  ,1)
-Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111 ,1)
-Get_tout('US92826C8394','VISA',           x_date_jour,40  , x_cours_dollar)
-Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
-Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
-Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
-
-#DEFINIR LES TITRES DES COLONNES
-columns = ["Date", "Valeur", "Montant", "Progression"]
-
-#CREER LE TABLEAU AVEC LIGNES ET COLONNES CHARGEES PRECEDEMMENT
-df = pd.DataFrame(liste_donnees, columns=columns)
-
-#A SUPPRIMER
-df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
-#df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
-
-#TRIER LE TABLEAU SUR LA PROGRESSION
-df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
-
-#CALCULER LES TOTAUX
-total_prix = df["Montant"].sum()
-total_prog = df["Progression"].sum()
-
-#AFFICHER LES TOTAUX
-if total_prog > 0:
-
-    st.markdown(
-        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'>"
-        f"<strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp;"
-        f"<strong>Gains :</strong> {format_euro(total_prog)}"
-        f"</p>"
-        f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}"
-        f"</p>",
-        unsafe_allow_html=True    )
-
-else:
-    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour +"-" + t_heure_actuelle)
-
-#CREATION DU TABLEAU HTML
-def df_to_html(df):
-
-    #FORMATAGE GENERAL DU TABLEAU
-    html = "<table style='width:100%; border-collapse: collapse;'>"
-
-    #ECRITURE DES ENTETES
-    html += "<thead><tr>"
-    for col in df.columns:
-        html += f"<th style='border: 1px solid #ccc; padding: 4px; background-color: #f0f0f0; font-weight: bold;'>{col}</th>"
-    html += "</tr></thead><tbody>"
-
-    #ECRITURE DES LIGNES
-    for _, row in df.iterrows():
-
-        html += "<tr>"
-
+    # Affichage tableau
+    def df_to_html(df):
+        html = "<table style='width:100%; border-collapse: collapse;'>"
+        html += "<thead><tr>"
         for col in df.columns:
+            html += f"<th style='border: 1px solid #ccc; padding: 4px; background-color: #f0f0f0; font-weight: bold;'>{col}</th>"
+        html += "</tr></thead><tbody>"
+        for _, row in df.iterrows():
+            html += "<tr>"
+            for col in df.columns:
+                val = row[col]
+                style = "font-weight: bold;"
+                if col in ["Montant", "Progression"]: style += " text-align: right;"
+                if col == "Montant":  val = format_euro(val)
+                if col == "Progression":
+                    style += "color: green;" if val > 0 else "color: red;"
+                    val = f"{val:,.2f} €"
+                html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
+            html += "</tr>"
+        html += "</tbody></table>"
+        return html
 
-            val = row[col]
-            style = "font-weight: bold;"
+    st.markdown(df_to_html(df_sorted), unsafe_allow_html=True)
 
-            #ALIGNER LES VALEURS NUMERIQUES A DROITE
-            if col in ["Montant", "Progression"]: style += " text-align: right;"
-
-            # FORMATTER LE MONTANT
-            if col == "Montant":  val = format_euro(val)
-
-            # FORMATTER LA PROGRESSION (EN EUROS)
-            if col == "Progression": style += "color: green;" if val > 0 else "color: red;"
-            if col == "Progression":  val = f"{val:,.2f} €"
-
-            #???
-            html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
-
-        # ???
-        html += "</tr>"
-
-#   FIN DE LA FOCTION HTML
-    html += "</tbody></table>"
-    return html
-
-# Affichage HTML
-st.markdown(df_to_html(df_sorted), unsafe_allow_html=True)
+# ⏬ Appel de la fonction principale
+afficher_tableau()
