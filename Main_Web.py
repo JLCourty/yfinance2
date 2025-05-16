@@ -5,7 +5,7 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-x_date_jour="2025-05-15"
+x_date_jour="2025-05-16"
 
 #DEFINIR UN BEAU TITRE
 #st.set_page_config(layout="wide")
@@ -78,11 +78,7 @@ Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111 ,1)
 Get_tout('US92826C8394','VISA',           x_date_jour,40  , x_cours_dollar)
 Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
-Get_tout('LU1829221024','ET--F NASDAQ',     x_date_jour,130 ,1)
-
-
-#import pandas as pd
-#import streamlit as st
+Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
 # Exemple de données
 columns = ["Date", "Valeur", "Prix actuel", "Progression"]
@@ -100,7 +96,10 @@ total_prog = df["Progression"].sum()
 if total_prog > 0:
     st.markdown("# Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog))
 else:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog))
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+x_date_jour)
+
+
+
 
 # Création du tableau HTML avec style personnalisé
 def df_to_html(df):
