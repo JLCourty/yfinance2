@@ -89,7 +89,7 @@ Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
 #DEFINIR LES TITRES DES COLONNES
-columns = ["Date", "Valeur", "Prix actuel", "Progression"]
+columns = ["Date", "Valeur", "Montant", "Progression"]
 
 #CREE LE TABLEAU AVEC LIGNES ET COLONNES CHARGEES PRECEDEMMENT
 df = pd.DataFrame(liste_donnees, columns=columns)
@@ -102,7 +102,7 @@ df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(i
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
 #CALCULER LES TOTAUX
-total_prix = df["Prix actuel"].sum()
+total_prix = df["Montant"].sum()
 total_prog = df["Progression"].sum()
 
 #AFFICHER LES TOTAUX
@@ -133,13 +133,13 @@ def df_to_html(df):
             style = "font-weight: bold;"
 
             #ALIGNER LES VALEURS NUMERIQUES A DROITE
-            if col in ["Prix actuel", "Progression"]: style += " text-align: right;"
+            if col in ["Montant", "Progression"]: style += " text-align: right;"
 
             #AFFICHER EN COULEUR CONDITIONNELLE
             if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
 
             #DEUX LIGNES A TESTER
-            #df["Prix actuel"] = df["Prix actuel"].apply(format_euro)
+            #df["Montant"] = df["Montant"].apply(format_euro)
             #html = df.to_html(escape=False, index=False)
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
