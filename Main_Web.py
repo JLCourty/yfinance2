@@ -105,6 +105,7 @@ total_prog = df["Progression"].sum()
 #AFFICHER LES TOTAUX
 if total_prog > 0:
     st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-" + t_heure_actuelle)
+    st.markdown("### Le "+x_date_jour + " à " + t_heure_actuelle)
 else:
     st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour +"-" + t_heure_actuelle)
 
