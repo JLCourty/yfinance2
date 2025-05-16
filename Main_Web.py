@@ -11,6 +11,11 @@ liste_donnees = []
 date_jour = pd.Timestamp.today()
 x_date_jour = date_jour.strftime("%d/%m/%Y")
 
+#HEURE ACTUELLE
+t_heure_actuelle = pd.Timestamp.now().strftime('%H:%M')
+
+
+
 #CREER LES TICKERS DES COURS DU DOLLAR  PLNTAGE MARDI
 usd_eur_data = yf.Ticker("EURUSD=X")
 x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1],4)
@@ -101,9 +106,9 @@ total_prog = df["Progression"].sum()
 
 #AFFICHER LES TOTAUX
 if total_prog > 0:
-    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
+    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-" + t_heure_actuelle)
 else:
-    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour +"-" )
+    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour +"-" + t_heure_actuelle)
 
 #CREATION DU TABLEAU HTML
 def df_to_html(df):
