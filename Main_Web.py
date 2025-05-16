@@ -5,7 +5,10 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-x_date_jour="2025-05-16"
+#x_date_jour="2025-05-16"
+#x_date_jour   = str(datetime.now())[00:10]
+x_date_jour = pd.Timestamp.today()
+#print(date_du_jour)
 
 #DEFINIR UN BEAU TITRE
 #st.set_page_config(layout="wide")
@@ -94,9 +97,9 @@ total_prog = df["Progression"].sum()
 
 # Affichage total
 if total_prog > 0:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog))
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
 else:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+x_date_jour)
+    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
 
 
 
