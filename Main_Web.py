@@ -3,8 +3,10 @@ import streamlit as st
 import pandas as pd
 
 
+
 #DEFINIR UNE LISTE
 liste_donnees = []
+
 
 # Date du jour
 date_jour = pd.Timestamp.today()
@@ -128,7 +130,7 @@ def df_to_html(df):
             if col in ["Montant", "Progression"]: style += " text-align: right;"
 
             #AFFICHER EN COULEUR CONDITIONNELLE
-            #if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
+            if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
 
             # FORMATTER LE MONTANT
             #if col == "Montant":  val = format_euro(val)
