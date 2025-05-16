@@ -10,12 +10,6 @@ liste_donnees = []
 date_jour = pd.Timestamp.today()
 x_date_jour = date_jour.strftime("%d/%m/%Y")
 
-
-
-#DEFINIR UN BEAU TITRE
-#st.set_page_config(layout="wide")
-#st.title("📈 Mon Application Boursière 554 000€")
-
 #CREER LES TICKERS DES COURS DU DOLLAR  PLNTAGE MARDI
 usd_eur_data = yf.Ticker("EURUSD=X")
 x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1],4)
@@ -99,6 +93,12 @@ df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=T
 #CALCULER LES TOTAUX
 total_prix = df["Montant"].sum()
 total_prog = df["Progression"].sum()
+
+
+st.markdown(
+    f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 18px;'><strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp; <strong>Gains :</strong> {format_euro(total_prog)}</p>",
+    unsafe_allow_html=True
+)
 
 #AFFICHER LES TOTAUX
 if total_prog > 0:
