@@ -63,7 +63,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             Progression = 0
 
         total_prix = t_prix * x_qte / x_currency
-        prix_format = formet_euro(total_prix)
+        prix_format = format_euro(total_prix)
 
         #AJOUTER UNE LIGNE A LA LISTE
         liste_donnees.append([  x_date_jour , x_nom_valeur, prix_format , round(Progression)  ])   #round(total_prix)
