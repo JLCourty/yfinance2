@@ -6,23 +6,9 @@ import pandas as pd
 #DEFINIR UNE LISTE
 liste_donnees = []
 
-
-#x_date_jour="2025-05-16"
-#x_date_jour   = str(datetime.now())[00:10]
-#x_date_jour = pd.Timestamp.today()
-#print(date_du_jour)
-
 # Date du jour
 date_jour = pd.Timestamp.today()
-
-# Format texte
 x_date_jour = date_jour.strftime("%d/%m/%Y")
-
-
-
-#DEFINIR UN BEAU TITRE
-#st.set_page_config(layout="wide")
-#st.title("📈 Mon Application Boursière 554 000€")
 
 #CREER LES TICKERS DES COURS DU DOLLAR  PLNTAGE MARDI
 usd_eur_data = yf.Ticker("EURUSD=X")
@@ -46,13 +32,10 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-05-11")['Close']
 
-        #EXTRAIRE LES DONNEES
-        t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
-        t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
-
-        t_date_jour = data.index[-1]  # Dernière date disponible dans les données
-
-        t_date_jour = t_date_jour.strftime("%Y-%m-%d")
+        #EXTRAIRE LES DONNEES DU TICKER
+        t_date_jour = data.index[-1]
+        t_prix = data.iloc[-1]
+        t_ouverture = data.iloc[-2]
 
         if x_date_jour == t_date_jour:
             x_date_jour = "OK"
@@ -64,7 +47,8 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         total_prix = t_prix * x_qte / x_currency
 
         #AJOUTER UNE LIGNE A LA LISTE
-        liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix), round(Progression)  ])
+        liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix) , round(Progression)  ])   #
+
     else:
 
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
@@ -93,56 +77,69 @@ Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
-# Exemple de données
-columns = ["Date", "Valeur", "Prix actuel", "Progression"]
+#DEFINIR LES TITRES DES COLONNES
+columns = ["Date", "Valeur", "Montant", "Progression"]
+
+#CREE LE TABLEAU AVEC LIGNES ET COLONNES CHARGEES PRECEDEMMENT
 df = pd.DataFrame(liste_donnees, columns=columns)
+
+#A SUPPRIMER
+df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 
-# Trier
+#TRIER LE TABLEAU SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
-# Totaux
-total_prix = df["Prix actuel"].sum()
+#CALCULER LES TOTAUX
+total_prix = df["Montant"].sum()
 total_prog = df["Progression"].sum()
 
-# Affichage total
-if total_prog > 0:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
-else:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
 
+st.markdown(
+    f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'><strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp; <strong>Gains :</strong> {format_euro(total_prog)}</p>",
+    unsafe_allow_html=True
+)
 
+#AFFICHER LES TOTAUX
+#if total_prog > 0:
+#    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog))   #+"   -"+x_date_jour+"-"
+#else:
+#    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour)
 
-
-# Création du tableau HTML avec style personnalisé
+#CREATION DU TABLEAU HTML
 def df_to_html(df):
 
-
+    #FORMATAGE GENERAL DU TABLEAU
     html = "<table style='width:100%; border-collapse: collapse;'>"
 
-    # En-têtes
+    #ECRITURE DES ENTETES
     html += "<thead><tr>"
     for col in df.columns:
         html += f"<th style='border: 1px solid #ccc; padding: 4px; background-color: #f0f0f0; font-weight: bold;'>{col}</th>"
     html += "</tr></thead><tbody>"
 
-    # Lignes
+    #ECRITURE DES LIGNES
     for _, row in df.iterrows():
+
         html += "<tr>"
 
         for col in df.columns:
             val = row[col]
             style = "font-weight: bold;"
 
+            #ALIGNER LES VALEURS NUMERIQUES A DROITE
+            if col in ["Montant", "Progression"]: style += " text-align: right;"
 
-            # Aligner à droite si colonne numérique
-            if col in ["Prix actuel", "Progression"]:
-                style += " text-align: right;"
-            #****************************************
+            #AFFICHER EN COULEUR CONDITIONNELLE
+            if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
 
-            if col == "Progression": style += "color: green;" if val > 0 else "color: red;"
-            #if col == "Valeur": style += "color: green;" if val > 0 else "color: red;"
+            # FORMATTER LE MONTANT
+            if col == "Montant":
+                val = format_euro(val)
 
+            # FORMATTER LA PROGRESSION
+            #if col == "Progression":
+            #    val = f"{val:,.2f} %"
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
