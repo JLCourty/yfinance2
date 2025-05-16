@@ -7,7 +7,6 @@ import pandas as pd
 #DEFINIR UNE LISTE
 liste_donnees = []
 
-
 # Date du jour
 date_jour = pd.Timestamp.today()
 x_date_jour = date_jour.strftime("%d/%m/%Y")
@@ -82,7 +81,7 @@ Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 #DEFINIR LES TITRES DES COLONNES
 columns = ["Date", "Valeur", "Montant", "Progression"]
 
-#CREE LE TABLEAU AVEC LIGNES ET COLONNES CHARGEES PRECEDEMMENT
+#CREER LE TABLEAU AVEC LIGNES ET COLONNES CHARGEES PRECEDEMMENT
 df = pd.DataFrame(liste_donnees, columns=columns)
 
 #A SUPPRIMER
