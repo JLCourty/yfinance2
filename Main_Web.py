@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 
 
-# Liste globale pour stocker toutes les lignes
+#DEFINIR UNE LISTE
 liste_donnees = []
 
 
@@ -40,15 +40,17 @@ def format_pc(t_P1,t_P2):
 
 #MA FONCTION GET TOUT
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
+
     if x_code_valeur:
 
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-05-11")['Close']
+
+        #EXTRAIRE LES DONNEES
         t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
         t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
 
-        # Trouver la date la plus récente dans les données
-        t_date_jour = data.index[-1]  # Dernière date disponible
+        t_date_jour = data.index[-1]  # Dernière date disponible dans les données
 
         t_date_jour = t_date_jour.strftime("%Y-%m-%d")
 
@@ -59,14 +61,12 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             x_date_jour = "Hier"
             Progression = 0
 
-        #latest_date_str = latest_date.strftime("%Y-%m-%d")
-        #latest_date_fr = latest_date.strftime("%d-%m-%Y")
-
         total_prix = t_prix * x_qte / x_currency
 
-        # Ajouter une ligne à la liste globale
+        #AJOUTER UNE LIGNE A LA LISTE
         liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix), round(Progression)  ])
     else:
+
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
 #LANCER LA FONCTION UNIQUE
