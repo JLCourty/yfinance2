@@ -84,8 +84,8 @@ columns = ["Date", "Valeur", "Montant", "Progression"]
 df = pd.DataFrame(liste_donnees, columns=columns)
 
 #A SUPPRIMER
-df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
-df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
+#df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
+#df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 
 #TRIER LE TABLEAU SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
