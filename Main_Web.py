@@ -136,10 +136,13 @@ def df_to_html(df):
             # FORMATTER LE MONTANT
             if col == "Montant":  val = format_euro(val)
 
-            # FORMATTER LA PROGRESSION
-            if col == "Progression":  val = f"{val:,.2f} %"
+            # FORMATTER LA PROGRESSION (EN EUROS)
+            if col == "Progression":  val = f"{val:,.2f} €"
 
+            #???
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
+
+        # ???
         html += "</tr>"
 
 #   FIN DE LA FOCTION HTML
