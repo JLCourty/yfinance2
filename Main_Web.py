@@ -66,6 +66,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
         #AJOUTER UNE LIGNE A LA LISTE
         liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix), round(Progression)  ])
+
     else:
 
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
@@ -94,55 +95,55 @@ Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
-# Exemple de données
+#DEFINIT LES TITRES DES COLONNES
 columns = ["Date", "Valeur", "Prix actuel", "Progression"]
+
+
 df = pd.DataFrame(liste_donnees, columns=columns)
+
+
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 
-# Trier
+#TRIER LE TABLEAU SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
-# Totaux
+#CALCULER LES TOTAUX
 total_prix = df["Prix actuel"].sum()
 total_prog = df["Progression"].sum()
 
-# Affichage total
+#AFFICHER LES TOTAUX
 if total_prog > 0:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
+    st.markdown("## Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
 else:
-    st.markdown("# Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
+    st.markdown("## Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
 
-
-
-
-# Création du tableau HTML avec style personnalisé
+#CREATION DU TABLEAU HTML
 def df_to_html(df):
 
-
+    #FORMATAGE GENERAL DU TABLEAU
     html = "<table style='width:100%; border-collapse: collapse;'>"
 
-    # En-têtes
+    #ECRITURE DES ENTETES
     html += "<thead><tr>"
     for col in df.columns:
         html += f"<th style='border: 1px solid #ccc; padding: 4px; background-color: #f0f0f0; font-weight: bold;'>{col}</th>"
     html += "</tr></thead><tbody>"
 
-    # Lignes
+    #ECRITURE DES LIGNES
     for _, row in df.iterrows():
+
         html += "<tr>"
 
         for col in df.columns:
             val = row[col]
             style = "font-weight: bold;"
 
+            #ALIGNER LES VALEURS NUMERIQUES A DROITE
+            if col in ["Prix actuel", "Progression"]: style += " text-align: right;"
 
-            # Aligner à droite si colonne numérique
-            if col in ["Prix actuel", "Progression"]:
-                style += " text-align: right;"
-            #****************************************
+            #AFFICHER EN COULEUR CONDITIONNELLE
+            if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
 
-            if col == "Progression": style += "color: green;" if val > 0 else "color: red;"
-            #if col == "Valeur": style += "color: green;" if val > 0 else "color: red;"
 
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
