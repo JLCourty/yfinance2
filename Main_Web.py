@@ -43,10 +43,6 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_prix = data.iloc[-1]
         t_ouverture = data.iloc[-2]
 
-
-
-        #t_date_jour = t_date_jour.strftime("%Y-%m-%d")
-
         if x_date_jour == t_date_jour:
             x_date_jour = "OK"
             Progression = (t_prix - t_ouverture) * x_qte
@@ -55,7 +51,6 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             Progression = 0
 
         total_prix = t_prix * x_qte / x_currency
-        #prix_format = format_euro(total_prix)
 
         #AJOUTER UNE LIGNE A LA LISTE
         liste_donnees.append([  x_date_jour , x_nom_valeur, round(total_prix) , round(Progression)  ])   #
@@ -139,7 +134,7 @@ def df_to_html(df):
             if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
 
             #DEUX LIGNES A TESTER
-            df["Montant"] = df["Montant"].apply(format_euro)
+            #df["Montant"] = df["Montant"].apply(format_euro)
             #html = df.to_html(escape=False, index=False)
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
