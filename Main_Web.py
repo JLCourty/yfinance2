@@ -95,14 +95,14 @@ Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543,1)
 Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305 ,1)
 Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130 ,1)
 
-#DEFINIT LES TITRES DES COLONNES
+#DEFINIR LES TITRES DES COLONNES
 columns = ["Date", "Valeur", "Prix actuel", "Progression"]
 
-
+#CREE LE TABLEAU AVEC LIGNES ET COLONNES CHARGEES PRECEDEMMENT
 df = pd.DataFrame(liste_donnees, columns=columns)
 
 
-df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
+#df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
 
 #TRIER LE TABLEAU SUR LA PROGRESSION
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
@@ -113,7 +113,7 @@ total_prog = df["Progression"].sum()
 
 #AFFICHER LES TOTAUX
 if total_prog > 0:
-    st.markdown("## Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
+    st.markdown("## Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog))   #+"   -"+x_date_jour+"-"
 else:
     st.markdown("## Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
 
