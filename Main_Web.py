@@ -12,9 +12,7 @@ date_jour = pd.Timestamp.today()
 x_date_jour = date_jour.strftime("%d/%m/%Y")
 
 #HEURE ACTUELLE
-t_heure_actuelle = pd.Timestamp.now().strftime('%H:%M')
-
-
+t_heure_actuelle = pd.Timestamp.now(tz='Europe/Paris').strftime('%H:%M')
 
 #CREER LES TICKERS DES COURS DU DOLLAR  PLNTAGE MARDI
 usd_eur_data = yf.Ticker("EURUSD=X")
