@@ -75,16 +75,16 @@ def afficher_tableau():
     df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(int)
     df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
-    # Totaux
+    #CALCUL DES TOTAUX
     total_prix = df["Montant"].sum()
     total_prog = df["Progression"].sum()
 
-    # Affichage totaux
+    #AFFICHAGE DES TOTAUX
     if total_prog > 0:
         st.markdown(
-            f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'>"
+            f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 24px;'>"
             f"<strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp;"
-            f"<strong>Gains :</strong> {format_euro(total_prog)}"
+            f"<strong>Gains : +</strong> {format_euro(total_prog)}"
             f"</p>"
             f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
             f"Le {x_date_jour} à {t_heure_actuelle}"
