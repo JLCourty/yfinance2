@@ -35,6 +35,9 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
         #EXTRAIRE LES DONNEES DU TICKER
         t_date_jour = data.index[-1]
+        t_date_jour = t_date_jour.strftime("%d/%m/%Y")
+
+
         t_prix = data.iloc[-1]
         t_ouverture = data.iloc[-2]
 
