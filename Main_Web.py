@@ -139,7 +139,7 @@ def df_to_html(df):
 
             # FORMATTER LA PROGRESSION
             if col == "Progression":
-                val = str(val) + " €"
+                val = f"{val:,.2f}" + " %"
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
