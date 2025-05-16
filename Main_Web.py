@@ -100,11 +100,11 @@ df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=T
 total_prix = df["Montant"].sum()
 total_prog = df["Progression"].sum()
 
-#st.markdown(     f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'><strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp; <strong>Gains :</strong> {format_euro(total_prog)}</p>",   unsafe_allow_html=True )
+st.markdown(     f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'><strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp; <strong>Gains :</strong> {format_euro(total_prog)}</p>",   unsafe_allow_html=True )
 
 #AFFICHER LES TOTAUX
 if total_prog > 0:
-    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-" + t_heure_actuelle)
+    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog))
     st.markdown("### Le "+x_date_jour + " à " + t_heure_actuelle)
 else:
     st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour +"-" + t_heure_actuelle)
