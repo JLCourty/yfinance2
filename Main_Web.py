@@ -42,7 +42,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             x_date_jour = "OK"
             Progression = (t_prix - t_ouverture) * x_qte
         else:
-            x_date_jour = "Hier"
+            x_date_jour = t_date_jour+"Hier"
             Progression = 0
 
         total_prix = t_prix * x_qte / x_currency
