@@ -133,13 +133,13 @@ def df_to_html(df):
             #AFFICHER EN COULEUR CONDITIONNELLE
             if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
 
-            # FORMATTER LA VALEUR POUR LA COLONNE "Montant"
+            # FORMATTER LE MONTANT
             if col == "Montant":
-                val = format_euro(val)  # <--- transformation ici
+                val = format_euro(val)
 
-            #DEUX LIGNES A TESTER
-            #df["Montant"] = df["Montant"].apply(format_euro)
-            #html = df.to_html(escape=False, index=False)
+            # FORMATTER LA PROGRESSION
+            if col == "Progression":
+                val = format_pc(val)
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
