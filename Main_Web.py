@@ -95,16 +95,13 @@ total_prix = df["Montant"].sum()
 total_prog = df["Progression"].sum()
 
 
-st.markdown(
-    f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'><strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp; <strong>Gains :</strong> {format_euro(total_prog)}</p>",
-    unsafe_allow_html=True
-)
+#st.markdown(     f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'><strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp; <strong>Gains :</strong> {format_euro(total_prog)}</p>",   unsafe_allow_html=True )
 
 #AFFICHER LES TOTAUX
-#if total_prog > 0:
-#    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog))   #+"   -"+x_date_jour+"-"
-#else:
-#    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour)
+if total_prog > 0:
+    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Gains : " + format_euro(total_prog)+"   -"+x_date_jour+"-")
+else:
+    st.markdown("### Total : " + format_euro(total_prix + 131619) + " Pertes : " + format_euro(total_prog)+"   -"+x_date_jour +"-" )
 
 #CREATION DU TABLEAU HTML
 def df_to_html(df):
