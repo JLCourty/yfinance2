@@ -139,8 +139,8 @@ def df_to_html(df):
             if col == "Progression": style += "color: green;" if val >= 0 else "color: red;"
 
             #DEUX LIGNES A TESTER
-            df["Prix actuel"] = df["Prix actuel"].apply(format_euro)
-            html = df.to_html(escape=False, index=False)
+            #df["Prix actuel"] = df["Prix actuel"].apply(format_euro)
+            #html = df.to_html(escape=False, index=False)
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
