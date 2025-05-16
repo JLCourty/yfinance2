@@ -41,7 +41,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_ouverture = data.iloc[-2]
 
         if x_date_jour == t_date_jour:
-            x_date_jour = "OK"
+            x_date_jour = ""
             Progression = (t_prix - t_ouverture) * x_qte
         else:
             x_date_jour = "Hier"
@@ -97,7 +97,6 @@ df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=T
 total_prix = df["Montant"].sum()
 total_prog = df["Progression"].sum()
 
-
 #st.markdown(     f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 32px;'><strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp; <strong>Gains :</strong> {format_euro(total_prog)}</p>",   unsafe_allow_html=True )
 
 #AFFICHER LES TOTAUX
@@ -124,6 +123,7 @@ def df_to_html(df):
         html += "<tr>"
 
         for col in df.columns:
+
             val = row[col]
             style = "font-weight: bold;"
 
@@ -137,7 +137,7 @@ def df_to_html(df):
             if col == "Montant":  val = format_euro(val)
 
             # FORMATTER LA PROGRESSION
-            #if col == "Progression":  val = f"{val:,.2f} %"
+            if col == "Progression":  val = f"{val:,.2f} %"
 
             html += f"<td style='border: 1px solid #ccc; padding: 4px; {style}'>{val}</td>"
         html += "</tr>"
