@@ -1,4 +1,7 @@
 streamlit
+streamlit-autorefresh
+yfinance
+pandas
 yfinance
 pandas
 streamlit-aggrid
