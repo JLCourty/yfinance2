@@ -5,8 +5,11 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
-x_date_jour="2025-05-15"
+#x_date_jour="2025-05-15"
 
+# Date du jour
+date_jour = pd.Timestamp.today()
+x_date_jour = date_jour.strftime("%d/%m/%Y")
 #DEFINIR UN BEAU TITRE
 #st.set_page_config(layout="wide")
 #st.title("📈 Mon Application Boursière 554 000€")
