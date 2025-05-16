@@ -46,13 +46,14 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-05-11")['Close']
 
-        #EXTRAIRE LES DONNEES
-        t_prix = data.iloc[-1] #/ x_currency  # AVANT IL Y AVAIT 3
-        t_ouverture = data.iloc[-2] #/ x_currency  #t_prix #info.get("open")
+        #EXTRAIRE LES DONNEES DU TICKER
+        t_date_jour = data.index[-1]
+        t_prix = data.iloc[-1]
+        t_ouverture = data.iloc[-2]
 
-        t_date_jour = data.index[-1]  # Dernière date disponible dans les données
 
-        t_date_jour = t_date_jour.strftime("%Y-%m-%d")
+
+        #t_date_jour = t_date_jour.strftime("%Y-%m-%d")
 
         if x_date_jour == t_date_jour:
             x_date_jour = "OK"
