@@ -5,10 +5,20 @@ import pandas as pd
 
 # Liste globale pour stocker toutes les lignes
 liste_donnees = []
+
+
 #x_date_jour="2025-05-16"
 #x_date_jour   = str(datetime.now())[00:10]
-x_date_jour = pd.Timestamp.today()
+#x_date_jour = pd.Timestamp.today()
 #print(date_du_jour)
+
+# Date du jour
+date_jour = pd.Timestamp.today()
+
+# Format texte
+x_date_jour = date_jour.strftime("%d/%m/%Y")
+
+
 
 #DEFINIR UN BEAU TITRE
 #st.set_page_config(layout="wide")
