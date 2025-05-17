@@ -3,6 +3,10 @@ from streamlit_autorefresh import st_autorefresh
 import pandas as pd
 import yfinance as yf
 
+
+t_reserves = 132846
+
+
 # Rafraîchir automatiquement toutes les 60 secondes
 st_autorefresh(interval=60000, key="refresh")
 
@@ -47,28 +51,28 @@ def afficher_tableau():
             st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
     # Appels aux tickers
-    Get_tout('FR0000120404','ACCOR', x_date_jour ,214 ,1)
-    Get_tout('NL0000235190','AIRBUS', x_date_jour ,95  ,1)
-    Get_tout('GOOGL','ALPHABET', x_date_jour,79  , x_cours_dollar)
-    Get_tout('US0231351067','AMAZON', x_date_jour,52  , x_cours_dollar)
-    Get_tout('NL0010273215','ASML', x_date_jour ,18  ,1)
-    Get_tout('US11135F1012','BROADCOM', x_date_jour,73  , x_cours_dollar)
-    Get_tout('DE0005810055','DEUTSCHE BORSE', x_date_jour,42  ,1)
-    Get_tout('FR0000052292','HERMES', x_date_jour,4   ,1)
-    Get_tout('ES0144580Y14','IBERDROLA', x_date_jour,712 ,1)
-    Get_tout('IT0003856405','LEONARDO', x_date_jour,142  , 1)
-    Get_tout('US5949181045','MICROSOFT', x_date_jour ,48  , x_cours_dollar)
-    Get_tout('US64110L1061','NETFLIX', x_date_jour ,10  , x_cours_dollar)
-    Get_tout('US67066G1040','NVDIA', x_date_jour,160 , x_cours_dollar)
-    Get_tout('US6974351057','PALO ALTO', x_date_jour,56  , x_cours_dollar)
-    Get_tout('DE0007030009','RHEINMETALL', x_date_jour,5   ,1)
-    Get_tout('US79466L3024','SALESFORCE', x_date_jour,46  , x_cours_dollar)
-    Get_tout('FR0000121329','THALES', x_date_jour,24  ,1)
-    Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111 ,1)
-    Get_tout('US92826C8394','VISA', x_date_jour,40  , x_cours_dollar)
-    Get_tout('FR0007054358','ETF STOXX 50', x_date_jour,1543,1)
-    Get_tout('FR0010315770','ETF MSCI' , x_date_jour,305 ,1)
-    Get_tout('LU1829221024','ETF NASDAQ', x_date_jour,130 ,1)
+    Get_tout('FR0000120404','ACCOR',          x_date_jour ,214 ,1)
+    Get_tout('NL0000235190','AIRBUS',         x_date_jour ,95  ,1)
+    Get_tout('GOOGL',       'ALPHABET',       x_date_jour,79   , x_cours_dollar)
+    Get_tout('US0231351067','AMAZON',         x_date_jour,52   , x_cours_dollar)
+    Get_tout('NL0010273215','ASML',           x_date_jour ,18  ,1)
+    Get_tout('US11135F1012','BROADCOM',       x_date_jour,73   , x_cours_dollar)
+    Get_tout('DE0005810055','DEUTSCHE BORSE', x_date_jour,42   ,1)
+    Get_tout('FR0000052292','HERMES',         x_date_jour,4    ,1)
+    Get_tout('ES0144580Y14','IBERDROLA',      x_date_jour,712  ,1)
+    Get_tout('IT0003856405','LEONARDO',       x_date_jour,142  , 1)
+    Get_tout('US5949181045','MICROSOFT',      x_date_jour ,48  , x_cours_dollar)
+    Get_tout('US64110L1061','NETFLIX',        x_date_jour ,10  , x_cours_dollar)
+    Get_tout('US67066G1040','NVDIA',          x_date_jour,160  , x_cours_dollar)
+    Get_tout('US6974351057','PALO ALTO',      x_date_jour,56   , x_cours_dollar)
+    Get_tout('DE0007030009','RHEINMETALL',    x_date_jour,5    ,1)
+    Get_tout('US79466L3024','SALESFORCE',     x_date_jour,46   , x_cours_dollar)
+    Get_tout('FR0000121329','THALES',         x_date_jour,24   ,1)
+    Get_tout('FR0000120271','TOTAL ENERGIES', x_date_jour,111  ,1)
+    Get_tout('US92826C8394','VISA',           x_date_jour,40   , x_cours_dollar)
+    Get_tout('FR0007054358','ETF STOXX 50',   x_date_jour,1543 ,1)
+    Get_tout('FR0010315770','ETF MSCI' ,      x_date_jour,305  ,1)
+    Get_tout('LU1829221024','ETF NASDAQ',     x_date_jour,130  ,1)
 
     # Création DataFrame
     df = pd.DataFrame(liste_donnees, columns=["Date", "Valeur", "Montant", "Progression"])
@@ -83,7 +87,7 @@ def afficher_tableau():
     if total_prog > 0:
         st.markdown(
             f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 24px;'>"
-            f"<strong>Total :</strong> {format_euro(total_prix + 131619)} &nbsp;&nbsp;"
+            f"<strong>Total :</strong> {format_euro(total_prix + t_reserves)} &nbsp;&nbsp;"
             f"<strong>Gains : +</strong> {format_euro(total_prog)}"
             f"</p>"
             f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
@@ -91,7 +95,7 @@ def afficher_tableau():
             f"</p>",
             unsafe_allow_html=True)
     else:
-        st.markdown(f"### Total : {format_euro(total_prix + 131619)} - Pertes : {format_euro(total_prog)} - {x_date_jour} - {t_heure_actuelle}")
+        st.markdown(f"### Total : {format_euro(total_prix + t_reserves)} - Pertes : {format_euro(total_prog)} - {x_date_jour} - {t_heure_actuelle}")
 
     # Affichage tableau
     def df_to_html(df):
