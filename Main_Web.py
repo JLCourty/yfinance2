@@ -86,8 +86,8 @@ def afficher_tableau():
     if total_prog > 0:
         st.markdown(
             f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 24px;'>"
-            f"<strong>Total :</strong>          {format_euro(total_prix + t_reserves)} &nbsp;&nbsp;"
-            f"<strong> <span style='color: green;'> Gains : +{format_euro(total_prog)  }   </strong>       "
+            f"<strong>Total :          {format_euro(total_prix + t_reserves)} &nbsp;&nbsp;"
+            f" <span style='color: green;'> Gains : +{format_euro(total_prog)  }   </strong>       "
             f"</p>"
             f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
             f"Le {x_date_jour} à {t_heure_actuelle} " f"</p>",
