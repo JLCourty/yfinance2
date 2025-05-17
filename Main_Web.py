@@ -91,7 +91,7 @@ def afficher_tableau():
             f"<strong>Gains : +</strong> {format_euro(total_prog)}"
             f"</p>"
             f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
-            f"Le {x_date_jour} à {t_heure_actuelle}"
+            f"Le {x_date_jour} à {t_heure_actuelle} + str(t_reserves)"
             f"</p>",
             unsafe_allow_html=True)
     else:
