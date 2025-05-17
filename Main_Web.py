@@ -3,9 +3,8 @@ from streamlit_autorefresh import st_autorefresh
 import pandas as pd
 import yfinance as yf
 
-
+#DEFINIR LES RESERVES
 t_reserves = 132846
-
 
 # Rafraîchir automatiquement toutes les 60 secondes
 st_autorefresh(interval=60000, key="refresh")
@@ -43,7 +42,7 @@ def afficher_tableau():
                 progression = (t_prix - t_ouverture) * x_qte
             else:
                 label_date = "Hier"
-                progression = 0
+                progression = (t_prix - t_ouverture) * x_qte  #0
 
             total_prix = t_prix * x_qte / x_currency
             liste_donnees.append([label_date, x_nom_valeur, round(total_prix), round(progression)])
@@ -87,13 +86,20 @@ def afficher_tableau():
     if total_prog > 0:
         st.markdown(
             f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 24px;'>"
-            f"<strong>Total :</strong> {format_euro(total_prix + t_reserves)} &nbsp;&nbsp;"
-            f"<strong>Gains : +</strong> {format_euro(total_prog)}"
+            f"<strong>Total :</strong>          {format_euro(total_prix + t_reserves)} &nbsp;&nbsp;"
+            f"<strong> <span style='color: green;'> Gains : +{format_euro(total_prog)  }   </strong>       "
             f"</p>"
             f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
-            f"Le {x_date_jour} à {t_heure_actuelle} + str(t_reserves)"
+            f"Le {x_date_jour} à {t_heure_actuelle} "
             f"</p>",
             unsafe_allow_html=True)
+
+
+
+
+
+
+
     else:
         st.markdown(f"### Total : {format_euro(total_prix + t_reserves)} - Pertes : {format_euro(total_prog)} - {x_date_jour} - {t_heure_actuelle}")
 
