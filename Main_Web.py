@@ -90,18 +90,11 @@ def afficher_tableau():
             f"<strong> <span style='color: green;'> Gains : +{format_euro(total_prog)  }   </strong>       "
             f"</p>"
             f"<p style='margin-top: 10px; margin-bottom: 5px; font-size: 16px;'>"
-            f"Le {x_date_jour} à {t_heure_actuelle} "
-            f"</p>",
+            f"Le {x_date_jour} à {t_heure_actuelle} " f"</p>",
             unsafe_allow_html=True)
 
-
-
-
-
-
-
     else:
-        st.markdown(f"### Total : {format_euro(total_prix + t_reserves)} - Pertes : {format_euro(total_prog)} - {x_date_jour} - {t_heure_actuelle}")
+        st.markdown(f"### Total : {format_euro(total_prix + t_reserves)} - <span style='color: red;'>Pertes : {format_euro(total_prog)} - {x_date_jour} - {t_heure_actuelle}")
 
     # Affichage tableau
     def df_to_html(df):
