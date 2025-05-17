@@ -91,7 +91,7 @@ total_prog = df["Progression"].sum()
 # 🔸 Affichage des totaux
 if total_prog > 0:
     st.markdown(
-        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 24px;'>"
+        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 20px;'>"
         f"<strong>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;&nbsp;"
         f"<span style='color: green;'>Gains : +{format_euro(total_prog)}</span></strong>"
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
@@ -100,7 +100,7 @@ if total_prog > 0:
     )
 else:
     st.markdown(
-        f"<p style='font-size: 24px;'>Total : {format_euro(total_prix + t_reserves)} - "
+        f"<p style='font-size: 20px;'>Total : {format_euro(total_prix + t_reserves)} - "
         f"<span style='color: red;'>Pertes : {format_euro(total_prog)}</span> - "
         f"{x_date_jour} - {t_heure_actuelle}</p>",
         unsafe_allow_html=True    )
@@ -116,6 +116,8 @@ function(params) {
     return null;
 }
 """)
+
+#st.title("Encore Mon tableau")
 
 # 🔸 Configuration du tableau interactif
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
