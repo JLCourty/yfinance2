@@ -160,11 +160,10 @@ import matplotlib.pyplot as plt
 df_export = df_sorted.drop(columns=["Date"]).sort_values(by="Valeur")
 csv = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
 st.download_button(
-    label="📥 Télécharger le tableau (.csv)",
+    label="📥 Export Csv)",
     data=csv,
     file_name="portefeuille.csv",
-    mime="text/csv"
-)
+    mime="text/csv" )
 
 # Affichage ligne sélectionnée + graphe si sélection
 selected = grid_response["selected_rows"]
