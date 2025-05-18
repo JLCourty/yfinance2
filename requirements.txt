@@ -5,4 +5,4 @@ pandas
 yfinance
 pandas
 streamlit-aggrid
-matplotlib.pyplot
+matplotlib
