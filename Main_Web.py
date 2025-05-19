@@ -5,12 +5,10 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
-#import io
-#import pytz
 
 
 # 🔹 Réserves initiales
-t_reserves = 132846
+t_reserves = 50116 + 47800
 
 # 🔹 Fonctions utilitaires
 def format_euro(val):
@@ -45,7 +43,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         label_date = "" if x_date_jour == t_date_jour else "Hier"
 
         if not label_date != "Hier":
-            progression = 0
+            progression = (t_prix - t_ouverture) * x_qte
             variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
         else:
             progression = (t_prix - t_ouverture) * x_qte
@@ -57,8 +55,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             x_nom_valeur,
             round(total_prix),
             round(progression),
-            round(variation_pct, 2)
-        ])
+            round(variation_pct, 2) ])
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
@@ -68,8 +65,9 @@ valeurs = [
     ('NL0000235190', 'AIRBUS', 95, 1),
     ('GOOGL', 'ALPHABET', 79, x_cours_dollar),
     ('US0231351067', 'AMAZON', 52, x_cours_dollar),
-    ('NL0010273215', 'ASML', 18, 1),
+    ('NL0010273215', 'ASML', 21, 1),
     ('US11135F1012', 'BROADCOM', 73, x_cours_dollar),
+    ('FR0000121667', 'ESSILOR'        ,34 ,1)  ,
     ('DE0005810055', 'DEUTSCHE BORSE', 42, 1),
     ('FR0000052292', 'HERMES', 4, 1),
     ('ES0144580Y14', 'IBERDROLA', 712, 1),
@@ -78,28 +76,26 @@ valeurs = [
     ('US64110L1061', 'NETFLIX', 10, x_cours_dollar),
     ('US67066G1040', 'NVDIA', 160, x_cours_dollar),
     ('US6974351057', 'PALO ALTO', 56, x_cours_dollar),
-    ('DE0007030009', 'RHEINMETALL', 5, 1),
+    ('DE0007030009', 'RHEINMETALL', 10, 1),
     ('US79466L3024', 'SALESFORCE', 46, x_cours_dollar),
+    ('DE0007164600', 'SAP',34 ,1)  ,
     ('FR0000121329', 'THALES', 24, 1),
     ('FR0000120271', 'TOTAL ENERGIES', 111, 1),
-    ('US92826C8394', 'VISA', 40, x_cours_dollar),
+    ('US92826C8394', 'VISA',            40, x_cours_dollar),
     ('FR0007054358', 'ETF STOXX 50', 1543, 1),
     ('FR0010315770', 'ETF MSCI', 305, 1),
-    ('LU1829221024', 'ETF NASDAQ', 130, 1)
-]
+    ('LU1829221024', 'ETF NASDAQ', 130, 1) ]
 
 # 🔹 Chargement des données
 for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
 # 🔹 DataFrame final
-df = pd.DataFrame(
-    liste_donnees,
-    columns=["Date", "Valeur", "Montant", "Progression", "Variation (%)"]
-)
+df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Montant", "Progression", "Variation (%)"])
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(float)
 df["Montant"] = df["Montant"].astype(float)
 
+#TRI
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
 
 # 🔹 Totaux
@@ -114,15 +110,13 @@ if total_prog > 0:
         f"<span style='color: green;'>Gains : +{format_euro(total_prog)}</span></strong>"
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
         f"Le {x_date_jour} à {t_heure_actuelle}</p>",
-        unsafe_allow_html=True
-    )
+        unsafe_allow_html=True    )
 else:
     st.markdown(
         f"<p style='font-size: 20px;'>Total : {format_euro(total_prix + t_reserves)} - "
         f"<span style='color: red;'>Pertes : {format_euro(total_prog)}</span> - "
         f"{x_date_jour} - {t_heure_actuelle}</p>",
-        unsafe_allow_html=True
-    )
+        unsafe_allow_html=True    )
 
 # 🔹 Mise en forme conditionnelle JS
 cell_style_js = JsCode("""
