@@ -63,7 +63,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 valeurs = [
     ('FR0000120404', 'ACCOR', 214, 1),
     ('NL0000235190', 'AIRBUS', 95, 1),
-    ('GOOGL', 'ALPHABET', 79, x_cours_dollar),
+    ('GOOGL',        'ALPHABET', 79, x_cours_dollar),
     ('US0231351067', 'AMAZON', 52, x_cours_dollar),
     ('NL0010273215', 'ASML', 21, 1),
     ('US11135F1012', 'BROADCOM', 73, x_cours_dollar),
@@ -107,7 +107,7 @@ if total_prog > 0:
     st.markdown(
         f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 20px;'>"
         f"<strong>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;&nbsp; "
-        f"<span style='color: green;'>Gains : +{format_euro(total_prog)}</span></strong>"
+        f"<span style='color: green;'>📥 Gains : +{format_euro(total_prog)}</span></strong>"
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
         f"Le {x_date_jour} à {t_heure_actuelle}</p>",
         unsafe_allow_html=True    )
