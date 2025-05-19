@@ -5,7 +5,9 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
-import matplotlib.pyplot as plt
+#import io
+#import pytz
+
 
 # 🔹 Réserves initiales
 t_reserves = 132846
@@ -28,6 +30,7 @@ liste_donnees = []
 
 # 🔹 Fonction principale
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
+
     if x_code_valeur:
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-05-11")['Close']
@@ -40,8 +43,13 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_ouverture = data.iloc[-2]
 
         label_date = "" if x_date_jour == t_date_jour else "Hier"
-        progression = (t_prix - t_ouverture) * x_qte
-        variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
+
+        if not label_date != "Hier":
+            progression = 0
+            variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
+        else:
+            progression = (t_prix - t_ouverture) * x_qte
+            variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
 
         total_prix = t_prix * x_qte / x_currency
         liste_donnees.append([
@@ -131,8 +139,7 @@ function(params) {
 # 🔹 Configuration AgGrid
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
 gb.configure_selection("single", use_checkbox=False)
-gb.configure_column("Montant", type=["numericColumn"],
-                    valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Montant", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Progression", cellStyle=cell_style_js)
 gb.configure_column("Variation (%)", cellStyle=cell_style_js)
 grid_options = gb.build()
@@ -150,68 +157,20 @@ grid_response = AgGrid(
     update_mode='SELECTION_CHANGED',
     allow_unsafe_jscode=True,)
 
-#**********************************************
-
-import matplotlib.pyplot as plt
-
-import matplotlib.pyplot as plt
-
-# Bouton export CSV (toujours visible)
-df_export = df_sorted.drop(columns=["Date"]).sort_values(by="Valeur")
-csv = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
-st.download_button(
-    label="📥 Export Csv)",
-    data=csv,
-    file_name="portefeuille.csv",
-    mime="text/csv" )
-
-# Affichage ligne sélectionnée + graphe si sélection
+# 🔹 Affichage ligne sélectionnée
 selected = grid_response["selected_rows"]
 if isinstance(selected, list) and selected:
     ligne = selected[0]
     st.markdown("### ✅ Ligne sélectionnée")
     st.json(ligne)
 
-    nom_valeur = ligne["Valeur"]
-    st.write(f"Valeur sélectionnée : '{nom_valeur}'")
+# 🔹 Préparer le DataFrame pour export : trié par Valeur, sans la colonne Date
+df_export = df_sorted.drop(columns=["Date"]).sort_values(by="Valeur")
 
-    map_nom_ticker = {
-        'ACCOR': 'FR0000120404',
-        'AIRBUS': 'NL0000235190',
-        'ALPHABET': 'GOOGL',
-        'AMAZON': 'US0231351067',
-        'ASML': 'NL0010273215',
-        'BROADCOM': 'US11135F1012',
-        'DEUTSCHE BORSE': 'DE0005810055',
-        'HERMES': 'FR0000052292',
-        'IBERDROLA': 'ES0144580Y14',
-        'LEONARDO': 'IT0003856405',
-        'MICROSOFT': 'US5949181045',
-        'NETFLIX': 'US64110L1061',
-        'NVDIA': 'US67066G1040',
-        'PALO ALTO': 'US6974351057',
-        'RHEINMETALL': 'DE0007030009',
-        'SALESFORCE': 'US79466L3024',
-        'THALES': 'FR0000121329',
-        'TOTAL ENERGIES': 'FR0000120271',
-        'VISA': 'US92826C8394',
-        'ETF STOXX 50': 'FR0007054358',
-        'ETF MSCI': 'FR0010315770',
-        'ETF NASDAQ': 'LU1829221024',
-    }
-
-    x_ticker = map_nom_ticker.get(nom_valeur)
-    if not x_ticker:
-        st.warning("⚠️ Historique non disponible pour cette valeur.")
-    else:
-        data_hist = yf.Ticker(x_ticker).history(start=f"{datetime.now().year}-01-01")
-        st.write(f"Données historiques chargées : {len(data_hist)} lignes")
-        if not data_hist.empty:
-            fig, ax = plt.subplots()
-            data_hist["Close"].plot(ax=ax, linewidth=2)
-            ax.set_title(f"Historique YTD : {nom_valeur}")
-            ax.set_ylabel("Cours (€ ou $)")
-            ax.grid(True)
-            st.pyplot(fig)
-        else:
-            st.warning("⚠️ Aucune donnée historique disponible.")
+# 📤 Téléchargement CSV
+csv = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
+st.download_button(
+    label="📥 Télécharger le tableau (.csv)",
+    data=csv,
+    file_name="portefeuille.csv",
+    mime="text/csv")
