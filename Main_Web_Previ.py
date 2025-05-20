@@ -6,10 +6,8 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
-# 🔹 Réserves initiales
-t_reserves = 0#50116 + 47970
 
-# 🔹 Fonctions utilitaires
+#FONCTION FORMATAGE EN EUROS
 def format_euro(val):
     return f"{val:,.2f} €".replace(",", " ").replace(".", ",")
 
@@ -26,7 +24,7 @@ x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1], 4)
 liste_donnees = []
 
 # 🔹 Fonction principale
-def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
+def Get_tout(x_code_valeur,x_nom_valeur,Janvier,Janvier2,x_date_jour):
 
     if x_code_valeur:
         x_ticker = yf.Ticker(x_code_valeur)
@@ -36,85 +34,79 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             return
 
         t_date_jour = data.index[-1].strftime("%d/%m/%Y")
-        t_prix = data.iloc[-1]
-        t_ouverture = data.iloc[-2]
 
-        label_date = "" if x_date_jour == t_date_jour else "Hier"
+        #COURS OUVERTURE ET DE FERMETURE
+        t_close = data.iloc[-1]
+        t_open = data.iloc[-2]
+
+        label_date = "Aujourd'hui" if x_date_jour == t_date_jour else "Hier"
 
         if not label_date != "Hier":
-            progression = (t_prix - t_ouverture) * x_qte
-            variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
+            variation_pct = ((t_close - t_open) / t_open) * 100
         else:
-            progression = (t_prix - t_ouverture) * x_qte
-            variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
+            variation_pct = ((t_close - t_open) / t_open) * 100
 
-        total_prix = t_prix * x_qte / x_currency
+
+        Janvier_PC =   str(round(  (t_close-Janvier) / Janvier * 100   ,2))+"%"
+
+
+        #LISTE DES INFOS REELLEMENT AFFICHEES
         liste_donnees.append([
             label_date,
             x_nom_valeur,
-            round(total_prix),
-            round(progression),
+            format_euro(Janvier),
+            Janvier_PC,
+            format_euro(t_open),
+            format_euro(t_close),
             round(variation_pct, 2) ])
     else:
         st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
 
-# 🔹 Portefeuille (code, nom, quantité, devise)
+#CHAINE DES VALEURS
 valeurs = [
-    ('FR0000120404', 'ACCOR', 214, 1),
-    ('NL0000235190', 'AIRBUS', 95, 1),
-    ('GOOGL',        'ALPHABET', 79, x_cours_dollar),
-    ('US0231351067', 'AMAZON', 52, x_cours_dollar),
-    ('NL0010273215', 'ASML', 21, 1),
-    ('US11135F1012', 'BROADCOM', 73, x_cours_dollar),
-    ('FR0000121667', 'ESSILOR'        ,34 ,1)  ,
-    ('DE0005810055', 'DEUTSCHE BORSE', 42, 1),
-    ('FR0000052292', 'HERMES', 4, 1),
-    ('ES0144580Y14', 'IBERDROLA', 712, 1),
-    ('IT0003856405', 'LEONARDO', 142, 1),
-    ('US5949181045', 'MICROSOFT', 48, x_cours_dollar),
-    ('US64110L1061', 'NETFLIX', 10, x_cours_dollar),
-    ('US67066G1040', 'NVDIA', 160, x_cours_dollar),
-    ('US6974351057', 'PALO ALTO', 56, x_cours_dollar),
-    ('DE0007030009', 'RHEINMETALL', 10, 1),
-    ('US79466L3024', 'SALESFORCE', 46, x_cours_dollar),
-    ('DE0007164600', 'SAP',34 ,1)  ,
-    ('FR0000121329', 'THALES', 24, 1),
-    ('FR0000120271', 'TOTAL ENERGIES', 111, 1),
-    ('US92826C8394', 'VISA',            40, x_cours_dollar),
-    ('FR0007054358', 'ETF STOXX 50', 1543, 1),
-    ('FR0010315770', 'ETF MSCI', 305, 1),
-    ('LU1829221024', 'ETF NASDAQ', 130, 1) ]
+    ('FR0000131104', 'BNP'              ,  59.25, 222, 333 ),
+    ('FR0000130809', 'SOCIETE GENERALE' ,  27.08,1, 1),
+    ('FR0000133308', 'ORANGE'           ,   9.7,1,1),
+    ('US4370761029','HOME DEPOT'        , 388.46,1,1),
+    ('DE000RENK730','RENK ALLEMAND',  100,1, 1)       #NON ACQUISE QTE=0
 
-# 🔹 Chargement des données
-for code, nom, qte, devise in valeurs:
-    Get_tout(code, nom, x_date_jour, qte, devise)
 
-# 🔹 DataFrame final
-df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Montant", "Progression", "Variation (%)"])
-df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(float)
-df["Montant"] = df["Montant"].astype(float)
+
+
+]
+
+#Get_tout('TSLA'        ,'TESLA',          x_date_jour,350.01 ,248.00 ,360, 1 ,0 , x_cours_dollar)    #NON ACQUISE QTE=0
+#Get_tout('FR0014004L86','DASSAULT AV',    x_date_jour,350.01 ,317.00 ,400, 1 ,0 , 1)       #NON ACQUISE QTE=0Get_tout('FR0000062671','EXAIL TECHNOLOGIES',x_date_jour,350.01 ,50.00  ,60,  1 ,0 , 1)       #NON ACQUISE QTE=0
+
+#Get_tout('US8835561023','THERMO FISCHER', x_date_jour,502.54 ,378.00 ,55,  1 ,0 , x_cours_dollar)    #NON ACQUISE QTE=0
+#Get_tout('FR0000121014','LVMH',           x_date_jour,635.50 ,488    ,720, 1 ,0 , 1)       #NON ACQUISE QTE=0
+#Get_tout('DE0007236101','SIEMENS',        x_date_jour,238.01 ,255    ,300, 1 ,0 ,1)        #NON ACQUISE QTE=0
+#Get_tout('6758.T'      ,'SONY',           x_date_jour,238.01 ,255    ,300, 1 ,0 ,1)        #NON ACQUISE QTE=0
+#Get_tout('DE0006452007','NEMETSCHEK',     x_date_jour,03.60  ,116.70 ,55,  1 ,0 ,1)        #NON ACQUISE QTE=0
+#Get_tout('US8716071076','SYNOPSYS',       x_date_jour,472.47 ,405.00,55,  1 ,0 , x_cours_dollar)    #NON ACQUISE QTE=0
+#Get_tout('GB0002634046','BAE SYSTEMS',    x_date_jour,350.01 ,1742.00,400, 1 ,0 , 1)       #NON ACQUISE QTE=0
+#Get_tout('FR001400Q0V2','EXOSENS SA',     x_date_jour,350.01 ,36.00  ,42,  1 ,0 , 1)       #NON ACQUISE QTE=0
+#Get_tout('FR0000133308','ORANGE',         x_date_jour,350.01 ,36.00  ,42,  1 ,0 , 1)       #NON ACQUISE QTE=0
+#Get_tout('FR0000125486','VINCI',          x_date_jour,350.01 ,36.00  ,42,  1 ,0 , 1)       #NON ACQUISE QTE=0
+
+
+
+
+#LANCEMENT DE LA FONCTION SUR LA CHAINE DES VALEURS
+for code, nom, Janvier,Janvier2, devise in valeurs:
+    Get_tout(code, nom,  Janvier,Janvier2,x_date_jour)
+
+#TITRES DES COLONNES DU TABLEAU
+df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Janvier","Janvier2","Open", "Close", "Variation Jour"])
 
 #TRI
-df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
+df_sorted = df.sort_values(by="Variation Jour", ascending=False).reset_index(drop=True)
 
-# 🔹 Totaux
-total_prix = df["Montant"].sum()
-total_prog = df["Progression"].sum()
-
-# 🔹 Affichage des totaux
-if total_prog > 0:
-    st.markdown(
-        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 24px;'>"
-        f"<strong>📊 Prévisionnem : {format_euro(total_prix + t_reserves)} &nbsp;&nbsp; "
-        f"<span style='color: green;'>📥 Gains : +{format_euro(total_prog)}</span></strong>"
+st.markdown(
+        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
+        f"<strong>📊 Prévisionnel &nbsp;&nbsp; "
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
         f"Le {x_date_jour} à {t_heure_actuelle}</p>",
-        unsafe_allow_html=True    )
-else:
-    st.markdown(
-        f"<p style='font-size: 20px;'>Total : {format_euro(total_prix + t_reserves)} - "
-        f"<span style='color: red;'>Pertes : {format_euro(total_prog)}</span> - "
-        f"{x_date_jour} - {t_heure_actuelle}</p>",
         unsafe_allow_html=True    )
 
 # 🔹 Mise en forme conditionnelle JS
@@ -126,15 +118,18 @@ function(params) {
         return { color: 'red', fontWeight: 'bold' };
     }
     return null;
-}
-""")
+} """)
 
-# 🔹 Configuration AgGrid
+#CONFIGURATION DU TABLEAU
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
-gb.configure_selection("single", use_checkbox=False)
-gb.configure_column("Montant", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Progression", cellStyle=cell_style_js)
-gb.configure_column("Variation (%)", cellStyle=cell_style_js)
+
+
+#gb.configure_selection("single", use_checkbox=False)
+
+#UTILE ????????
+gb.configure_column("Open", cellStyle=cell_style_js)
+
+#CONSTRUCTION DU TABLEAU
 grid_options = gb.build()
 
 # 🔄 Rafraîchissement automatique
@@ -150,20 +145,5 @@ grid_response = AgGrid(
     update_mode='SELECTION_CHANGED',
     allow_unsafe_jscode=True,)
 
-# 🔹 Affichage ligne sélectionnée
-selected = grid_response["selected_rows"]
-if isinstance(selected, list) and selected:
-    ligne = selected[0]
-    st.markdown("### ✅ Ligne sélectionnée")
-    st.json(ligne)
 
-# 🔹 Préparer le DataFrame pour export : trié par Valeur, sans la colonne Date
-df_export = df_sorted.drop(columns=["Date"]).sort_values(by="Valeur")
 
-# 📤 Téléchargement CSV
-csv = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
-st.download_button(
-    label="📥 Télécharger le tableau (.csv)",
-    data=csv,
-    file_name="portefeuille.csv",
-    mime="text/csv")

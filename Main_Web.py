@@ -6,9 +6,8 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
-
 # 🔹 Réserves initiales
-t_reserves = 50116 + 47800
+t_reserves = 50116 + 46874
 
 # 🔹 Fonctions utilitaires
 def format_euro(val):
@@ -65,7 +64,9 @@ valeurs = [
     ('NL0000235190', 'AIRBUS', 95, 1),
     ('GOOGL',        'ALPHABET', 79, x_cours_dollar),
     ('US0231351067', 'AMAZON', 52, x_cours_dollar),
-    ('NL0010273215', 'ASML', 21, 1),
+    ('NL0010273215', 'ASML', 18, 1),
+    ('NL0010273215', 'ASML (2)', 3, 1),
+    ('FR0000131104', 'BNP',  14   ,1) ,  # JUIN 2025
     ('US11135F1012', 'BROADCOM', 73, x_cours_dollar),
     ('FR0000121667', 'ESSILOR'        ,34 ,1)  ,
     ('DE0005810055', 'DEUTSCHE BORSE', 42, 1),
@@ -90,7 +91,7 @@ valeurs = [
 for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
-# 🔹 DataFrame final
+#
 df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Montant", "Progression", "Variation (%)"])
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(float)
 df["Montant"] = df["Montant"].astype(float)
@@ -100,9 +101,9 @@ df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=T
 
 # 🔹 Totaux
 total_prix = df["Montant"].sum()
-total_prog = df["Progression"].sum()
-
-# 🔹 Affichage des totaux
+#total_prog = df["Progression"].sum()
+total_prog = df[df["Date"] != "Hier"]["Progression"].sum()
+#
 if total_prog > 0:
     st.markdown(
         f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 20px;'>"
