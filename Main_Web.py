@@ -89,15 +89,12 @@ for code, nom, qte, devise in valeurs:
 
 #CALCULS DIVERS
 df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Montant", "Progression",  "Variation"])
-
-
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(float)
 df["Montant"] = df["Montant"].astype(float)
 
 #TRI
 df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)   # EN EUROS
 df_sorted = df.sort_values(by="Variation", ascending=False).reset_index(drop=True)    # EN PC
-
 
 #TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
@@ -112,15 +109,9 @@ if total_prog > 0:
         f"<span style='color: green;'>- Gains : +{format_euro(total_prog)}</span>"
         f"</p>"
         f"<p style='margin: 0; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}</p>"
+        f"Le {x_date_jour} à {t_heure_actuelle}           -Version 2313</p>"
         f"</div>",
         unsafe_allow_html=True    )
-
-
-
-
-
-
 
 #TITRES DES PERTES
 else:
@@ -130,7 +121,7 @@ else:
         f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
         f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}</p>",
+        f"Le {x_date_jour} à {t_heure_actuelle}          -Version 2313</p>",
         unsafe_allow_html=True)
 
 

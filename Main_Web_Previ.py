@@ -155,7 +155,7 @@ st.markdown(
         f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
         f"<strong>📊 Prévisionnel &nbsp;&nbsp; "
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"{nombre_de_lignes} lignes - le {x_date_jour} à {t_heure_actuelle}</p>",
+        f"{nombre_de_lignes} lignes - le {x_date_jour} à {t_heure_actuelle}     - Version 2313</p>",
         unsafe_allow_html=True    )
 
 # 🔹 Mise en forme conditionnelle JS
