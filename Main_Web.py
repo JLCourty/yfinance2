@@ -7,9 +7,9 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 # 🔹 Réserves initiales
-t_reserves = 50116 + 46874
+t_reserves = 52635 + 43652
 
-# 🔹 Fonctions utilitaires
+#FORMAT NUMERIQUE EN EUROS
 def format_euro(val):
     return f"{val:,.2f} €".replace(",", " ").replace(".", ",")
 
@@ -49,14 +49,9 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
             variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
 
         total_prix = t_prix * x_qte / x_currency
-        liste_donnees.append([
-            label_date,
-            x_nom_valeur,
-            round(total_prix),
-            round(progression),
-            round(variation_pct, 2) ])
-    else:
-        st.warning(f"Le ticker n’a pas été trouvé : {x_code_valeur}")
+
+        #CHARGER LE TABLEAU AVEC LES COLONNES TELLES QU'ELLES SERONT AFFICHEES
+        liste_donnees.append([label_date,x_nom_valeur,round(total_prix,2), round(progression,2), round(variation_pct,2)   ])
 
 # 🔹 Portefeuille (code, nom, quantité, devise)
 valeurs = [
@@ -66,9 +61,9 @@ valeurs = [
     ('US0231351067', 'AMAZON', 52, x_cours_dollar),
     ('NL0010273215', 'ASML', 18, 1),
     ('NL0010273215', 'ASML (2)', 3, 1),
-    ('FR0000131104', 'BNP',  14   ,1) ,  # JUIN 2025
+    ('FR0000131104', 'BNP (2)',  28   ,1) ,  # JUIN 2025
     ('US11135F1012', 'BROADCOM', 73, x_cours_dollar),
-    ('FR0000121667', 'ESSILOR'        ,34 ,1)  ,
+    ('FR0000121667', 'ESSILOR LUXOTICA'        ,34 ,1)  ,
     ('DE0005810055', 'DEUTSCHE BORSE', 42, 1),
     ('FR0000052292', 'HERMES', 4, 1),
     ('ES0144580Y14', 'IBERDROLA', 712, 1),
@@ -79,7 +74,8 @@ valeurs = [
     ('US6974351057', 'PALO ALTO', 56, x_cours_dollar),
     ('DE0007030009', 'RHEINMETALL', 10, 1),
     ('US79466L3024', 'SALESFORCE', 46, x_cours_dollar),
-    ('DE0007164600', 'SAP',34 ,1)  ,
+    ('DE0007164600', 'SAP '   ,34 ,1)  ,
+    ('DE0007164600', 'SAP (2)', 8, 1),
     ('FR0000121329', 'THALES', 24, 1),
     ('FR0000120271', 'TOTAL ENERGIES', 111, 1),
     ('US92826C8394', 'VISA',            40, x_cours_dollar),
@@ -87,49 +83,67 @@ valeurs = [
     ('FR0010315770', 'ETF MSCI', 305, 1),
     ('LU1829221024', 'ETF NASDAQ', 130, 1) ]
 
-# 🔹 Chargement des données
+#CHARGEMENT DES DONNES
 for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
-#
-df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Montant", "Progression", "Variation (%)"])
+#CALCULS DIVERS
+df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Montant", "Progression",  "Variation"])
+
+
 df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(float)
 df["Montant"] = df["Montant"].astype(float)
 
 #TRI
-df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)
+df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)   # EN EUROS
+df_sorted = df.sort_values(by="Variation", ascending=False).reset_index(drop=True)    # EN PC
 
-# 🔹 Totaux
+
+#TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
-#total_prog = df["Progression"].sum()
 total_prog = df[df["Date"] != "Hier"]["Progression"].sum()
-#
+
+#AFFICHER LE TITRE DES GAINS
 if total_prog > 0:
     st.markdown(
-        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 20px;'>"
+        f"<div style='margin: 0; padding: 0;'>"
+        f"<p style='margin: 0; font-size: 20px;'>"
         f"<strong>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;&nbsp; "
-        f"<span style='color: green;'>📥 Gains : +{format_euro(total_prog)}</span></strong>"
-        f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}</p>",
-        unsafe_allow_html=True    )
-else:
-    st.markdown(
-        f"<p style='font-size: 20px;'>Total : {format_euro(total_prix + t_reserves)} - "
-        f"<span style='color: red;'>Pertes : {format_euro(total_prog)}</span> - "
-        f"{x_date_jour} - {t_heure_actuelle}</p>",
+        f"<span style='color: green;'>- Gains : +{format_euro(total_prog)}</span>"
+        f"</p>"
+        f"<p style='margin: 0; font-size: 16px;'>"
+        f"Le {x_date_jour} à {t_heure_actuelle}</p>"
+        f"</div>",
         unsafe_allow_html=True    )
 
-# 🔹 Mise en forme conditionnelle JS
+
+
+
+
+
+
+#TITRES DES PERTES
+else:
+
+    st.markdown(
+        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
+        f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
+        f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
+        f"</p><p style='margin-top: 10px; font-size: 16px;'>"
+        f"Le {x_date_jour} à {t_heure_actuelle}</p>",
+        unsafe_allow_html=True)
+
+
+#COULEUR DES RUBRIQUES NUMERIQUES DANS LA LISTE
 cell_style_js = JsCode("""
 function(params) {
+    if (params.data && params.data.Date === "Hier") {
+        return { color: 'Orange', fontWeight: 'bold' };    }
     if (params.value > 0) {
         return { color: 'green', fontWeight: 'bold' };
     } else if (params.value < 0) {
-        return { color: 'red', fontWeight: 'bold' };
-    }
-    return null;
-}
-""")
+        return { color: 'red', fontWeight: 'bold' };    }
+    return null;} """)
 
 # 🔹 Configuration AgGrid
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
@@ -142,11 +156,15 @@ grid_options = gb.build()
 # 🔄 Rafraîchissement automatique
 st_autorefresh(interval=60000, key="refresh")
 
-# 🔹 Affichage AgGrid
+# 🔢 Calcul dynamique de la hauteur : 35 pixels par ligne environ + marge
+hauteur_ligne = 33
+marge =20
+hauteur_totale = len(df_sorted) * hauteur_ligne  + marge
+
 grid_response = AgGrid(
     df_sorted,
     gridOptions=grid_options,
-    height=680,
+    height=hauteur_totale,
     fit_columns_on_grid_load=True,
     enable_enterprise_modules=False,
     update_mode='SELECTION_CHANGED',
