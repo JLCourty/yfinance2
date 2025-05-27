@@ -9,7 +9,6 @@ import yfinance as yf
 #ECRAN TOTAL
 #st.set_page_config(layout="wide")
 
-
 #CALCULER LA RESERVE
 t_reserves = 52635 + 43652
 
@@ -45,20 +44,17 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
         t_date_jour   = data.index[-1].strftime("%d/%m/%Y")
         t_label_date  = "" if x_date_jour == t_date_jour else "Hier"
-        t_cours_1janv = data.iloc[0]  # 2 JANVIER  ****************** METTRE 3112
+        t_cours_1janv = data.iloc[0]  # COURS AU 1ER JANVIER
         t_open        = data.iloc[-2]
         t_close       = data.iloc[-1]
-        t_jour_euros  = (t_close - t_open) * x_qte
+        t_jour_euros  = ((t_close - t_open) * x_qte)
         t_jour_pc     = (t_close - t_open) / t_open
         t_mt_action   = t_close * x_qte / x_currency
-
-#       CALCULER LE COURS AU 1ER JANVIER
-
         t_annee_euros = (t_close-t_cours_1janv) * x_qte
         t_annee_pc = (t_close-t_cours_1janv) / t_cours_1janv
 
         #CHARGER LE TABLEAU AVEC LES 5               COLONNES TELLES QU'ELLES SERONT AFFICHEES
-        liste_donnees.append([t_label_date,   x_nom_valeur,   t_mt_action,    round(t_jour_euros,2),     t_jour_pc , f"{t_annee_euros:.2f}"  , t_annee_pc  ])
+        liste_donnees.append([t_label_date,x_nom_valeur,t_mt_action,int(t_jour_euros),t_jour_pc,int(t_annee_euros),t_annee_pc ])
 
 # 🔹 Portefeuille (code, nom, quantité, devise)
 valeurs = [
@@ -70,8 +66,8 @@ valeurs = [
     ('NL0010273215', 'ASML (2)', 3, 1),
     ('FR0000131104', 'BNP (2)',  28   ,1) ,  # JUIN 2025
     ('US11135F1012', 'BROADCOM', 73, x_cours_dollar),
-    ('FR0000121667', 'ESSILOR LUXOTICA'        ,34 ,1)  ,
-    ('DE0005810055', 'DEUTSCHE BORSE', 42, 1),
+    ('FR0000121667', 'ESSILOR LUXOTICA' , 34 ,1)  ,
+    ('DE0005810055', 'DEUTSCHE BORSE'   , 42, 1),
     ('FR0000052292', 'HERMES', 4, 1),
     ('ES0144580Y14', 'IBERDROLA', 712, 1),
     ('IT0003856405', 'LEONARDO', 142, 1),
@@ -95,7 +91,7 @@ for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
 #CALCULS DIVERS
-df = pd.DataFrame( liste_donnees, columns=["Date", "Valeur", "Montant", "Jour_Euros",  "Jour_PC"    ,"Année_Euros"        , "Année_PC"          ])
+df = pd.DataFrame( liste_donnees, columns=["Date", "Valeur", "Montant", "Jour_Euros", "Jour_PC" , "Année_Euros" , "Année_PC" ])
 
 #TRI PRINCIPAL
 df_sorted = df.sort_values(by="Jour_PC", ascending=False).reset_index(drop=True)    # EN PC
@@ -146,22 +142,21 @@ gb.configure_selection("single", use_checkbox=False)
 gb.configure_column("Date", width=60)
 gb.configure_column("Valeur", width=240)
 gb.configure_column("Montant", width=140)
-gb.configure_column("Année_Euros", width=1540)
 
+gb.configure_column("Jour_Euros", width=240)
+gb.configure_column("Jour_PC", width=240)
+gb.configure_column("Année_Euros",width=100)
+gb.configure_column("Année_PC", width=100)
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
 gb.configure_column("Montant",     type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Jour_Euros",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Année_Euros", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_PC",     type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
-gb.configure_column("Année_PC",    type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
-
-
-
-
+gb.configure_column("Jour_PC",     type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+gb.configure_column("Année_PC",    type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
 
 #APPLIQUER DES COULEURS AUX ZONES NUMERIQUES
-colonnes_numeriques = ["Jour_Euros","Jour_PC", "Année_Euros","Année_PC"]    #"Montant",
+colonnes_numeriques = [ "Jour_Euros" , "Jour_PC" , "Année_Euros" , "Année_PC"]
 for col in colonnes_numeriques:
     gb.configure_column(col, cellStyle=cell_style_js)
 
@@ -172,13 +167,13 @@ for col in colonnes_numeriques:
             color: 'blue',
             fontWeight: 'bold'
         };
-    }
-    """)
+    }    """)
 
 #   APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
     gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
     gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
 
+#
 grid_options = gb.build()
 
 #APPLIQUE RAFRAICHISSEMENT TOUTES LES 3 MINUTES
@@ -202,7 +197,7 @@ hauteur_ligne = 33
 #marge =20
 hauteur_totale = len(df_sorted) * hauteur_ligne  + 20
 
-
+#UTILE
 
 
 grid_response = AgGrid(
