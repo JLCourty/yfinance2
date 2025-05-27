@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #ECRAN TOTAL
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 
 #CALCULER LA RESERVE
@@ -143,10 +143,10 @@ gb = GridOptionsBuilder.from_dataframe(df_sorted)
 gb.configure_selection("single", use_checkbox=False)
 
 # Définir largeurs spécifiques
-gb.configure_column("Date", width=80)
-gb.configure_column("Valeur", width=540)
-
-
+gb.configure_column("Date", width=60)
+gb.configure_column("Valeur", width=240)
+gb.configure_column("Montant", width=140)
+gb.configure_column("Année_Euros", width=1540)
 
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
