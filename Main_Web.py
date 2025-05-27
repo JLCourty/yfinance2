@@ -6,7 +6,27 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
-# 🔹 Réserves initiales
+st.set_page_config(layout="wide")
+
+st.markdown("""
+    <style>
+    /* Étendre le conteneur principal à toute la largeur */
+    .main .block-container {
+        max-width: 100%;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    /* Centrer les titres/éléments */
+    .css-18e3th9 {
+        flex-direction: row;
+        justify-content: center;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
+#CALCULER LA RESERVE
 t_reserves = 52635 + 43652
 
 #FORMAT NUMERIQUE EN EUROS
@@ -18,40 +38,43 @@ date_jour = pd.Timestamp.today()
 x_date_jour = datetime.now().strftime("%d/%m/%Y")
 t_heure_actuelle = datetime.now().strftime("%H:%M")
 
-# 🔹 Données USD/EUR
+#CALCULER LE COURS DU DOLLAR
 usd_eur_data = yf.Ticker("EURUSD=X")
 x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1], 4)
+
+
+
+
 
 # 🔹 Liste de données à remplir
 liste_donnees = []
 
-# 🔹 Fonction principale
+#FONCTION PRINCIPALE DE CALCUL DES DONNEES
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
     if x_code_valeur:
         x_ticker = yf.Ticker(x_code_valeur)
-        data = x_ticker.history(start="2025-05-11")['Close']
+        data = x_ticker.history(start="2025-01-02")['Close']
         if data.empty:
             st.warning(f"Données absentes pour {x_code_valeur}")
             return
 
-        t_date_jour = data.index[-1].strftime("%d/%m/%Y")
-        t_prix = data.iloc[-1]
-        t_ouverture = data.iloc[-2]
+        t_date_jour   = data.index[-1].strftime("%d/%m/%Y")
+        t_label_date  = "" if x_date_jour == t_date_jour else "Hier"
+        t_cours_1janv = data.iloc[0]  # 2 JANVIER  ****************** METTRE 3112
+        t_open        = data.iloc[-2]
+        t_close       = data.iloc[-1]
+        t_jour_euros  = (t_close - t_open) * x_qte
+        t_jour_pc     = (t_close - t_open) / t_open
+        t_mt_action   = t_close * x_qte / x_currency
 
-        label_date = "" if x_date_jour == t_date_jour else "Hier"
+#       CALCULER LE COURS AU 1ER JANVIER
 
-        if not label_date != "Hier":
-            progression = (t_prix - t_ouverture) * x_qte
-            variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
-        else:
-            progression = (t_prix - t_ouverture) * x_qte
-            variation_pct = ((t_prix - t_ouverture) / t_ouverture) * 100
+        t_annee_euros = (t_close-t_cours_1janv) * x_qte
+        t_annee_pc = (t_close-t_cours_1janv) / t_cours_1janv
 
-        total_prix = t_prix * x_qte / x_currency
-
-        #CHARGER LE TABLEAU AVEC LES COLONNES TELLES QU'ELLES SERONT AFFICHEES
-        liste_donnees.append([label_date,x_nom_valeur,round(total_prix,2), round(progression,2), round(variation_pct,2)   ])
+        #CHARGER LE TABLEAU AVEC LES 5               COLONNES TELLES QU'ELLES SERONT AFFICHEES
+        liste_donnees.append([t_label_date,   x_nom_valeur,   t_mt_action,    round(t_jour_euros,2),     t_jour_pc , f"{t_annee_euros:.2f}"  , t_annee_pc  ])
 
 # 🔹 Portefeuille (code, nom, quantité, devise)
 valeurs = [
@@ -83,24 +106,21 @@ valeurs = [
     ('FR0010315770', 'ETF MSCI', 305, 1),
     ('LU1829221024', 'ETF NASDAQ', 130, 1) ]
 
-#CHARGEMENT DES DONNES
+#CHARGEMENT DES DONNEES
 for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
 #CALCULS DIVERS
-df = pd.DataFrame(    liste_donnees,    columns=["Date", "Valeur", "Montant", "Progression",  "Variation"])
-df["Progression"] = df["Progression"].astype(str).str.replace(",", ".").astype(float)
-df["Montant"] = df["Montant"].astype(float)
+df = pd.DataFrame( liste_donnees, columns=["Date", "Valeur", "Montant", "Jour_Euros",  "Jour_PC"    ,"Année_Euros"        , "Année_PC"          ])
 
-#TRI
-df_sorted = df.sort_values(by="Progression", ascending=False).reset_index(drop=True)   # EN EUROS
-df_sorted = df.sort_values(by="Variation", ascending=False).reset_index(drop=True)    # EN PC
+#TRI PRINCIPAL
+df_sorted = df.sort_values(by="Jour_PC", ascending=False).reset_index(drop=True)    # EN PC
 
 #TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
-total_prog = df[df["Date"] != "Hier"]["Progression"].sum()
+total_prog = df[df["Date"] != "Hier"]["Jour_Euros"].sum()
 
-#AFFICHER LE TITRE DES GAINS
+#AFFICHER LE TITRE DES GAINS ET PERTES
 if total_prog > 0:
     st.markdown(
         f"<div style='margin: 0; padding: 0;'>"
@@ -109,23 +129,21 @@ if total_prog > 0:
         f"<span style='color: green;'>- Gains : +{format_euro(total_prog)}</span>"
         f"</p>"
         f"<p style='margin: 0; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}           -Version 2313</p>"
+        f"Le {x_date_jour} à {t_heure_actuelle}           -Version 2805</p>"
         f"</div>",
         unsafe_allow_html=True    )
 
 #TITRES DES PERTES
 else:
-
     st.markdown(
         f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
         f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
         f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}          -Version 2313</p>",
+        f"Le {x_date_jour} à {t_heure_actuelle}          -Version 2805</p>",
         unsafe_allow_html=True)
 
-
-#COULEUR DES RUBRIQUES NUMERIQUES DANS LA LISTE
+#DEFINIR LES COULEURS DES RUBRIQUES NUMERIQUES DANS LA LISTE exe
 cell_style_js = JsCode("""
 function(params) {
     if (params.data && params.data.Date === "Hier") {
@@ -136,30 +154,82 @@ function(params) {
         return { color: 'red', fontWeight: 'bold' };    }
     return null;} """)
 
-# 🔹 Configuration AgGrid
+#CONFIGURATION DU TABLEAU
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
 gb.configure_selection("single", use_checkbox=False)
-gb.configure_column("Montant", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Progression", cellStyle=cell_style_js)
-gb.configure_column("Variation (%)", cellStyle=cell_style_js)
+
+# Définir largeurs spécifiques
+gb.configure_column("Date", width=80)
+gb.configure_column("Valeur", width=1540)
+
+#APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
+gb.configure_column("Montant",     type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Jour_Euros",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Année_Euros", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Jour_PC", type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+gb.configure_column("Année_PC", type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+
+
+
+
+
+#APPLIQUER DES COULEURS AUX ZONES NUMERIQUES
+colonnes_numeriques = ["Jour_Euros","Jour_PC", "Année_Euros","Année_PC"]    #"Montant",
+for col in colonnes_numeriques:
+    gb.configure_column(col, cellStyle=cell_style_js)
+
+    #STYLE GRAS ET BLEU
+    valeur_montant_style_js = JsCode("""
+    function(params) {
+        return {
+            color: 'blue',
+            fontWeight: 'bold'
+        };
+    }
+    """)
+
+#   APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
+    gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
+    gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
+
 grid_options = gb.build()
 
-# 🔄 Rafraîchissement automatique
+#APPLIQUE RAFRAICHISSEMENT TOUTES LES 3 MINUTES
 st_autorefresh(interval=60000, key="refresh")
 
-# 🔢 Calcul dynamique de la hauteur : 35 pixels par ligne environ + marge
+#peut etre a supprimer
+st.markdown("""
+    <style>
+    .main .block-container {
+        max-width: 100%;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
+
+#PARAMETRES DE TAILLE DU TABLEAU
 hauteur_ligne = 33
-marge =20
-hauteur_totale = len(df_sorted) * hauteur_ligne  + marge
+#marge =20
+hauteur_totale = len(df_sorted) * hauteur_ligne  + 20
+
+
+
 
 grid_response = AgGrid(
     df_sorted,
     gridOptions=grid_options,
     height=hauteur_totale,
-    fit_columns_on_grid_load=True,
+    fit_columns_on_grid_load=False,
     enable_enterprise_modules=False,
     update_mode='SELECTION_CHANGED',
-    allow_unsafe_jscode=True,)
+    allow_unsafe_jscode=True,
+    width='100%',
+    containerStyle={"width": "100%"}
+)
+
 
 # 🔹 Affichage ligne sélectionnée
 selected = grid_response["selected_rows"]
