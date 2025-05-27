@@ -25,10 +25,6 @@ t_heure_actuelle = datetime.now().strftime("%H:%M")
 usd_eur_data = yf.Ticker("EURUSD=X")
 x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1], 4)
 
-
-
-
-
 # 🔹 Liste de données à remplir
 liste_donnees = []
 
@@ -54,7 +50,7 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_annee_pc = (t_close-t_cours_1janv) / t_cours_1janv
 
         #CHARGER LE TABLEAU AVEC LES 5               COLONNES TELLES QU'ELLES SERONT AFFICHEES
-        liste_donnees.append([t_label_date,x_nom_valeur,t_mt_action,int(t_jour_euros),t_jour_pc,int(t_annee_euros),t_annee_pc ])
+        liste_donnees.append([t_label_date,x_nom_valeur,t_mt_action,t_jour_pc,int(t_jour_euros), t_annee_pc,int(t_annee_euros) ])
 
 # 🔹 Portefeuille (code, nom, quantité, devise)
 valeurs = [
@@ -91,7 +87,7 @@ for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
 #CALCULS DIVERS
-df = pd.DataFrame( liste_donnees, columns=["Date", "Valeur", "Montant", "Jour_Euros", "Jour_PC" , "Année_Euros" , "Année_PC" ])
+df = pd.DataFrame( liste_donnees, columns=["Date", "Valeur", "Montant", "Jour_PC" , "Jour_Euros", "Année_PC", "Année_Euros"  ])
 
 #TRI PRINCIPAL
 df_sorted = df.sort_values(by="Jour_PC", ascending=False).reset_index(drop=True)    # EN PC
@@ -109,7 +105,7 @@ if total_prog > 0:
         f"<span style='color: green;'>- Gains : +{format_euro(total_prog)}</span>"
         f"</p>"
         f"<p style='margin: 0; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}           -Version 2805</p>"
+        f"Le {x_date_jour} à {t_heure_actuelle}           -Version 0106</p>"
         f"</div>",
         unsafe_allow_html=True    )
 
@@ -120,7 +116,7 @@ else:
         f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
         f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}          -Version 2805</p>",
+        f"Le {x_date_jour} à {t_heure_actuelle}          -Version 0106</p>",
         unsafe_allow_html=True)
 
 #DEFINIR LES COULEURS DES RUBRIQUES NUMERIQUES DANS LA LISTE exe
@@ -139,12 +135,12 @@ gb = GridOptionsBuilder.from_dataframe(df_sorted)
 gb.configure_selection("single", use_checkbox=False)
 
 # Définir largeurs spécifiques
-gb.configure_column("Date", width=60)
+gb.configure_column("Date", width=40)
 gb.configure_column("Valeur", width=240)
 gb.configure_column("Montant", width=140)
 
-gb.configure_column("Jour_Euros", width=240)
-gb.configure_column("Jour_PC", width=240)
+gb.configure_column("Jour_Euros", width=200)
+gb.configure_column("Jour_PC", width=200)
 gb.configure_column("Année_Euros",width=100)
 gb.configure_column("Année_PC", width=100)
 
@@ -163,9 +159,7 @@ for col in colonnes_numeriques:
     #STYLE GRAS ET BLEU
     valeur_montant_style_js = JsCode("""
     function(params) {
-        return {
-            color: 'blue',
-            fontWeight: 'bold'
+        return { color: 'blue', fontWeight: 'bold'
         };
     }    """)
 
@@ -185,21 +179,15 @@ st.markdown("""
     .main .block-container {
         max-width: 100%;
         padding-left: 2rem;
-        padding-right: 2rem;
-    }
+        padding-right: 2rem;    }
     </style>
     """, unsafe_allow_html=True)
 
-
-
 #PARAMETRES DE TAILLE DU TABLEAU
 hauteur_ligne = 33
-#marge =20
 hauteur_totale = len(df_sorted) * hauteur_ligne  + 20
 
 #UTILE
-
-
 grid_response = AgGrid(
     df_sorted,
     gridOptions=grid_options,
@@ -209,9 +197,7 @@ grid_response = AgGrid(
     update_mode='SELECTION_CHANGED',
     allow_unsafe_jscode=True,
     width='100%',
-    containerStyle={"width": "100%"}
-)
-
+    containerStyle={"width": "100%"} )
 
 # 🔹 Affichage ligne sélectionnée
 selected = grid_response["selected_rows"]
