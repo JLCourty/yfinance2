@@ -6,24 +6,8 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
+#ECRAN TOTAL
 st.set_page_config(layout="wide")
-
-st.markdown("""
-    <style>
-    /* Étendre le conteneur principal à toute la largeur */
-    .main .block-container {
-        max-width: 100%;
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
-
-    /* Centrer les titres/éléments */
-    .css-18e3th9 {
-        flex-direction: row;
-        justify-content: center;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 
 #CALCULER LA RESERVE
@@ -160,14 +144,17 @@ gb.configure_selection("single", use_checkbox=False)
 
 # Définir largeurs spécifiques
 gb.configure_column("Date", width=80)
-gb.configure_column("Valeur", width=1540)
+gb.configure_column("Valeur", width=540)
+
+
+
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
 gb.configure_column("Montant",     type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Jour_Euros",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Année_Euros", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_PC", type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
-gb.configure_column("Année_PC", type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+gb.configure_column("Jour_PC",     type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+gb.configure_column("Année_PC",    type=["numericColumn"],    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
 
 
 
