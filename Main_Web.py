@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #ECRAN TOTAL
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 #CALCULER LA RESERVE
 t_reserves = 52700 + 41640  # AMUNDI DEFENSE
@@ -176,26 +176,20 @@ for col in colonnes_numeriques:
     }
     """)
 
-
-
-
-
-
     #   APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
     gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
     gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
     gb.configure_column("Date", cellStyle=valeur_montant_style_js)
 
-#**********************
-# Cacher la colonne "Date"
+#   **********************
+#   Cacher la colonne "Date"
     gb.configure_column("Date", hide=True)
-#***********************
 
 #
 grid_options = gb.build()
 
 #APPLIQUE RAFRAICHISSEMENT TOUTES LES 3 MINUTES
-st_autorefresh(interval=60000, key="refresh")
+st_autorefresh(interval=180000, key="refresh")
 
 #peut etre a supprimer
 st.markdown("""

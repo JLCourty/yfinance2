@@ -29,6 +29,8 @@ def Get_tout(x_code_valeur,x_nom_valeur):
     #SI LE TICKER EST CORRECT
     if x_code_valeur:
 
+
+
         #CHERCHER DANS YFINANCE
         x_ticker = yf.Ticker(x_code_valeur)
         data = x_ticker.history(start="2025-01-02")['Close']
@@ -60,81 +62,119 @@ def Get_tout(x_code_valeur,x_nom_valeur):
 
 #CHAINE DES VALEURS FRANCAISES
 valeurs = [
-           ('FR0000131104','BNP'),
-           ('FR0000130809','Soc Générale'),
-           ('FR0000133308','Orange'),
-           ('US4370761029','US-Home Depot'),
-           ('DE000RENK730','Renk Allemand'),
-           ('FR0000120404','Accor'),
-           ('FR0000120073','Air Liquide'),
-           ('NL0000235190','Airbus'),
-           ('FR0010220475','Alstom'),
-           ('LU1598757687','Arcelor Mittal'),
-           ('FR0000120628','Axa'),
-           ('FR0000120503','Bouygues'),
-           ('FR0000125338','Capgemini'),
-           ('FR0000120172','Carrefour'),
-           ('FR0000045072','Crédit Agricole'),
-           ('FR0000120644','Danone'),
-           ('FR0014003TT8','Dassault Systemes'),
-           ('FR0010908533','Edenred'),
-           ('FR0010208488','Engie'),
-           ('FR0000121667','Essilor Luxottica'),
-           ('FR0014000MR3','Eurofins Scientific'),
-           ('FR0000052292','Hermès'),
-           ('FR0000121485','Kering'),
-           ('FR0000120321','LOréal'),
-           ('FR0010307819','Legrand'),
-           ('FR0000121014','LVMH'),
-           ('FR001400AJ45','Michelin'),
-           ('FR0000120693','Pernod Ricard'),
-           ('FR0000130577','Publicis'),
-           ('FR0000131906','Renault'),
-           ('FR0000073272','Safran'),
-           ('FR0000125007','Saint-Gobain'),
-           ('FR0000120578','Sanofi'),
-           ('FR0000121972','Schneider Electric'),
-           ('NL00150001Q9','--Stellantis'),
-           ('NL0000226223','ST Microelectronics'),
-           ('FR0000051807','Teleperformance'),
-           ('FR0000121329','Thales'),
-           ('FR0000120271','Total Energies'),
-           ('FR001400J770','Unibail-Rodamco'),
-           ('FR0000124141','Veolia Environnement'),
-           ('FR0000125486','Vinci'),
-           ('FR0000127771','Vivendi'),
-           ('FR0014004L86','Dassault Aviation'),
-           ('FR0012757854','SPIE'),
-           ('US02079K3059', 'US-Alphabet Class A'),
-        ('US02079K1079','US-Alphabet Class C'),
-('US30303M1027','US-Meta Platforms'),
-('US67066G1040','US-Nvidia'),
-('US88160R1014','US-Tesla'),
-('US11135F1012','US-Broadcom'),
-('US64110L1061','US-Netflix'),
-('US22160K1051','US-Costco'),
-('US17275R1023','US-Cisco Systems'),
-('US4581401001','US-Intel Corporation'),
-('US0079031078','US-Advanced Micro Devices'),
-('US0530151036','US-Automatic Data Processing'),
-('US7223041028','US-Pinduoduo'),
-('US8825081040','US-Texas Instruments'),
-('US7475251036','US-Qualcom'),
-('US8552441094','US-Starbucks Corporation'),
-('US0382221051','US-Applied Materials'),
-('US4612021034','US-Intuit Inc'),
-('US4523271090','US-Illumina'),
-('US75886F1075','US-Regeneron Pharmaceuticals'),
-('US09062X1037','US-Biogen Inc'),
-('US30161N1019','US-Exelon Corporation'),
-('US92532F1003','US-Vertex Pharmaceuticals'),
-('US47215P1066','US-JD.com'),
-('US2561631068','US-Docusign'),
-('US2855121099','US-Electronic Arts'),
-('US98138H1014','US-Workda'),
-('US00724F1012','US-Adobe Inc'),
-('US09857L1089','US-Booking Holdings'),
-('US98980L1017','US-Zoom Video') ]
+('FR0000131104','FR - BNP'),
+('FR0000130809','FR - Soc Générale'),
+('FR0000133308','FR - Orange'),
+('US4370761029','FR - US-Home Depot'),
+('DE000RENK730','FR - Renk Allemand'),
+('FR0000120404','FR - Accor'),
+('FR0000120073','FR - Air Liquide'),
+('NL0000235190','FR - Airbus'),
+('FR0010220475','FR - Alstom'),
+('LU1598757687','FR - Arcelor Mittal'),
+('FR0000120628','FR - Axa'),
+('FR0000120503','FR - Bouygues'),
+('FR0000125338','FR - Capgemini'),
+('FR0000120172','FR - Carrefour'),
+('FR0000045072','FR - Crédit Agricole'),
+('FR0000120644','FR - Danone'),
+('FR0014003TT8','FR - Dassault Systemes'),
+('FR0010908533','FR - Edenred'),
+('FR0010208488','FR - Engie'),
+('FR0000121667','FR - Essilor Luxottica'),
+('FR0014000MR3','FR - Eurofins Scientific'),
+('FR0000052292','FR - Hermès'),
+('FR0000121485','FR - Kering'),
+('FR0000120321','FR - LOréal'),
+('FR0010307819','FR - Legrand'),
+('FR0000121014','FR - LVMH'),
+('FR001400AJ45','FR - Michelin'),
+('FR0000120693','FR - Pernod Ricard'),
+('FR0000130577','FR - Publicis'),
+('FR0000131906','FR - Renault'),
+('FR0000073272','FR - Safran'),
+('FR0000125007','FR - Saint-Gobain'),
+('FR0000120578','FR - Sanofi'),
+('FR0000121972','FR - Schneider Electric'),
+('NL00150001Q9','FR - Stellantis'),
+('NL0000226223','FR - ST Microelectronics'),
+('FR0000051807','FR - Teleperformance'),
+('FR0000121329','FR - Thales'),
+('FR0000120271','FR - Total Energies'),
+('FR001400J770','FR - Unibail-Rodamco'),
+('FR0000124141','FR - Veolia Environnement'),
+('FR0000125486','FR - Vinci'),
+('FR0000127771','FR - Vivendi'),
+('FR0014004L86','FR - Dassault Aviation'),
+('FR0012757854','FR - SPIE'),
+('DE000A1EWWW0','EU - Adidas'),
+('NL0012969182','EU - Adyen'),
+('NL0011794037','EU - Ahold Delhaize'),
+('DE0008404005','EU - Allianz'),
+('BE0974293251','EU - Anheuser-Busch InBev'),
+('NL0010273215','EU - ASML Holding'),
+('DE000BASF111','EU - BASF'),
+('DE000BAY0017','EU - Bayer'),
+('ES0113211835','EU - BBVA'),
+('ES0113900J37','EU - Banco Santander'),
+('DE0005190003','EU - BMW'),
+('DE0005810055','EU - Deutsche Börse'),
+('DE0005552004','EU - Deutsche Post'),
+('DE0005557508','EU - Deutsche Telekom'),
+('IT0003128367','EU - Enel'),
+('IT0003132476','EU - Eni'),
+('NL0011585146','EU - Ferrari'),
+('IE00BWT6H894','EU - Flutter Entertainment'),
+('ES0144580Y14','EU - Iberdrola'),
+('ES0148396007','EU - Inditex'),
+('DE0006231004','EU - Infineon Technologies'),
+('NL0011821202','EU - ING Group'),
+('IT0000072618','EU - Intesa Sanpaolo'),
+('DE0007100000','EU - Mercedes-Benz Group'),
+('DE0008430026','EU - Munich Re'),
+('FI0009000681','EU - Nokia'),
+('NL0013654783','EU - Prosus'),
+('DE0007164600','EU - SAP'),
+('DE0007236101','EU - Siemens'),
+('NL00150001Q9','EU - Stellantis'),
+('IT0005239360','EU - UniCredit'),
+('DE0007664039','EU - Volkswagen Group'),
+('DE000A1ML7J1','EU - Vonovia'),
+('US02079K3059','US - Alphabet Class A'),
+('US02079K1079','US - Alphabet Class C'),
+('US30303M1027','US - Meta Platforms'),
+('US67066G1040','US - Nvidia'),
+('US88160R1014','US - Tesla'),
+('US11135F1012','US - Broadcom'),
+('US64110L1061','US - Netflix'),
+('US22160K1051','US - Costco'),
+('US17275R1023','US - Cisco Systems'),
+('US4581401001','US - Intel Corporation'),
+('US0079031078','US - Advanced Micro Devices'),
+('US0530151036','US - Automatic Data Processing'),
+('US7223041028','US - Pinduoduo'),
+('US8825081040','US - Texas Instruments'),
+('US7475251036','US - Qualcom'),
+('US8552441094','US - Starbucks'),
+('US0382221051','US - Applied Materials'),
+('US4612021034','US - Intuit Inc'),
+('US4523271090','US - Illumina'),
+('US75886F1075','US - Regeneron Pharma'),
+('US09062X1037','US - Biogen Inc'),
+('US30161N1019','US - Exelon Corporation'),
+('US92532F1003','US - Vertex Pharma'),
+('US47215P1066','US - JD.com'),
+('US2561631068','US - Docusign'),
+('US2855121099','US - Electronic Arts'),
+('US98138H1014','US - Workda'),
+('US00724F1012','US - Adobe Inc'),
+('US09857L1089','US - Booking Holdings'),
+('LU0908500753','ETF STOXX Eur 600'),
+('FR0007054358','ETF STOXX 50'),
+('FR0010315770','ETF MSCI'),
+('LU1829221024','ETF NASDAQ'),
+('LU3038520774','ETF Amundi Stoxx Defense'),
+('US98980L1017','US - Zoom Video') ]
 
 #('US5737741035','Marvell Technolog'),
 
@@ -199,7 +239,7 @@ gb.configure_column("PC_2025", cellStyle=cell_style_pc2025)
 grid_options = gb.build()
 
 # 🔄 Rafraîchissement automatique
-st_autorefresh(interval=60000, key="refresh")
+st_autorefresh(interval=180000, key="refresh")  # 3 MINUTES
 
 # 🔹 Affichage AgGrid
 grid_response = AgGrid(
@@ -212,4 +252,39 @@ grid_response = AgGrid(
     allow_unsafe_jscode=True,)
 
 
+selected = grid_response["selected_rows"]
 
+print("selected")
+
+if isinstance(selected, list) and selected:
+    ligne = selected[0]
+    st.markdown("### ✅ Ligne sélectionnée")
+    st.json(ligne)
+
+    if "Valeur" in ligne:
+        nom_valeur = ligne["Valeur"]
+
+        # Rechercher dans la liste des valeurs
+        trouve = False
+        for code, nom, qte, devise in valeurs:
+            if nom == nom_valeur:
+                trouve = True
+                ticker = yf.Ticker(code)
+                historique = ticker.history(start="2025-01-02")["Close"]
+
+                if historique.empty:
+                    st.warning(f"Aucune donnée trouvée pour {code}")
+                    break
+
+                # Conversion en euros
+                historique_eur = historique / devise * qte
+                historique_eur.name = "Montant (€)"
+
+                st.markdown(f"### 📈 Évolution de **{nom_valeur}** en € depuis le 2 janvier 2025")
+                st.line_chart(historique_eur)
+                break
+
+        if not trouve:
+            st.warning(f"Aucune correspondance trouvée pour : {nom_valeur}")
+    else:
+        st.warning("Champ 'Valeur' non trouvé dans la ligne sélectionnée.")
