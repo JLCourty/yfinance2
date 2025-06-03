@@ -11,6 +11,7 @@ import yfinance as yf
 
 #CALCULER LA RESERVE
 t_reserves = 52700 + 39600  # APRES ACCOR
+x_version = "- Version du 0506"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(val):
@@ -127,7 +128,7 @@ if total_prog > 0:
         f"<strong>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;&nbsp; "
         f"<span style='color: green;'>- Gains : +{format_euro(total_prog)}</span>" f"</p>"
         f"<p style='margin: 0; font-size: 24px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}           -Version 0106</p>"        f"</div>",
+        f"Le {x_date_jour} à {t_heure_actuelle}    {x_version}</p>"        f"</div>",
         unsafe_allow_html=True)
 
 #TITRES DES PERTES
@@ -137,7 +138,7 @@ else:
         f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
         f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle} - Version 0106</p>",
+        f"Le {x_date_jour} à {t_heure_actuelle}  {x_version} </p>",
         unsafe_allow_html=True)
 
 #DEFINIR LES COULEURS DES RUBRIQUES NUMERIQUES DANS LA LISTE exe
