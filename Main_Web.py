@@ -10,7 +10,7 @@ import yfinance as yf
 #st.set_page_config(layout="wide")
 
 #CALCULER LA RESERVE
-t_reserves = 52700 + 41640  # AMUNDI DEFENSE
+t_reserves = 52700 + 39600  # APRES ACCOR
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(val):
