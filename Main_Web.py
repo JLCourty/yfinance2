@@ -32,13 +32,15 @@ liste_donnees =[]
 #FONCTION PRINCIPALE DE CALCUL DES DONNEES
 def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
 
+    #
+    #st.warning(f"Données pour {x_nom_valeur}")
 #
     x_ticker = yf.Ticker(x_code_valeur)
     data = x_ticker.history(start="2025-01-02")['Close']
 
 #
     if data.empty:
-        st.warning(f"Données absentes pour {x_code_valeur}")
+        st.warning(f"Données absentes pour {x_nom_valeur}")
         return
 
     #else:
