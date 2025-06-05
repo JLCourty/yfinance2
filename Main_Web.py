@@ -10,7 +10,7 @@ import yfinance as yf
 #st.set_page_config(layout="wide")
 
 #CALCULER LA RESERVE
-t_reserves = 52700 + 39600  # APRES ACCOR
+t_reserves = 52700 + 36610
 x_version = "- Version du 0506"
 
 #FORMAT NUMERIQUE EN EUROS
@@ -102,6 +102,7 @@ valeurs = [
     ('DE0007164600', 'SAP (2)', 8, 1),  # MAI 2025
     ('FR0000121329', 'THALES', 24, 1),
     ('FR0000120271', 'TOTAL ENERGIES', 111, 1),
+    ('FR0000120271', 'TOTAL ENERGIES (2)', 56, 1),
     ('US92826C8394', 'VISA', 40, x_cours_dollar),
     ('FR0007054358', 'ETF STOXX 50', 1543, 1),
     ('LU3038520774', 'ETF AMUNDI DEFENSE (2)', 360, 1),  # MAI 2025
@@ -113,11 +114,11 @@ for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
 #TITRES DES COLONNES
-df = pd.DataFrame(liste_donnees,
-                  columns=["Date", "Valeur", "Montant", "Jour_PC", "Jour_Euros", "Année_PC", "Année_Euros"])
+df = pd.DataFrame(liste_donnees,columns=["Date", "Valeur", "Montant", "Jour_PC", "Jour_Euros", "Année_PC", "Année_Euros"])
 
 #TRI PRINCIPAL
-df_sorted = df.sort_values(by="Jour_PC", ascending=False).reset_index(drop=True)  # EN PC
+#df_sorted = df.sort_values(by="Jour_PC", ascending=False).reset_index(drop=True)  # EN PC
+df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).reset_index(drop=True)
 
 #TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
@@ -161,14 +162,14 @@ gb.configure_selection("single", use_checkbox=False)
 #DEFINIR LES LARGEURS DE COLONNES
 gb.configure_column("Date", width=40)
 gb.configure_column("Valeur", width=240)
-gb.configure_column("Montant", width=140)
-gb.configure_column("Jour_Euros", width=200)
-gb.configure_column("Jour_PC", width=200)
-gb.configure_column("Année_Euros", width=100)
-gb.configure_column("Année_PC", width=100)
+gb.configure_column("Montant", width=160)
+gb.configure_column("Jour_Euros", width=160)
+gb.configure_column("Jour_PC", width=160)
+gb.configure_column("Année_Euros", width=160)
+gb.configure_column("Année_PC", width=160)
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
-gb.configure_column("Montant", type=["numericColumn"],                    valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Montant", type=["numericColumn"],   valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Jour_Euros", type=["numericColumn"],   valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Année_Euros", type=["numericColumn"],  valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Jour_PC", type=["numericColumn"],                    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
@@ -183,8 +184,7 @@ for col in colonnes_numeriques:
         if (params.data && params.data.Date === "Hier") {
             return { color: 'blue', fontWeight: 'normal' };
         } else {
-            return { color: 'blue', fontWeight: 'bold' };
-        }    }      """)
+            return { color: 'blue', fontWeight: 'bold' };          }    }      """)
 
     #   APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
     gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
@@ -199,7 +199,7 @@ for col in colonnes_numeriques:
 grid_options = gb.build()
 
 #APPLIQUE RAFRAICHISSEMENT TOUTES LES 3 MINUTES
-st_autorefresh(interval=60000, key="refresh")
+st_autorefresh(interval=120000, key="refresh")
 
 #peut etre a supprimer
 st.markdown("""
@@ -212,7 +212,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 #PARAMETRES DE TAILLE DU TABLEAU
-hauteur_ligne = 33
+hauteur_ligne = 32
 hauteur_totale = len(df_sorted) * hauteur_ligne + 20
 
 #UTILE
