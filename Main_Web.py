@@ -10,7 +10,7 @@ import yfinance as yf
 #st.set_page_config(layout="wide")
 
 #CALCULER LA RESERVE
-t_reserves = 52700 + 36610
+t_reserves = 52700 + 36600 - 2380   # TOTAL
 x_version = "- Version du 0506"
 
 #FORMAT NUMERIQUE EN EUROS
@@ -30,10 +30,8 @@ x_cours_dollar = round(usd_eur_data.history(period="1d")["Close"].iloc[-1], 4)
 liste_donnees =[]
 
 #FONCTION PRINCIPALE DE CALCUL DES DONNEES
-def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
+def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
-    #
-    #st.warning(f"Données pour {x_nom_valeur}")
 #
     x_ticker = yf.Ticker(x_code_valeur)
     data = x_ticker.history(start="2025-01-02")['Close']
@@ -42,9 +40,6 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}")
         return
-
-    #else:
-        #st.warning("Ceci est un test pour la valeur")
 
 #
     t_der_date = data.index[-1].strftime("%d/%m/%Y")
@@ -71,7 +66,6 @@ def Get_tout(x_code_valeur, x_nom_valeur, x_date_jour, x_qte, x_currency):
         t_annee_pc = ((t_close / x_currency) - (t_close_1janv) / 1.04) / (t_close_1janv / 1.04)
         t_annee_euros = ((t_close / x_currency) - (t_close_1janv / 1.04)) * x_qte
 
-
         # CHARGER LE TABLEAU AVEC LES 7 COLONNES TELLES QU'ELLES SERONT AFFICHEES
     liste_donnees.append( [t_label_date, x_nom_valeur, t_mt_action,
              t_jour_pc, int(t_jour_euros), t_annee_pc, int(t_annee_euros)])
@@ -92,6 +86,7 @@ valeurs = [
     ('FR0000052292', 'HERMES', 4, 1),
     ('ES0144580Y14', 'IBERDROLA', 712, 1),
     ('IT0003856405', 'LEONARDO', 142, 1),
+    ('FR0000121014', 'LVMH', 5, 1),
     ('US5949181045', 'MICROSOFT', 48, x_cours_dollar),
     ('US64110L1061', 'NETFLIX', 10, x_cours_dollar),
     ('US67066G1040', 'NVDIA', 160, x_cours_dollar),
