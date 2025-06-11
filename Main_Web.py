@@ -158,12 +158,12 @@ gb.configure_selection("single", use_checkbox=False)
 
 #DEFINIR LES LARGEURS DE COLONNES
 gb.configure_column("Date", width=40)
-gb.configure_column("Valeur", width=240)
+gb.configure_column("Valeur", width=300)
 gb.configure_column("Montant", width=160)
 gb.configure_column("Jour_Euros", width=160)
-gb.configure_column("Jour_PC", width=160)
+gb.configure_column("Jour_PC", width=140)
 gb.configure_column("Année_Euros", width=160)
-gb.configure_column("Année_PC", width=160)
+gb.configure_column("Année_PC", width=140)
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
 gb.configure_column("Montant",     type=["numericColumn"],   valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
@@ -188,8 +188,7 @@ for col in colonnes_numeriques:
     gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
     gb.configure_column("Date", cellStyle=valeur_montant_style_js)
 
-#   **********************
-#   Cacher la colonne "Date"
+#   CACHER DEUX COLONNES
     gb.configure_column("Date", hide=True)
     gb.configure_column("Montant", hide=True)
 
