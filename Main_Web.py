@@ -103,7 +103,7 @@ valeurs = [
     ('FR0000120271', 'TOTAL ENERGIES (2)', 56, 1),
     ('US92826C8394', 'VISA', 40, x_cours_dollar),
     ('FR0007054358', 'ETF STOXX 50', 1543, 1),
-    ('LU3038520774', 'ETF AMUNDI DEFENSE (2)', 360, 1),
+    ('LU3038520774', 'ETF AMUNDI DEF (2)', 360, 1),
     ('FR0010315770', 'ETF MSCI', 305, 1),
     ('LU1829221024', 'ETF NASDAQ', 130, 1)]
 
@@ -166,10 +166,10 @@ gb.configure_column("Année_Euros", width=160)
 gb.configure_column("Année_PC", width=140)
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
-gb.configure_column("Montant",     type=["numericColumn"],   valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_Euros",  type=["numericColumn"],  valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Année_Euros", type=["numericColumn"], valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_PC",     type=["numericColumn"],     valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+#gb.configure_column("Montant",     type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Jour_Euros",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Année_Euros", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Jour_PC",     type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
 gb.configure_column("Année_PC",    type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
 
 #APPLIQUER DES COULEURS AUX ZONES NUMERIQUES
@@ -184,9 +184,9 @@ for col in colonnes_numeriques:
             return { color: 'blue', fontWeight: 'bold' };          }    }      """)
 
     #APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
-    gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
+    #gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
     gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
-    gb.configure_column("Date", cellStyle=valeur_montant_style_js)
+    #gb.configure_column("Date", cellStyle=valeur_montant_style_js)
 
 #   CACHER DEUX COLONNES
     gb.configure_column("Date", hide=True)
