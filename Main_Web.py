@@ -70,9 +70,6 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     nom_et_montant = f"{x_nom_valeur} - {format_euro(t_mt_action)}"
     liste_donnees.append([t_label_date, nom_et_montant, t_mt_action,  t_jour_pc, int(t_jour_euros),   t_annee_pc, int(t_annee_euros)       ])
 
-
-
-
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
     ('FR0000120404', 'ACCOR',       214, 1),
@@ -167,7 +164,15 @@ gb.configure_column("Année_PC", width=140)
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
 #gb.configure_column("Montant",     type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_Euros",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+#gb.configure_column("Jour_Euros",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'}                     )")
+
+gb.configure_column(
+    "Jour_Euros",
+    type=["numericColumn"],
+    valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0})"
+)
+
+
 gb.configure_column("Année_Euros", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 gb.configure_column("Jour_PC",     type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
 gb.configure_column("Année_PC",    type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
@@ -197,16 +202,6 @@ grid_options = gb.build()
 
 #APPLIQUE RAFRAICHISSEMENT TOUTES LES 3 MINUTES
 st_autorefresh(interval=120000, key="refresh")
-
-#peut etre a supprimer
-st.markdown("""
-    <style>
-    .main .block-container {
-        max-width: 100%;
-        padding-left: 2rem;
-        padding-right: 2rem;    }
-    </style>
-    """, unsafe_allow_html=True)
 
 #PARAMETRES DE TAILLE DU TABLEAU
 hauteur_ligne = 32
