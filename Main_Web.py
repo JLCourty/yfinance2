@@ -11,7 +11,7 @@ import yfinance as yf
 
 #CALCULER LA RESERVE
 t_reserves = 52700 + 36600 - 2380   # TOTAL
-x_version = "- Version du 0506"
+x_version = "- Version du 1206"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(val):
@@ -35,8 +35,6 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 #
     x_ticker = yf.Ticker(x_code_valeur)
     data = x_ticker.history(start="2025-01-02")['Close']
-
-#
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}")
         return
@@ -56,9 +54,8 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
     # GAINS OU PERTES DU JOUR EN DOLLAR   (CORRIGE EN EUROS)
     t_jour_euros = ((t_close - t_open) * x_qte) / x_currency
-    #print(x_nom_valeur,x_currency, t_close_1janv,t_close)
 
-    # GAINS ANNEE EN PC ET ENEUROS (ADAPTE AU DOLLAR)
+    # GAINS ANNEE EN PC ET EN EUROS (ADAPTE AU DOLLAR)
     if x_currency==1:
         t_annee_pc = (   (t_close) - (t_close_1janv)    ) / (t_close_1janv )
         t_annee_euros = (   (t_close) - (t_close_1janv)      ) * x_qte
@@ -66,9 +63,15 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
         t_annee_pc = ((t_close / x_currency) - (t_close_1janv) / 1.04) / (t_close_1janv / 1.04)
         t_annee_euros = ((t_close / x_currency) - (t_close_1janv / 1.04)) * x_qte
 
-        # CHARGER LE TABLEAU AVEC LES 7 COLONNES TELLES QU'ELLES SERONT AFFICHEES
-    liste_donnees.append( [t_label_date, x_nom_valeur, t_mt_action,
-             t_jour_pc, int(t_jour_euros), t_annee_pc, int(t_annee_euros)])
+    # CHARGER LE TABLEAU AVEC LES 7 COLONNES TELLES QU'ELLES SERONT AFFICHEES
+    #liste_donnees.append( [t_label_date, x_nom_valeur, t_mt_action,              t_jour_pc, int(t_jour_euros), t_annee_pc, int(t_annee_euros)])
+
+    #DEFINIR LES COLONNES QUI COMPOSERONT LE TABLEAU
+    nom_et_montant = f"{x_nom_valeur} - {format_euro(t_mt_action)}"
+    liste_donnees.append([t_label_date, nom_et_montant, t_mt_action,  t_jour_pc, int(t_jour_euros),   t_annee_pc, int(t_annee_euros)       ])
+
+
+
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
@@ -77,11 +80,11 @@ valeurs = [
     ('NL0000235190', 'AIRBUS',     95, 1),
     ('GOOGL',        'ALPHABET',   79, x_cours_dollar),
     ('US0231351067', 'AMAZON',     52, x_cours_dollar),
-    ('NL0010273215', 'ASML', 18, 1),
-    ('NL0010273215', 'ASML (2)', 3, 1),  # MAI 2025
-    ('FR0000131104', 'BNP (2)', 28, 1),  # MAI 2025
-    ('US11135F1012', 'BROADCOM', 73, x_cours_dollar),
-    ('FR0000121667', 'ESSILOR LUXOTICA', 34, 1),
+    ('NL0010273215', 'ASML',       18, 1),
+    ('NL0010273215', 'ASML (2)',    3, 1),
+    ('FR0000131104', 'BNP (2)',    28, 1),
+    ('US11135F1012', 'BROADCOM',   73, x_cours_dollar),
+    ('FR0000121667', 'ESSILOR',    34, 1),
     ('DE0005810055', 'DEUTSCHE BORSE', 42, 1),
     ('FR0000052292', 'HERMES', 4, 1),
     ('ES0144580Y14', 'IBERDROLA', 712, 1),
@@ -100,7 +103,7 @@ valeurs = [
     ('FR0000120271', 'TOTAL ENERGIES (2)', 56, 1),
     ('US92826C8394', 'VISA', 40, x_cours_dollar),
     ('FR0007054358', 'ETF STOXX 50', 1543, 1),
-    ('LU3038520774', 'ETF AMUNDI DEFENSE (2)', 360, 1),  # MAI 2025
+    ('LU3038520774', 'ETF AMUNDI DEFENSE (2)', 360, 1),
     ('FR0010315770', 'ETF MSCI', 305, 1),
     ('LU1829221024', 'ETF NASDAQ', 130, 1)]
 
@@ -112,7 +115,6 @@ for code, nom, qte, devise in valeurs:
 df = pd.DataFrame(liste_donnees,columns=["Date", "Valeur", "Montant", "Jour_PC", "Jour_Euros", "Année_PC", "Année_Euros"])
 
 #TRI PRINCIPAL
-#df_sorted = df.sort_values(by="Jour_PC", ascending=False).reset_index(drop=True)  # EN PC
 df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).reset_index(drop=True)
 
 #TOTALISER LES 2 INFOS
@@ -164,11 +166,11 @@ gb.configure_column("Année_Euros", width=160)
 gb.configure_column("Année_PC", width=160)
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
-gb.configure_column("Montant", type=["numericColumn"],   valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_Euros", type=["numericColumn"],   valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Année_Euros", type=["numericColumn"],  valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_PC", type=["numericColumn"],                    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
-gb.configure_column("Année_PC", type=["numericColumn"],                    valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+gb.configure_column("Montant",     type=["numericColumn"],   valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Jour_Euros",  type=["numericColumn"],  valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Année_Euros", type=["numericColumn"], valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
+gb.configure_column("Jour_PC",     type=["numericColumn"],     valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+gb.configure_column("Année_PC",    type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
 
 #APPLIQUER DES COULEURS AUX ZONES NUMERIQUES
 colonnes_numeriques = ["Jour_Euros", "Jour_PC", "Année_Euros", "Année_PC"]
@@ -181,7 +183,7 @@ for col in colonnes_numeriques:
         } else {
             return { color: 'blue', fontWeight: 'bold' };          }    }      """)
 
-    #   APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
+    #APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
     gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
     gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
     gb.configure_column("Date", cellStyle=valeur_montant_style_js)
@@ -189,6 +191,7 @@ for col in colonnes_numeriques:
 #   **********************
 #   Cacher la colonne "Date"
     gb.configure_column("Date", hide=True)
+    gb.configure_column("Montant", hide=True)
 
 #ACTIVER LES OPTIONS
 grid_options = gb.build()
