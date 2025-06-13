@@ -82,7 +82,7 @@ valeurs = [
     ('FR0000131104', 'BNP (2)',           28, 1),
     ('US11135F1012', 'BROADCOM',          73, x_cours_dollar),
     ('FR0000121667', 'ESSILOR',           34, 1),
-    ('DE0005810055', 'DEUTSCHE BORSE',    42, 1),
+    ('DE0005810055', 'DEUTS BORSE',       42, 1),
     ('FR0000052292', 'HERMES',             4, 1),
     ('ES0144580Y14', 'IBERDROLA',        712, 1),
     ('IT0003856405', 'LEONARDO',         142, 1),
@@ -166,7 +166,7 @@ gb.configure_column("Année_PC", width=100)
 gb.configure_column(
     "Valeur",
     width=120,
-    maxWidth=180,
+    maxWidth=200,
     resizable=False,
     cellStyle=JsCode("""
         function(params) {
@@ -174,7 +174,7 @@ gb.configure_column(
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                maxWidth: '120px'
+                maxWidth: '160px'
             };
         }
     """),
