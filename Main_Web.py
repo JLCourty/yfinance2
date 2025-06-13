@@ -162,6 +162,31 @@ gb.configure_column("Jour_PC", width=100)
 gb.configure_column("Année_Euro", width=100)
 gb.configure_column("Année_PC", width=100)
 
+#VENDREDO
+gb.configure_column(
+    "Valeur",
+    width=120,
+    maxWidth=180,
+    resizable=False,
+    cellStyle=JsCode("""
+        function(params) {
+            return {
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '120px'
+            };
+        }
+    """),
+    tooltipField="Valeur" )
+
+
+#VENDREDI
+
+
+
+
+
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
 #gb.configure_column("Montant",     type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
 #gb.configure_column("Jour_Euro",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'}                     )")
