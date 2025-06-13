@@ -10,8 +10,8 @@ import yfinance as yf
 #st.set_page_config(layout="wide")
 
 #CALCULER LA RESERVE
-t_reserves = 52700 + 36600 - 2380   # TOTAL
-x_version = "- Version du 1206"
+t_reserves = 52970 + 36600 - 2380   # TOTAL
+x_version = "- Version du 1506"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(val):
@@ -72,37 +72,37 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-    ('FR0000120404', 'ACCOR',       214, 1),
-    ('FR0000120404', 'ACCOR (2)',    45, 1),
-    ('NL0000235190', 'AIRBUS',       95, 1),
-    ('GOOGL',        'ALPHABET',     79, x_cours_dollar),
-    ('US0231351067', 'AMAZON',       52, x_cours_dollar),
-    ('NL0010273215', 'ASML',         18, 1),
-    ('NL0010273215', 'ASML (2)',      3, 1),
-    ('FR0000131104', 'BNP (2)',      28, 1),
-    ('US11135F1012', 'BROADCOM',     73, x_cours_dollar),
-    ('FR0000121667', 'ESSILOR',      34, 1),
-    ('DE0005810055', 'DEUTSC BORSE', 42, 1),
-    ('FR0000052292', 'HERMES',        4, 1),
-    ('ES0144580Y14', 'IBERDROLA',   712, 1),
-    ('IT0003856405', 'LEONARDO',    142, 1),
-    ('FR0000121014', 'LVMH',          5, 1),
-    ('US5949181045', 'MICROSOFT',    48, x_cours_dollar),
-    ('US64110L1061', 'NETFLIX',      10, x_cours_dollar),
-    ('US67066G1040', 'NVDIA',       160, x_cours_dollar),
-    ('US6974351057', 'PALO ALTO',    56, x_cours_dollar),
-    ('DE0007030009', 'RHEINMETALL',  10, 1),
-    ('US79466L3024', 'SALESFORCE',   46, x_cours_dollar),
-    ('DE0007164600', 'SAP ',         34, 1),
-    ('DE0007164600', 'SAP (2)',       8, 1),  # MAI 2025
-    ('FR0000121329', 'THALES',       24, 1),
-    ('FR0000120271', 'TOTAL ENERGIE', 111, 1),
+    ('FR0000120404', 'ACCOR',            214, 1),
+    ('FR0000120404', 'ACCOR (2)',         45, 1),
+    ('NL0000235190', 'AIRBUS',            95, 1),
+    ('GOOGL',        'ALPHABET',          79, x_cours_dollar),
+    ('US0231351067', 'AMAZON',            52, x_cours_dollar),
+    ('NL0010273215', 'ASML',              18, 1),
+    ('NL0010273215', 'ASML (2)',           3, 1),
+    ('FR0000131104', 'BNP (2)',           28, 1),
+    ('US11135F1012', 'BROADCOM',          73, x_cours_dollar),
+    ('FR0000121667', 'ESSILOR',           34, 1),
+    ('DE0005810055', 'DEUTSCHE BORSE',    42, 1),
+    ('FR0000052292', 'HERMES',             4, 1),
+    ('ES0144580Y14', 'IBERDROLA',        712, 1),
+    ('IT0003856405', 'LEONARDO',         142, 1),
+    ('FR0000121014', 'LVMH (2)',           5, 1),
+    ('US5949181045', 'MICROSOFT',         48, x_cours_dollar),
+    ('US64110L1061', 'NETFLIX',           10, x_cours_dollar),
+    ('US67066G1040', 'NVDIA',            160, x_cours_dollar),
+    ('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
+    ('DE0007030009', 'RHEINMETALL',       10, 1),
+    ('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
+    ('DE0007164600', 'SAP ',              34, 1),
+    ('DE0007164600', 'SAP (2)',            8, 1),  # MAI 2025
+    ('FR0000121329', 'THALES',            24, 1),
+    ('FR0000120271', 'TOTAL ENERGIE',    111, 1),
     ('FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),
-    ('US92826C8394', 'VISA', 40, x_cours_dollar),
-    ('FR0007054358', 'ETF STOXX 50', 1543, 1),
-    ('LU3038520774', 'ETF AMUNDI DEF (2)', 360, 1),
-    ('FR0010315770', 'ETF MSCI', 305, 1),
-    ('LU1829221024', 'ETF NASDAQ', 130, 1)]
+    ('US92826C8394', 'VISA',              40, x_cours_dollar),
+    ('FR0007054358', 'ETF STOXX 50',    1543, 1),
+    ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
+    ('FR0010315770', 'ETF MSCI',         305, 1),
+    ('LU1829221024', 'ETF NASDAQ',       130, 1)]
 
 #CHARGEMENT DES DONNEES
 for code, nom, qte, devise in valeurs:
