@@ -92,7 +92,7 @@ valeurs = [
     ('DE0007030009', 'RHEINMETALL',       10, 1),
     ('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
     ('DE0007164600', 'SAP ',              34, 1),
-    ('DE0007164600', 'SAP (2)',            8, 1),  # MAI 2025
+    ('DE0007164600', 'SAP (2)',            8, 1),
     ('FR0000121329', 'THALES',            24, 1),
     ('FR0000120271', 'TOTAL ENERGIE',    111, 1),
     ('FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),
