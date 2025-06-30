@@ -35,7 +35,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     x_ticker = yf.Ticker(x_code_valeur)
     data = x_ticker.history(start="2025-01-02")['Close']
     if data.empty:
-        st.warning(f"Données absentes pour {x_nom_valeur}")
+        st.warning(f"Données absentes pggggour {x_nom_valeur}")
         return
 
 #
