@@ -6,8 +6,7 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
-#ECRAN TOTAL
-#st.set_page_config(layout="wide")
+
 
 #CALCULER LA RESERVE
 t_reserves = 52970 + 36600 - 2380   # TOTAL
