@@ -117,7 +117,7 @@ total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 
 
-st.warning(total_prix)
+st.warning(total_prix+t_reserves)
 
 #AFFICHER LE TITRE DES GAINS ET PERTES
 if total_prog > 0:
