@@ -6,11 +6,10 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
-
-
 #CALCULER LA RESERVE
 t_reserves = 52970 + 36600 - 2380   # TOTAL
 x_version = "- Version du 1506"
+st.warning(t_reserves)
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(val):
