@@ -99,7 +99,7 @@ valeurs = [
     ('FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),
     ('US92826C8394', 'VISA',              40, x_cours_dollar),
     ('FR0007054358', 'ETF STOXX 50',    1543, 1),
-    ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
+   # ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
     ('FR0010315770', 'ETF MSCI',         305, 1),
     ('LU1829221024', 'ETF NASDAQ',       130, 1)]
 
