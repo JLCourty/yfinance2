@@ -72,6 +72,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
     ('FR0000120404', 'ACCOR',            214, 1),
+('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
     ('FR0000120404', 'ACCOR (2)',         45, 1),
     ('NL0000235190', 'AIRBUS',            95, 1),
     ('GOOGL',        'ALPHABET',          79, x_cours_dollar),
