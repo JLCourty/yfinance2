@@ -9,7 +9,7 @@ import yfinance as yf
 #CALCULER LA RESERVE
 t_reserves = 52970 + 36600 - 2380   # TOTAL
 x_version = "- Version du 1506"
-st.warning(t_reserves)
+#st.warning(t_reserves)
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(val):
@@ -115,6 +115,9 @@ df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).rese
 #TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
+
+
+st.warning(total_prix)
 
 #AFFICHER LE TITRE DES GAINS ET PERTES
 if total_prog > 0:
