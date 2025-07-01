@@ -36,8 +36,8 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}")
         return
-    else:
-        st.warning(x_code_valeur)
+    #lse:
+        #st.warning(x_code_valeur)
 #
     t_der_date = data.index[-1].strftime("%d/%m/%Y")
     t_label_date = "" if x_date_jour == t_der_date else "Hier"
