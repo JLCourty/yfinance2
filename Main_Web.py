@@ -50,7 +50,10 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
     # MONTANT DE l'ACTION EN Euro **********  OK
     t_mt_action = t_close * x_qte / x_currency
-    st.warning(x_nom_valeur+"-"+str(t_mt_action))
+    st.warning(x_nom_valeur+"-"+str(t_close))
+
+
+    
     # GAINS OU PERTES DU JOUR EN DOLLAR   (CORRIGE EN Euro)
     t_jour_Euro = ((t_close - t_open) * x_qte) / x_currency
 
