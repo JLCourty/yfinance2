@@ -32,7 +32,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #
     x_ticker = yf.Ticker(x_code_valeur)
-    data = x_ticker.history(start="2025-07-01")['Close']
+    data = x_ticker.history(start="2025-06-01")['Close']
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}")
         return
@@ -42,7 +42,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     t_der_date = data.index[-1].strftime("%d/%m/%Y")
     t_label_date = "" if x_date_jour == t_der_date else "Hier"
     t_close_1janv = data.iloc[0]  # COURS AU 1ER JANVIER EN DOLLAR
-    t_open = data.iloc[-1]
+    t_open = data.iloc[-2]
     t_close = data.iloc[-1]
 
     # GAINS OU PERTES DU JOUR EN PC **********  OK
