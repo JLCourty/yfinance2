@@ -7,9 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 52970 + 36600 - 2380   # TOTAL
-x_version = "- Version du 3006"
-#st.warning(t_reserves)
+t_reserves = 53000 + 34000   # TOTAL
+x_version = "- Version du 0207"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(val):
@@ -32,50 +31,37 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #
     x_ticker = yf.Ticker(x_code_valeur)
-    data = x_ticker.history(start="2025-06-21")['Close']
+    data = x_ticker.history(start="2025-01-02")['Close']
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}")
         return
-    #lse:
-        #st.warning(x_code_valeur)
+
 #
     t_der_date = data.index[-1].strftime("%d/%m/%Y")
     t_label_date = "" if x_date_jour == t_der_date else "Hier"
-    t_close_1janv = data.iloc[0]  # COURS AU 1ER JANVIER EN DOLLAR
+    #t_close_1janv = data.iloc[0]  # COURS AU 1ER JANVIER EN DOLLAR
     t_open = data.iloc[-2]
     t_close = data.iloc[-1]
+
+#   Suite incident Londres
+    #print(x_nom_valeur,t_open,t_close)
 
     # GAINS OU PERTES DU JOUR EN PC **********  OK
     t_jour_pc = (t_close - t_open) / t_open
 
     # MONTANT DE l'ACTION EN Euro **********  OK
     t_mt_action = t_close * x_qte / x_currency
-    #st.warning(x_nom_valeur+"-"+str(t_close))
 
-
-    
-    # GAINS OU PERTES DU JOUR EN DOLLAR   (CORRIGE EN Euro)
+    # GAINS OU PERTES DU JOUR EN EUROS
     t_jour_Euro = ((t_close - t_open) * x_qte) / x_currency
 
-    # GAINS ANNEE EN PC ET EN Euro (ADAPTE AU DOLLAR)
-    if x_currency==1:
-        t_annee_pc = (   (t_close) - (t_close_1janv)    ) / (t_close_1janv )
-        t_annee_Euro = (   (t_close) - (t_close_1janv)      ) * x_qte
-    else:
-        t_annee_pc = ((t_close / x_currency) - (t_close_1janv) / 1.04) / (t_close_1janv / 1.04)
-        t_annee_Euro = ((t_close / x_currency) - (t_close_1janv / 1.04)) * x_qte
-
-    # CHARGER LE TABLEAU AVEC LES 7 COLONNES TELLES QU'ELLES SERONT AFFICHEES
-    #liste_donnees.append( [t_label_date, x_nom_valeur, t_mt_action,              t_jour_pc, int(t_jour_Euro), t_annee_pc, int(t_annee_Euro)])
-
-    #DEFINIR LES COLONNES QUI COMPOSERONT LE TABLEAU
+    #DEFINIR LES COLONNES QUI DU TABLEAU
     nom_et_montant = f"{x_nom_valeur} - {format_euro(t_mt_action)}"
-    liste_donnees.append([t_label_date, nom_et_montant, t_mt_action,  t_jour_pc, int(t_jour_Euro),   t_annee_pc, int(t_annee_Euro)       ])
+    liste_donnees.append([t_label_date, nom_et_montant, t_mt_action,  t_jour_pc, int(t_jour_Euro)      ])
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
     ('FR0000120404', 'ACCOR',            214, 1),
-('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
     ('FR0000120404', 'ACCOR (2)',         45, 1),
     ('NL0000235190', 'AIRBUS',            95, 1),
     ('GOOGL',        'ALPHABET',          79, x_cours_dollar),
@@ -103,6 +89,7 @@ valeurs = [
     ('FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),
     ('US92826C8394', 'VISA',              40, x_cours_dollar),
     ('FR0007054358', 'ETF STOXX 50',    1543, 1),
+    ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
     ('FR0010315770', 'ETF MSCI',         305, 1),
     ('LU1829221024', 'ETF NASDAQ',       130, 1)]
 
@@ -111,7 +98,7 @@ for code, nom, qte, devise in valeurs:
     Get_tout(code, nom, x_date_jour, qte, devise)
 
 #TITRES DES COLONNES
-df = pd.DataFrame(liste_donnees,columns=["Date", "Valeur", "Montant", "Jour_PC", "Jour_Euro", "Année_PC", "Année_Euro"])
+df = pd.DataFrame(liste_donnees,columns=["Date", "Valeur", "Montant", "Jour_PC", "Jour_Euro"])
 
 #TRI PRINCIPAL
 df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).reset_index(drop=True)
@@ -119,9 +106,6 @@ df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).rese
 #TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
-
-
-#t.warning(total_prix+t_reserves)
 
 #AFFICHER LE TITRE DES GAINS ET PERTES
 if total_prog > 0:
@@ -164,48 +148,23 @@ gb.configure_column("Valeur", width=100)
 gb.configure_column("Montant", width=60)
 gb.configure_column("Jour_Euro", width=100)
 gb.configure_column("Jour_PC", width=100)
-gb.configure_column("Année_Euro", width=100)
-gb.configure_column("Année_PC", width=100)
 
-#VENDREDO
+#VENDREDI
 gb.configure_column(
     "Valeur",
-    width=120,
-    maxWidth=200,
+    width=120, maxWidth=200,
     resizable=False,
     cellStyle=JsCode("""
         function(params) {
-            return {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                maxWidth: '160px'
-            };
-        }
-    """),
-    tooltipField="Valeur" )
-
-
-#VENDREDI
-
-
-
-
+            return {whiteSpace: 'nowrap', overflow: 'hidden',
+            textOverflow: 'ellipsis', maxWidth: '160px'}; } """),tooltipField="Valeur" )
 
 #APPLIQUER DES FORMATAGES AUX COLONNES NUMERIQUES
-#gb.configure_column("Montant",     type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-#gb.configure_column("Jour_Euro",  type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'}                     )")
-
-gb.configure_column( "Jour_Euro", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0})")
-gb.configure_column( "Année_Euro",type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0})")
-
-
-#gb.configure_column("Année_Euro", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})")
-gb.configure_column("Jour_PC",     type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
-gb.configure_column("Année_PC",    type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
+gb.configure_column("Jour_Euro", type=["numericColumn"],valueFormatter="x.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0})")
+gb.configure_column("Jour_PC",   type=["numericColumn"],valueFormatter="(x * 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %'")
 
 #APPLIQUER DES COULEURS AUX ZONES NUMERIQUES
-colonnes_numeriques = ["Jour_Euro", "Jour_PC", "Année_Euro", "Année_PC"]
+colonnes_numeriques = ["Jour_Euro", "Jour_PC"]
 for col in colonnes_numeriques:
     gb.configure_column(col, cellStyle=cell_style_js)
     valeur_montant_style_js = JsCode("""
@@ -216,9 +175,7 @@ for col in colonnes_numeriques:
             return { color: 'blue', fontWeight: 'bold' };          }    }      """)
 
     #APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
-    #gb.configure_column("Montant", cellStyle=valeur_montant_style_js)
     gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
-    #gb.configure_column("Date", cellStyle=valeur_montant_style_js)
 
 #   CACHER DEUX COLONNES
     gb.configure_column("Date", hide=True)
