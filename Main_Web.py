@@ -37,7 +37,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
     x_ticker = yf.Ticker(x_code_valeur)
-    data = x_ticker.history(start="2025-01-02")['Close']
+    data = x_ticker.history(start="2025-06-06")['Close']
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}")
         return
@@ -115,18 +115,18 @@ total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 #AFFICHER LE TITRE DES GAINS ET PERTES
 if total_prog > 0:
     st.markdown(
-        f"<div style='margin: 0; padding: 0;'>"  f"<p style='margin: 0; font-size: 32px;'>"
-        f"<strong>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;&nbsp; "
-        f"<span style='color: green;'>- Gains : +{format_euro(total_prog)}</span>" f"</p>"
+    f"<div style='margin: 0; padding: 0;'>"  f"<p style='margin: 0; font-size: 32px;'>"
+    f"<strong>📊 Total : {format_euro(total_prix+t_reserves)} &nbsp;&nbsp; "
+        f"<span style='color: green;'>- Gains : {format_euro(total_prog)}</span>" f"</p>"
         f"<p style='margin: 0; font-size: 24px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}    {x_version}</p>"        f"</div>",
+        f"Le {x_date_jour} à {t_heure_actuelle} {x_version}</p>"        f"</div>",
         unsafe_allow_html=True)
 
 #TITRES DES PERTES
 else:
     st.markdown(
-        f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
-        f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
+    f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
+    f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
         f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
         f"</p><p style='margin-top: 10px; font-size: 16px;'>"
         f"Le {x_date_jour} à {t_heure_actuelle}  {x_version} </p>",
