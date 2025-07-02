@@ -23,7 +23,7 @@ def format_euro(num_brut):
 date_jour = pd.Timestamp.today()
 x_date_jour = datetime.now().strftime("%d/%m/%Y")
 t_heure_actuelle = datetime.now().strftime("%H:%M")
-st.warning(f"Date du jour {x_date_jour}")
+#st.warning(f"Date du jour {x_date_jour}")
 
 #CALCULER LE COURS DU DOLLAR
 usd_eur_data = yf.Ticker("EURUSD=X")
@@ -42,11 +42,14 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
         st.warning(f"Données absentes pour {x_nom_valeur}")
         return
 
+    t_open  = data.iloc[-2]
+    t_close = data.iloc[-1]
+
+
 #
     t_der_date = data.index[-1].strftime("%d/%m/%Y")
     t_label_date = "" if x_date_jour == t_der_date else "Hier"
-    t_open  = data.iloc[-2]
-    t_close = data.iloc[-1]
+
 
 #   Suite incident Londres
     #print(x_nom_valeur,t_open,t_close)
@@ -60,14 +63,14 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     # GAINS OU PERTES DU JOUR EN EUROS
     t_jour_Euro = ((t_close - t_open) * x_qte) / x_currency
 
-    #DEFINIR LES COLONNES QUI DU TABLEAU
+    #DEFINIR LES COLONNES DU TABLEAU
     nom_et_montant = f"{x_nom_valeur} - {format_euro(t_mt_action)}"
     liste_donnees.append([t_label_date,nom_et_montant,t_mt_action,t_jour_pc,int(t_jour_Euro)])
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-    ('FR0000120404', 'ACCOR',            214, 1),
-    ('FR0000120404', 'ACCOR (2)',         45, 1),
+('FR0000120404', 'ACCOR',            214, 1),
+('FR0000120404', 'ACCOR (2)',         45, 1),
     ('NL0000235190', 'AIRBUS',            95, 1),
     ('GOOGL',        'ALPHABET',          79, x_cours_dollar),
     ('US0231351067', 'AMAZON',            52, x_cours_dollar),
@@ -115,22 +118,22 @@ total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 #AFFICHER LE TITRE DES GAINS ET PERTES
 if total_prog > 0:
     st.markdown(
-    f"<div style='margin: 0; padding: 0;'>"  f"<p style='margin: 0; font-size: 32px;'>"
-    f"<strong>📊 Total : {format_euro(total_prix+t_reserves)} &nbsp;&nbsp; "
-        f"<span style='color: green;'>- Gains : {format_euro(total_prog)}</span>" f"</p>"
-        f"<p style='margin: 0; font-size: 24px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle} {x_version}</p>"        f"</div>",
-        unsafe_allow_html=True)
+    f"<div style='margin: 0; padding: 0;'>"  f"<p style='margin: 0; font-size: 24px;'>"
+    f"<strong>📊 Total : {format_euro(  round( total_prix+t_reserves)  )} &nbsp;&nbsp; "
+    f"<span style='color: green;'>- Gains : {format_euro(total_prog)}</span>" f"</p>"
+    f"<p style='margin: 0; font-size: 16px;'>"
+    f"Le {x_date_jour} à {t_heure_actuelle} {x_version}</p>"        f"</div>",
+    unsafe_allow_html=True)
 
 #TITRES DES PERTES
 else:
     st.markdown(
-    f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
-    f"<strong><span style='color: blue;'>📊 Total : {format_euro(total_prix + t_reserves)} &nbsp;"
-        f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
-        f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"Le {x_date_jour} à {t_heure_actuelle}  {x_version} </p>",
-        unsafe_allow_html=True)
+    f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 24px;'>"
+    f"<strong><span style='color: blue;'>📊 Total : {format_euro(  round(  total_prix + t_reserves)   )} &nbsp;"
+    f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
+    f"</p><p style='margin-top: 10px; font-size: 16px;'>"
+    f"Le {x_date_jour} à {t_heure_actuelle}  {x_version} </p>",
+    unsafe_allow_html=True)
 
 #DEFINIR LES COULEURS DES RUBRIQUES NUMERIQUES DANS LA LISTE exe
 cell_style_js = JsCode("""
