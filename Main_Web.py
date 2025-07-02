@@ -8,16 +8,22 @@ import yfinance as yf
 
 #CALCULER LA RESERVE
 t_reserves = 53000 + 34000   # TOTAL
-x_version = "- Version du 0207"
+x_version = "- Version du 0507"
 
 #FORMAT NUMERIQUE EN EURO
-def format_euro(val):
-    return f"{val:,.2f} €".replace(",", " ").replace(".", ",")
+#def format_euroXX(val):
+#    return f"{val:,.2f} €".replace(",", " ").replace(".", ",")
 
-# 🔹 Date et heure actuelles
+def format_euro(num_brut):
+    num_brut = str("{:,.2f}".format(num_brut).replace(',', ' '))
+    num_brut = num_brut.replace('.00', ' ')
+    return num_brut + " euros"
+
+#DATE ET HEURE ACTUELLE
 date_jour = pd.Timestamp.today()
 x_date_jour = datetime.now().strftime("%d/%m/%Y")
 t_heure_actuelle = datetime.now().strftime("%H:%M")
+st.warning(f"Date du jour {x_date_jour}")
 
 #CALCULER LE COURS DU DOLLAR
 usd_eur_data = yf.Ticker("EURUSD=X")
@@ -29,7 +35,7 @@ liste_donnees =[]
 #FONCTION PRINCIPALE DE CALCUL DES DONNEES
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
-#
+#   CHERCHER LE TICKER
     x_ticker = yf.Ticker(x_code_valeur)
     data = x_ticker.history(start="2025-01-02")['Close']
     if data.empty:
@@ -39,17 +45,16 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 #
     t_der_date = data.index[-1].strftime("%d/%m/%Y")
     t_label_date = "" if x_date_jour == t_der_date else "Hier"
-    #t_close_1janv = data.iloc[0]  # COURS AU 1ER JANVIER EN DOLLAR
-    t_open = data.iloc[-2]
+    t_open  = data.iloc[-2]
     t_close = data.iloc[-1]
 
 #   Suite incident Londres
     #print(x_nom_valeur,t_open,t_close)
 
     # GAINS OU PERTES DU JOUR EN PC **********  OK
-    t_jour_pc = (t_close - t_open) / t_open
+    t_jour_pc = (t_close-t_open) / t_open
 
-    # MONTANT DE l'ACTION EN Euro **********  OK
+    # MONTANT DE l'ACTION EN EUROS  **********  OK
     t_mt_action = t_close * x_qte / x_currency
 
     # GAINS OU PERTES DU JOUR EN EUROS
@@ -57,7 +62,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
     #DEFINIR LES COLONNES QUI DU TABLEAU
     nom_et_montant = f"{x_nom_valeur} - {format_euro(t_mt_action)}"
-    liste_donnees.append([t_label_date, nom_et_montant, t_mt_action,  t_jour_pc, int(t_jour_Euro)      ])
+    liste_donnees.append([t_label_date,nom_et_montant,t_mt_action,t_jour_pc,int(t_jour_Euro)])
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
