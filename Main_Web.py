@@ -7,14 +7,14 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 53000 + 34000   # TOTAL
+t_reserves = 49420 + 2553  + 34000   # TOTAL
 x_version = "- Version du 0507"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
     num_brut = str("{:,.2f}".format(num_brut).replace(',', ' '))
     num_brut = num_brut.replace('.00', ' ')
-    return num_brut + " euros"
+    return num_brut + " €"
 
 #DATE ET HEURE ACTUELLE
 date_jour = pd.Timestamp.today()
@@ -111,11 +111,11 @@ df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).rese
 total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 
-#AFFICHER LE TITRE DES GAINS ET PERTES
+#AFFICHER LE TITRE DES GAINS
 if total_prog > 0:
     st.markdown(
     f"<div style='margin: 0; padding: 0;'>"  f"<p style='margin: 0; font-size: 24px;'>"
-    f"<strong>📊 Total : {format_euro(  round( total_prix+t_reserves)  )} &nbsp;&nbsp; "
+    f"<strong>Total : {format_euro(  round( total_prix+t_reserves)  )} &nbsp;&nbsp; "
     f"<span style='color: green;'>- Gains : {format_euro(total_prog)}</span>" f"</p>"
     f"<p style='margin: 0; font-size: 16px;'>"
     f"Le {x_date_jour} à {t_heure_actuelle} {x_version}</p>"        f"</div>",
