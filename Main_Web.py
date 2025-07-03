@@ -11,9 +11,6 @@ t_reserves = 53000 + 34000   # TOTAL
 x_version = "- Version du 0507"
 
 #FORMAT NUMERIQUE EN EURO
-#def format_euroXX(val):
-#    return f"{val:,.2f} €".replace(",", " ").replace(".", ",")
-
 def format_euro(num_brut):
     num_brut = str("{:,.2f}".format(num_brut).replace(',', ' '))
     num_brut = num_brut.replace('.00', ' ')
@@ -23,7 +20,6 @@ def format_euro(num_brut):
 date_jour = pd.Timestamp.today()
 x_date_jour = datetime.now().strftime("%d/%m/%Y")
 t_heure_actuelle = datetime.now().strftime("%H:%M")
-#st.warning(f"Date du jour {x_date_jour}")
 
 #CALCULER LE COURS DU DOLLAR
 usd_eur_data = yf.Ticker("EURUSD=X")
@@ -37,9 +33,9 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
     x_ticker = yf.Ticker(x_code_valeur)
-    data = x_ticker.history(start="2025-06-06")['Close']
+    data = x_ticker.history(start="2025-06-06")['Close']   # PLANTAGE ICI A LONDRES
     if data.empty:
-        st.warning(f"Données absentes pour {x_nom_valeur}")
+        st.warning(f"Données absentes pour {x_nom_valeur}, vérifier la date")
         return
 
     t_open  = data.iloc[-2]
@@ -47,8 +43,8 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 
 #
-    t_der_date = data.index[-1].strftime("%d/%m/%Y")
-    t_label_date = "" if x_date_jour == t_der_date else "Hier"
+    #t_der_date = data.index[-1].strftime("%d/%m/%Y")
+    t_label_date = "" if x_date_jour == data.index[-1].strftime("%d/%m/%Y") else "Hier"
 
 
 #   Suite incident Londres
@@ -71,35 +67,35 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 valeurs = [
 ('FR0000120404', 'ACCOR',            214, 1),
 ('FR0000120404', 'ACCOR (2)',         45, 1),
-    ('NL0000235190', 'AIRBUS',            95, 1),
-    ('GOOGL',        'ALPHABET',          79, x_cours_dollar),
-    ('US0231351067', 'AMAZON',            52, x_cours_dollar),
-    ('NL0010273215', 'ASML',              18, 1),
-    ('NL0010273215', 'ASML (2)',           3, 1),
-    ('FR0000131104', 'BNP (2)',           28, 1),
-    ('US11135F1012', 'BROADCOM',          73, x_cours_dollar),
-    ('FR0000121667', 'ESSILOR',           34, 1),
-    ('DE0005810055', 'DEUTS BORSE',       42, 1),
-    ('FR0000052292', 'HERMES',             4, 1),
-    ('ES0144580Y14', 'IBERDROLA',        712, 1),
-    ('IT0003856405', 'LEONARDO',         142, 1),
-    ('FR0000121014', 'LVMH (2)',           5, 1),
-    ('US5949181045', 'MICROSOFT',         48, x_cours_dollar),
-    ('US64110L1061', 'NETFLIX',           10, x_cours_dollar),
-    ('US67066G1040', 'NVDIA',            160, x_cours_dollar),
-    ('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
-    ('DE0007030009', 'RHEINMETALL',       10, 1),
-    ('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
-    ('DE0007164600', 'SAP ',              34, 1),
-    ('DE0007164600', 'SAP (2)',            8, 1),
-    ('FR0000121329', 'THALES',            24, 1),
-    ('FR0000120271', 'TOTAL ENERGIE',    111, 1),
-    ('FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),
-    ('US92826C8394', 'VISA',              40, x_cours_dollar),
-    ('FR0007054358', 'ETF STOXX 50',    1543, 1),
-    ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
-    ('FR0010315770', 'ETF MSCI',         305, 1),
-    ('LU1829221024', 'ETF NASDAQ',       130, 1)]
+('NL0000235190', 'AIRBUS',            95, 1),
+('GOOGL',        'ALPHABET',          79, x_cours_dollar),
+('US0231351067', 'AMAZON',            52, x_cours_dollar),
+('NL0010273215', 'ASML',              18, 1),
+('NL0010273215', 'ASML (2)',           3, 1),
+('FR0000131104', 'BNP (2)',           28, 1),
+('US11135F1012', 'BROADCOM',          73, x_cours_dollar),
+('FR0000121667', 'ESSILOR',           34, 1),
+('DE0005810055', 'DEUTS BORSE',       42, 1),
+('FR0000052292', 'HERMES',             4, 1),
+('ES0144580Y14', 'IBERDROLA',        712, 1),
+('IT0003856405', 'LEONARDO',         142, 1),
+('FR0000121014', 'LVMH (2)',           5, 1),
+('US5949181045', 'MICROSOFT',         48, x_cours_dollar),
+('US64110L1061', 'NETFLIX',           10, x_cours_dollar),
+('US67066G1040', 'NVDIA',            160, x_cours_dollar),
+('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
+('DE0007030009', 'RHEINMETALL',       10, 1),
+('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
+('DE0007164600', 'SAP ',              34, 1),
+('DE0007164600', 'SAP (2)',            8, 1),
+('FR0000121329', 'THALES',            24, 1),
+('FR0000120271', 'TOTAL ENERGIE',    111, 1),
+('FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),
+('US92826C8394', 'VISA',              40, x_cours_dollar),
+('FR0007054358', 'ETF STOXX 50',    1543, 1),
+('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
+('FR0010315770', 'ETF MSCI',         305, 1),
+('LU1829221024', 'ETF NASDAQ',       130, 1)]
 
 #CHARGEMENT DES DONNEES
 for code, nom, qte, devise in valeurs:
