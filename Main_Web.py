@@ -48,7 +48,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 
 #   Suite incident Londres
-    #print(x_nom_valeur,t_open,t_close)
+    print(x_nom_valeur,t_open,t_close)
 
     # GAINS OU PERTES DU JOUR EN PC **********  OK
     t_jour_pc = (t_close-t_open) / t_open
