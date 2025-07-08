@@ -8,7 +8,7 @@ import yfinance as yf
 
 #CALCULER LA RESERVE
 t_reserves = 49420 + 2553  +11500 + 34000   # TOTAL
-x_version = "- Version du 0507"
+x_version = "- Version du 1007"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
