@@ -41,14 +41,12 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     t_open  = data.iloc[-2]
     t_close = data.iloc[-1]
 
-
 #
     #t_der_date = data.index[-1].strftime("%d/%m/%Y")
     t_label_date = "" if x_date_jour == data.index[-1].strftime("%d/%m/%Y") else "Hier"
 
-
 #   Suite incident Londres
-    print(x_nom_valeur,t_open,t_close)
+    #rint(x_nom_valeur,t_open,t_close)
 
     # GAINS OU PERTES DU JOUR EN PC **********  OK
     t_jour_pc = (t_close-t_open) / t_open
