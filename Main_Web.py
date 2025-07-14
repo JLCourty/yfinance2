@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import time
 from st_aggrid import AgGrid, GridOptionsBuilder
 from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
@@ -19,7 +20,9 @@ def format_euro(num_brut):
 #DATE ET HEURE ACTUELLE
 date_jour = pd.Timestamp.today()
 x_date_jour = datetime.now().strftime("%d/%m/%Y")
-t_heure_actuelle = datetime.now().strftime("%H:%M")
+#t_heure_actuelle = datetime.now().strftime("%H:%M")
+t_heure_actuelle = time.strftime("%H:%M", time.localtime())
+
 
 #CALCULER LE COURS DU DOLLAR
 usd_eur_data = yf.Ticker("EURUSD=X")
