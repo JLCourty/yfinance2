@@ -9,7 +9,7 @@ import yfinance as yf
 
 #CALCULER LA RESERVE
 t_reserves = 60873 + 2553 -2422 + 34253   # TOTAL
-x_version = "- Version du 1507"
+x_version = "- Version du 1607"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -25,10 +25,10 @@ x_date_jour = datetime.now().strftime("%d/%m/%Y")
 
 
 #*************************
-t_heure_actuelle = datetime.now().strftime("%H:%M")
+t_heure_jour = datetime.now().strftime("%H:%M")
 
 # Étape 1 : Séparer heures et minutes
-heures, minutes = map(int, t_heure_actuelle.split(":"))
+heures, minutes = map(int, t_heure_jour.split(":"))
 
 # Étape 2 : Ajouter 2 heures
 heures += 2
@@ -37,8 +37,8 @@ heures += 2
 heures %= 24
 
 # Résultat formaté
-t_heure_actuelle = f"{heures:02d}:{minutes:02d}"
-print(t_heure_actuelle)  # Donne : 16:25
+t_heure_jour = f"{heures:02d}:{minutes:02d}"
+print(t_heure_jour)  # Donne : 16:25
 
 #**************************
 
@@ -140,7 +140,7 @@ if total_prog > 0:
     f"<strong>Total : {format_euro(  round( total_prix+t_reserves)  )} &nbsp;&nbsp; "
     f"<span style='color: green;'>- Gains : {format_euro(total_prog)}</span>" f"</p>"
     f"<p style='margin: 0; font-size: 16px;'>"
-    f"Le {x_date_jour} à {t_heure_actuelle} {x_version}</p>"        f"</div>",
+    f"Le {x_date_jour} à {t_heure_jour} {x_version}</p>"        f"</div>",
     unsafe_allow_html=True)
 
 #TITRES DES PERTES
@@ -150,7 +150,7 @@ else:
     f"<strong><span style='color: blue;'>📊 Total : {format_euro(  round(  total_prix + t_reserves)   )} &nbsp;"
     f"<strong><span style='color: red;'>- Pertes : {format_euro(total_prog)} &nbsp; "
     f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-    f"Le {x_date_jour} à {t_heure_actuelle}  {x_version} </p>",
+    f"Le {x_date_jour} à {t_heure_jour}  {x_version} </p>",
     unsafe_allow_html=True)
 
 #DEFINIR LES COULEURS DES RUBRIQUES NUMERIQUES DANS LA LISTE exe
