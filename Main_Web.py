@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-#import time
 from st_aggrid import AgGrid, GridOptionsBuilder
 from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
@@ -21,27 +20,13 @@ def format_euro(num_brut):
 date_jour = pd.Timestamp.today()
 x_date_jour = datetime.now().strftime("%d/%m/%Y")
 
-
-
-
-#*************************
-t_heure_jour = datetime.now().strftime("%H:%M")
-
-# Étape 1 : Séparer heures et minutes
+# HEURE DU JOUR TRUQUEE POUR ANDROID
+t_heure_jour = datetime.now().strftime("%H:%M")  # Séparer heures et minutes
 heures, minutes = map(int, t_heure_jour.split(":"))
-
-# Étape 2 : Ajouter 2 heures
-heures += 2
-
-# Étape 3 : Corriger si on dépasse 23h
-heures %= 24
-
-# Résultat formaté
+heures += 2 # Ajouter 2 heures
+heures %= 24 #Corriger si on dépasse 23h
 t_heure_jour = f"{heures:02d}:{minutes:02d}"
-print(t_heure_jour)  # Donne : 16:25
-
-#**************************
-
+#print(t_heure_jour)  # Donne : 16:25
 
 #CALCULER LE COURS DU DOLLAR
 usd_eur_data = yf.Ticker("EURUSD=X")
@@ -132,6 +117,10 @@ df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).rese
 #TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
+
+#JOURNAL
+with open("log_date.txt", "a") as f:
+    f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix) + " - Jour : " + format_euro(total_prog)    +"\n")
 
 #AFFICHER LE TITRE DES GAINS
 if total_prog > 0:
