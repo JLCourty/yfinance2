@@ -8,7 +8,7 @@ import yfinance as yf
 
 #CALCULER LA RESERVE
 t_reserves = 60873 + 2553 -2422 + 34253   # TOTAL
-x_version = "- Version du 1607"
+x_version = "- Version du 1707"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -49,10 +49,8 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     t_close = data.iloc[-1]
 
 
-#
-    #t_der_date = data.index[-1].strftime("%d/%m/%Y")
+#   CALCULER LE LIBELLE DE DATE
     t_label_date = "" if x_date_jour == data.index[-1].strftime("%d/%m/%Y") else "Hier"
-
 
 #   Suite incident Londres
     #print(x_nom_valeur,t_open,t_close)
