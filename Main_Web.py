@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 60873 + 2553 -2422 + 34253   # TOTAL
+t_reserves = (60873 + 2553)     - 2422 + 34253   # TOTAL
 x_version = "- Version du 1707"
 
 #FORMAT NUMERIQUE EN EURO
@@ -44,10 +44,9 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}, vérifier la date")
         return
-
-    t_open  = data.iloc[-2]
-    t_close = data.iloc[-1]
-
+    else:
+        t_open  = data.iloc[-2]
+        t_close = data.iloc[-1]
 
 #   CALCULER LE LIBELLE DE DATE
     t_label_date = "" if x_date_jour == data.index[-1].strftime("%d/%m/%Y") else "Hier"
@@ -70,13 +69,13 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-('FR0000120404', 'ACCOR',            214, 1),
-('FR0000120404', 'ACCOR (2)',         45, 1),
+('FR0000120404', 'ACCOR',            259, 1),   #214
+#('FR0000120404', 'ACCOR (2)',         45, 1),   # 45
 ('NL0000235190', 'AIRBUS',            95, 1),
 ('GOOGL',        'ALPHABET',          79, x_cours_dollar),
 ('US0231351067', 'AMAZON',            52, x_cours_dollar),
-('NL0010273215', 'ASML',              18, 1),
-('NL0010273215', 'ASML (2)',           3, 1),
+('NL0010273215', 'ASML',              21, 1),   # 18
+#'NL0010273215', 'ASML (2)',           3, 1),   # 3
 ('FR0000131104', 'BNP (2)',           28, 1),
 ('US11135F1012', 'BROADCOM',          73, x_cours_dollar),
 ('FR0014004L86', 'DASSAULT AVIATION',  8, 1),
@@ -91,11 +90,11 @@ valeurs = [
 ('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
 ('DE0007030009', 'RHEINMETALL',       10, 1),
 ('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
-('DE0007164600', 'SAP ',              34, 1),
-('DE0007164600', 'SAP (2)',            8, 1),
+('DE0007164600', 'SAP ',              42, 1),   # 34
+#'DE0007164600', 'SAP (2)',            8, 1),   # 8
 ('FR0000121329', 'THALES',            24, 1),
-('FR0000120271', 'TOTAL ENERGIE',    111, 1),
-('FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),
+('FR0000120271', 'TOTAL ENERGIE',    167, 1),   # 111
+#'FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),   #  56
 ('US92826C8394', 'VISA',              40, x_cours_dollar),
 ('FR0007054358', 'ETF STOXX 50',    1543, 1),
 ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
@@ -117,8 +116,8 @@ total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 
 #JOURNAL
-with open("/storage/log_date.txt", "a") as f:
-    f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix) + " - Jour : " + format_euro(total_prog)    +"\n")
+with open("log_date.txt", "a") as f:
+    f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)    +"\n")
 
 #AFFICHER LE TITRE DES GAINS
 if total_prog > 0:
@@ -202,7 +201,7 @@ st_autorefresh(interval=120000, key="refresh")
 
 #PARAMETRES DE TAILLE DU TABLEAU
 hauteur_ligne = 32
-hauteur_totale = len(df_sorted) * hauteur_ligne + 20
+hauteur_totale = len(df_sorted) * hauteur_ligne #+ 20
 
 #UTILE
 grid_response = AgGrid(
