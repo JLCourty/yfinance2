@@ -117,7 +117,7 @@ total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 
 #JOURNAL
-with open("/storage/emulated/0/Documents/log_date.txt", "a") as f:
+with open("/storage/log_date.txt", "a") as f:
     f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix) + " - Jour : " + format_euro(total_prog)    +"\n")
 
 #AFFICHER LE TITRE DES GAINS
