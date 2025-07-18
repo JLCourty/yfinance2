@@ -132,18 +132,7 @@ ligne_log =  x_date_jour + " à " + t_heure_jour + "Total_Prog : " + format_euro
 #st.warning("Mon fichier " + "/storage/emulated/0/Download/log.txt")
 
 
-# Écriture avec vérification
-try:
-    with open(chemin_fichier, "a") as f:
-        f.write(ligne_log)
-    st.warning("✅ Fichier écrit avec succès.")
-#cept FileNotFoundError:
-    #st.warning("❌ Erreur : Dossier introuvable.")
-except PermissionError:
-    st.warning("❌ Erreur : Permission refusée (autorisez l'accès au stockage).")
-except Exception as e:
-    st.warning(f"❌ Erreur inattendue : {e}")
-
+# Écriture avec 
 #****************************************
 
 #log_path = "/storage/emulated/0/Download/log.txt"
