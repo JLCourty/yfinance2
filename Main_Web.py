@@ -129,20 +129,20 @@ chemin_fichier = "/storage/emulated/0/Download/log.txt"
 # Texte à écrire
 ligne_log =  x_date_jour + " à " + t_heure_jour + "Total_Prog : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
 
-st.warning("Mon fichier " + "/storage/emulated/0/Download/log_total_prog.txt")
+st.warning("Mon fichier " + "/storage/emulated/0/Download/log.txt")
 
 
 # Écriture avec vérification
 try:
     with open(chemin_fichier, "a") as f:
         f.write(ligne_log)
-    print("✅ Fichier écrit avec succès.")
+    st.warning("✅ Fichier écrit avec succès.")
 except FileNotFoundError:
-    print("❌ Erreur : Dossier introuvable.")
+    st.warning("❌ Erreur : Dossier introuvable.")
 except PermissionError:
-    print("❌ Erreur : Permission refusée (autorisez l'accès au stockage).")
+    st.warning("❌ Erreur : Permission refusée (autorisez l'accès au stockage).")
 except Exception as e:
-    print(f"❌ Erreur inattendue : {e}")
+    st.warning(f"❌ Erreur inattendue : {e}")
 
 #****************************************
 
