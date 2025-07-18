@@ -137,7 +137,7 @@ try:
     with open(chemin_fichier, "a") as f:
         f.write(ligne_log)
     st.warning("✅ Fichier écrit avec succès.")
-except FileNotFoundError:
+#cept FileNotFoundError:
     #st.warning("❌ Erreur : Dossier introuvable.")
 except PermissionError:
     st.warning("❌ Erreur : Permission refusée (autorisez l'accès au stockage).")
