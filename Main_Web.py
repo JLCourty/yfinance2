@@ -7,11 +7,12 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = (60873 + 2553)     - 2422 + 34253   # TOTAL
+t_reserves = (60873 + 2553)  + 31774  # TOTAL
 x_version = "- Version du 1707"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
+    num_brut = round(num_brut)
     num_brut = str("{:,.2f}".format(num_brut).replace(',', ' '))
     num_brut = num_brut.replace('.00', ' ')
     return num_brut + " €"
@@ -116,8 +117,19 @@ total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 
 #JOURNAL
-with open("log_date.txt", "a") as f:
-    f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)    +"\n")
+#with open("log_date.txt", "a") as f:
+    #f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)    +"\n")
+
+log_path = "/storage/emulated/0/Download/log_prog.txt"
+
+try:
+    with open(log_path , "a", encoding="utf-8") as log_file:
+        ligne_log = "Total_Prog : "+ format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
+        log_file.write(ligne_log)
+except Exception as e:
+    st.error(f"Erreur d'écriture du log : {e}")
+
+
 
 #AFFICHER LE TITRE DES GAINS
 if total_prog > 0:
@@ -184,7 +196,7 @@ for col in colonnes_numeriques:
         if (params.data && params.data.Date === "Hier") {
             return { color: 'blue', fontWeight: 'normal' };
         } else {
-            return { color: 'blue', fontWeight: 'bold' };          }    }      """)
+            return { color: 'blue', fontWeight: 'bold' }; } } """)
 
     #APPLIQUER COULEUR ET GRAS AUX DEUX COLONNES MONTANT ET VALEUR
     gb.configure_column("Valeur", cellStyle=valeur_montant_style_js)
