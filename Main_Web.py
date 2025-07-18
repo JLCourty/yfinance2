@@ -120,7 +120,35 @@ total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 #with open("log_date.txt", "a") as f:
     #f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)    +"\n")
 
+
+#*****************
+from datetime import datetime
+import os
+
+# Chemin du fichier log
+chemin_fichier = "/storage/emulated/0/Download/log_total_prog.txt"
+
+# Texte à écrire
+ligne_log = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " - TOTAL_PROG : 12345\n"
+
+# Écriture avec vérification
+try:
+    with open(chemin_fichier, "a") as f:
+        f.write(ligne_log)
+    print("✅ Fichier écrit avec succès.")
+except FileNotFoundError:
+    print("❌ Erreur : Dossier introuvable.")
+except PermissionError:
+    print("❌ Erreur : Permission refusée (autorisez l'accès au stockage).")
+except Exception as e:
+    print(f"❌ Erreur inattendue : {e}")
+
+#****************************************
+
 log_path = "/storage/emulated/0/Download/log.txt"
+
+
+
 #log_path = "/storage/log.txt"
 
 try:
