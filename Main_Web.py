@@ -129,7 +129,7 @@ chemin_fichier = "/storage/emulated/0/Download/log_total_prog.txt"
 # Texte à écrire
 ligne_log =  x_date_jour + " à " + t_heure_jour + "Total_Prog : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
 
-print("Mon fichier")
+st.warning("Mon fichier " + "/storage/emulated/0/Download/log_total_prog.txt")
 
 
 # Écriture avec vérification
