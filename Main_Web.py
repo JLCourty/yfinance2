@@ -120,8 +120,7 @@ total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 #with open("log_date.txt", "a") as f:
     #f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)    +"\n")
 
-log_path = "/storage/emulated/0/Download/log_prog.txt"
-
+log_path = "/storage/emulated/0/Download/log.txt"
 try:
     with open(log_path , "a", encoding="utf-8") as log_file:
         ligne_log = "Total_Prog : "+ format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
