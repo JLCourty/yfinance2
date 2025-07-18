@@ -123,7 +123,6 @@ total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 
 #*****************
 from datetime import datetime
-import os
 
 # Chemin du fichier log
 chemin_fichier = "/storage/emulated/0/Download/log_total_prog.txt"
@@ -145,18 +144,13 @@ except Exception as e:
 
 #****************************************
 
-log_path = "/storage/emulated/0/Download/log.txt"
-
-
-
-#log_path = "/storage/log.txt"
-
-try:
-    with open(log_path , "a", encoding="utf-8") as log_file:
-        ligne_log = "Total_Prog : "+ format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
-        log_file.write(ligne_log)
-except Exception as e:
-    st.error(f"Erreur d'écriture du log : {e}")
+#log_path = "/storage/emulated/0/Download/log.txt"
+#try:
+#   with open(log_path , "a", encoding="utf-8") as log_file:
+#        ligne_log = "Total_Prog : "+ format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
+#        log_file.write(ligne_log)
+#except Exception as e:
+#    st.error(f"Erreur d'écriture du log : {e}")
 
 
 
