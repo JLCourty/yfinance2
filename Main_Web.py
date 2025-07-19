@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = (60873 + 2553)  + 31774  +32000
+t_reserves = 92300  + 31774  # TOTAL
 x_version = "- Version du 1707"
 
 #FORMAT NUMERIQUE EN EURO
@@ -81,7 +81,6 @@ valeurs = [
 ('US11135F1012', 'BROADCOM',          73, x_cours_dollar),
 ('FR0014004L86', 'DASSAULT AVIATION',  8, 1),
 ('FR0000121667', 'ESSILOR',           34, 1),
-#FR0000052292', 'HERMES',             4, 1),
 ('ES0144580Y14', 'IBERDROLA',        712, 1),
 ('IT0003856405', 'LEONARDO',         142, 1),
 ('FR0000121014', 'LVMH (2)',           5, 1),
@@ -91,8 +90,8 @@ valeurs = [
 ('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
 ('DE0007030009', 'RHEINMETALL',       10, 1),
 ('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
-#'DE0007164600', 'SAP ',              42, 1),   # 34
-#'DE0007164600', 'SAP (2)',            8, 1),   # 8
+#('DE0007164600', 'SAP ',              42, 1),   # 34
+('DE0007164600', 'SAP (2)',            8, 1),   # 8
 ('FR0000121329', 'THALES',            24, 1),
 ('FR0000120271', 'TOTAL ENERGIE',    167, 1),   # 111
 #'FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),   #  56
@@ -100,6 +99,8 @@ valeurs = [
 ('FR0007054358', 'ETF STOXX 50',    1543, 1),
 ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
 ('FR0010315770', 'ETF MSCI',         305, 1)]
+#'LU1829221024', 'ETF NASDAQ',       130, 1)]
+#'FR0000052292', 'HERMES',             4, 1),
 
 #CHARGEMENT DES DONNEES
 for code, nom, qte, devise in valeurs:
@@ -116,33 +117,21 @@ total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
 
 #JOURNAL
-#with open("log_date.txt", "a") as f:
-    #f.write(  x_date_jour + " à " + t_heure_jour + " - Montant : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)    +"\n")
-
-
-#*****************
-
-# Chemin du fichier log
-chemin_fichier = "/storage/emulated/0/Download/log.txt"
-
-# Texte à écrire
-ligne_log =  x_date_jour + " à " + t_heure_jour + "Total_Prog : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
+#chemin_fichier = "/storage/emulated/0/Download/log.txt"
+#ligne_log =  x_date_jour + " à " + t_heure_jour + "Total_Prog : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
 
 #st.warning("Mon fichier " + "/storage/emulated/0/Download/log.txt")
-
-
-# Écriture avec 
-#****************************************
-
-#log_path = "/storage/emulated/0/Download/log.txt"
+# Écriture avec vérification
 #try:
-#   with open(log_path , "a", encoding="utf-8") as log_file:
-#        ligne_log = "Total_Prog : "+ format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
-#        log_file.write(ligne_log)
+    #with open(chemin_fichier, "a") as f:
+        #f.write(ligne_log)
+    #st.warning("✅ Fichier écrit avec succès.")
+#except FileNotFoundError:
+    #st.warning("❌ Erreur : Dossier introuvable.")
+#except PermissionError:
+    #st.warning("❌ Erreur : Permission refusée (autorisez l'accès au stockage).")
 #except Exception as e:
-#    st.error(f"Erreur d'écriture du log : {e}")
-
-
+    #st.warning(f"❌ Erreur inattendue : {e}")
 
 #AFFICHER LE TITRE DES GAINS
 if total_prog > 0:
