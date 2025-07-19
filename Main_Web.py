@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = (60873 + 2553)  + 31774  # TOTAL
+t_reserves = (60873 + 2553)  + 31774  +32000
 x_version = "- Version du 1707"
 
 #FORMAT NUMERIQUE EN EURO
