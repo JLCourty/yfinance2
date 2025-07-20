@@ -108,7 +108,7 @@ valeurs = [
 #('FR0000124141','FR - Veolia Environnement'),
 #('FR0000125486','FR - Vinci'),
 #('FR0000127771','FR - Vivendi'),
-#('FR0012757854','FR - SPIE'),
+('FR0012757854','FR - SPIE'),
 
 #('DE000A1EWWW0','EU - Adidas'),
 #('NL0012969182','EU - Adyen'),
