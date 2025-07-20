@@ -54,24 +54,21 @@ def Get_tout(x_code_valeur,x_nom_valeur):
         liste_donnees.append([
             x_label_date,
             x_nom_valeur,
-            #str(Janvier_PC)+"%",
-            Janvier_PC,
-            format_euro(t_open_jour),format_euro(t_close_jour),round(variation_pct, 2) ])
+            Janvier_PC])
 
 #CHAINE DES VALEURS FRANCAISES
 valeurs = [
+('LU1829221024','ETF NASDAQ'),
+('FR0000052292','HERMES'),
+('DE000RENK730','RENK ALLEMAND'),
+('FR0014003TT8','DASSAULT SYSTEMS'),
+('US45168D1046','IDEXX'),
+('US8716071076','SYSNOPSYS'),
+('US68389X1054','ORACLE'),
+('FR0010307819','LEGRAND'),
+
 #()'FR0000131104','FR - BNP'),
 #('FR0000130809','FR - Soc Générale'),
-
-('LU1829221024', 'ETF NASDAQ'),
-('FR0000052292', 'HERMES'),
-('DE000RENK730','FR - Renk Allemand'),
-('FR0014003TT8','FR - Dassault Systemes'),
-
-#IDEXX
-#ORACLE
-#synopsys
-
 #('FR0000120404','FR - Accor'),
 #('FR0000120073','FR - Air Liquide'),
 #('NL0000235190','FR - Airbus'),
@@ -92,7 +89,7 @@ valeurs = [
 
 #('FR0000121485','FR - Kering'),
 #('FR0000120321','FR - LOréal'),
-('FR0010307819','FR - Legrand'),
+
 #('FR0000121014','FR - LVMH'),
 #('FR001400AJ45','FR - Michelin'),
 #('FR0000120693','FR - Pernod Ricard'),
@@ -183,12 +180,12 @@ for code, nom in valeurs:
     Get_tout(code,nom)
 
 #TITRES DES COLONNES DU TABLEAU
-df = pd.DataFrame(liste_donnees,columns=["Date", "Valeur", "PC_2025","Open", "Close", "PC_Jour"])
+df = pd.DataFrame(liste_donnees,columns=["Date", "Valeur", "PC_2025"])
 
 #TRI SUR LE PC DU JOUR
-df_sorted = df.sort_values(by="PC_Jour", ascending=False).reset_index(drop=True)
+df_sorted = df.sort_values(by="Valeur", ascending=False).reset_index(drop=True)
 
-nombre_de_lignes = len(df_sorted)
+nombre_de_lignes = 0
 #print("Nombre de lignes :", nombre_de_lignes)
 
 st.markdown(
@@ -211,7 +208,7 @@ function(params) {
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
 
 #fonction pour formater les cellules
-gb.configure_column("Open", cellStyle=cell_style_js)
+#gb.configure_column("Op en", cellStyle=cell_style_js)
 
 cell_style_pc2025 = JsCode("""
 function(params) {
