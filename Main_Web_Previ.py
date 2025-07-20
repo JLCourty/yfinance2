@@ -172,7 +172,7 @@ valeurs = [
 #('US98138H1014','US - Workda'),
 #('US00724F1012','US - Adobe Inc'),
 #('US09857L1089','US - Booking Holdings'),
-('LU0908500753','ETF STOXX Eur ") ]
+('LU0908500753','ETF STOXX Eur ') ]
 
 #LANCEMENT DE LA FONCTION SUR LA CHAINE DES VALEURS
 for code, nom in valeurs:
