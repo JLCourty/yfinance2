@@ -44,7 +44,16 @@ def Get_tout(x_code_valeur,x_nom_valeur):
         #EXTRAIRE LES COURS OUVERTURE ET DE FERMETURE
         vJanvier = data.iloc[0]         # 15 JANVIER
         t_close_jour = data.iloc[-1]
-        t_open_jour = data.iloc[-2]
+        #t_op en_jour = data.iloc[-2]
+
+        # Vérification que data a au moins 2 lignes
+        if len(data) >= 2:
+            t_open_jour = data.iloc[-2]
+        else:
+            print("❌ Pas assez de données disponibles pour "+x_nom_valeur)
+            t_open_jour = t_close_jour
+
+        #VARIATION DU JOUR
         variation_pct = ((t_close_jour - t_open_jour) / t_open_jour) * 100
 
         #TRAITER LES VARIATIONS DE 2025
@@ -52,9 +61,7 @@ def Get_tout(x_code_valeur,x_nom_valeur):
 
         #LISTE DES INFOS REELLEMENT AFFICHEES (AVEC LEUR FORMAT)
         liste_donnees.append([
-            x_label_date,
-            x_nom_valeur,
-            Janvier_PC])
+            x_label_date,x_nom_valeur,Janvier_PC,round(variation_pct, 2) ]) # format_euro(t_open_jour),format_euro(t_close_jour),
 
 #CHAINE DES VALEURS FRANCAISES
 valeurs = [
@@ -66,6 +73,7 @@ valeurs = [
 ('US8716071076','SYSNOPSYS'),
 ('US68389X1054','ORACLE'),
 ('FR0010307819','LEGRAND'),
+('FR0012757854','SPIE'),
 
 #()'FR0000131104','FR - BNP'),
 #('FR0000130809','FR - Soc Générale'),
@@ -80,17 +88,13 @@ valeurs = [
 #('FR0000120172','FR - Carrefour'),
 #('FR0000045072','FR - Crédit Agricole'),
 #('FR0000120644','FR - Danone'),
-
 #('FR0014004L86','FR - Dassault Aviation'),
 #('FR0010908533','FR - Edenred'),
 #('FR0010208488','FR - Engie'),
 #('FR0000121667','FR - Essilor Luxottica'),
 #('FR0014000MR3','FR - Eurofins Scientific'),
-
 #('FR0000121485','FR - Kering'),
 #('FR0000120321','FR - LOréal'),
-
-#('FR0000121014','FR - LVMH'),
 #('FR001400AJ45','FR - Michelin'),
 #('FR0000120693','FR - Pernod Ricard'),
 #('FR0000130577','FR - Publicis'),
@@ -102,13 +106,10 @@ valeurs = [
 #('NL00150001Q9','FR - Stellantis'),
 #('NL0000226223','FR - ST Microelectronics'),
 #('FR0000051807','FR - Teleperformance'),
-#('FR0000121329','FR - Thales'),
-#('FR0000120271','FR - Total Energies'),
 #('FR001400J770','FR - Unibail-Rodamco'),
 #('FR0000124141','FR - Veolia Environnement'),
 #('FR0000125486','FR - Vinci'),
 #('FR0000127771','FR - Vivendi'),
-('FR0012757854','FR - SPIE'),
 
 #('DE000A1EWWW0','EU - Adidas'),
 #('NL0012969182','EU - Adyen'),
@@ -137,7 +138,7 @@ valeurs = [
 #('DE0008430026','EU - Munich Re'),
 #('FI0009000681','EU - Nokia'),
 #('NL0013654783','EU - Prosus'),
-#('DE0007164600','EU - SAP'),
+
 #('DE0007236101','EU - Siemens'),
 #('IT0005239360','EU - UniCredit'),
 #('DE0007664039','EU - Volkswagen Group'),
@@ -172,43 +173,30 @@ valeurs = [
 #('US98138H1014','US - Workda'),
 #('US00724F1012','US - Adobe Inc'),
 #('US09857L1089','US - Booking Holdings'),
-('LU0908500753','ETF STOXX Eur ') ]
+#('LU0908500753','ETF STOXX Eur 600'),
+('DE0007164600','SAP')]
 
 #LANCEMENT DE LA FONCTION SUR LA CHAINE DES VALEURS
 for code, nom in valeurs:
     Get_tout(code,nom)
 
 #TITRES DES COLONNES DU TABLEAU
-df = pd.DataFrame(liste_donnees,columns=["Date", "Valeur", "PC_2025"])
+df = pd.DataFrame(liste_donnees,columns=["Date","Valeur","PC_2025", "PC_Jour"])     #"Op en", "Close",
 
 #TRI SUR LE PC DU JOUR
-df_sorted = df.sort_values(by="Valeur", ascending=False).reset_index(drop=True)
+df_sorted = df.sort_values(by="PC_Jour", ascending=False).reset_index(drop=True)
 
-nombre_de_lignes = 0
-#print("Nombre de lignes :", nombre_de_lignes)
-
+#ENTETE
 st.markdown(
         f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
-        f"<strong>📊 Prévisionnel &nbsp;&nbsp; "
-        f"</p><p style='margin-top: 10px; font-size: 16px;'>"
-        f"{nombre_de_lignes} lignes - le {x_date_jour} à {t_heure_actuelle}     - Version 2313</p>",
-        unsafe_allow_html=True    )
+        f"<strong>📊 Prévisionnel &nbsp;&nbsp; ",        unsafe_allow_html=True    )
 
-# 🔹 Mise en forme conditionnelle JS
-cell_style_js = JsCode("""
-function(params) {
-    if (params.value > 0) {
-        return { color: 'green', fontWeight: 'bold' };
-    } else if (params.value < 0) {
-        return { color: 'red', fontWeight: 'bold' };    }
-    return null;} """)
+
 
 #CONFIGURATION DU TABLEAU
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
 
 #fonction pour formater les cellules
-#gb.configure_column("Op en", cellStyle=cell_style_js)
-
 cell_style_pc2025 = JsCode("""
 function(params) {
     let color = 'black';
@@ -220,16 +208,16 @@ function(params) {
     return {
         fontWeight: 'bold',
         color: color
-    };
-}
-""")
+    };}""")
 gb.configure_column("PC_2025", cellStyle=cell_style_pc2025)
-
 
 # Style gras pour la colonne 3 : PC_2025
 cell_style_bold = JsCode("function(params) { return { fontWeight: 'bold' }; }")
-gb.configure_column("PC_2025", cellStyle=cell_style_pc2025)
 
+#APPLIQUER LA CONFIG A 3 COLONNES
+gb.configure_column("PC_2025", cellStyle=cell_style_pc2025)
+#gb.configure_column("Op en",    cellStyle=cell_style_pc2025)
+gb.configure_column("PC_Jour", cellStyle=cell_style_pc2025)
 
 #CONSTRUCTION DU TABLEAU
 grid_options = gb.build()
@@ -237,7 +225,7 @@ grid_options = gb.build()
 # 🔄 Rafraîchissement automatique
 st_autorefresh(interval=180000, key="refresh")  # 3 MINUTES
 
-# 🔹 Affichage AgGrid
+#AFFICHER AVEC AGRID
 grid_response = AgGrid(
     df_sorted,
     gridOptions=grid_options,
@@ -247,11 +235,8 @@ grid_response = AgGrid(
     update_mode='SELECTION_CHANGED',
     allow_unsafe_jscode=True,)
 
-
+#MESSAGE ????
 selected = grid_response["selected_rows"]
-
-print("selected")
-
 if isinstance(selected, list) and selected:
     ligne = selected[0]
     st.markdown("### ✅ Ligne sélectionnée")

@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 92300  + 31774  # TOTAL
-x_version = "- Version du 1707"
+t_reserves = 92300  + 31774
+x_version = "- Version du 2107"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -71,7 +71,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
 ('FR0000120404', 'ACCOR',            259, 1),   #214
-#('FR0000120404', 'ACCOR (2)',         45, 1),   # 45
+#'FR0000120404', 'ACCOR (2)',         45, 1),   # 45
 ('NL0000235190', 'AIRBUS',            95, 1),
 ('GOOGL',        'ALPHABET',          79, x_cours_dollar),
 ('US0231351067', 'AMAZON',            52, x_cours_dollar),
@@ -90,7 +90,7 @@ valeurs = [
 ('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
 ('DE0007030009', 'RHEINMETALL',       10, 1),
 ('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
-#('DE0007164600', 'SAP ',              42, 1),   # 34
+#'DE0007164600', 'SAP ',              42, 1),   # 34
 ('DE0007164600', 'SAP (2)',            8, 1),   # 8
 ('FR0000121329', 'THALES',            24, 1),
 ('FR0000120271', 'TOTAL ENERGIE',    167, 1),   # 111
@@ -98,9 +98,8 @@ valeurs = [
 ('US92826C8394', 'VISA',              40, x_cours_dollar),
 ('FR0007054358', 'ETF STOXX 50',    1543, 1),
 ('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
+#'LU1829221024', 'ETF NASDAQ',       130, 1),
 ('FR0010315770', 'ETF MSCI',         305, 1)]
-#'LU1829221024', 'ETF NASDAQ',       130, 1)]
-#'FR0000052292', 'HERMES',             4, 1),
 
 #CHARGEMENT DES DONNEES
 for code, nom, qte, devise in valeurs:
