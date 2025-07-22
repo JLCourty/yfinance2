@@ -65,16 +65,15 @@ def Get_tout(x_code_valeur,x_nom_valeur):
 
 #CHAINE DES VALEURS FRANCAISES
 valeurs = [
-('LU1829221024','ETF NASDAQ'),
 ('FR0000052292','HERMES'),
 ('DE000RENK730','RENK ALLEMAND'),
 ('FR0014003TT8','DASSAULT SYSTEMS'),
 ('US45168D1046','IDEXX'),
-('US8716071076','SYSNOPSYS'),
+('US8716071076','SYNOPSYS'),
 ('US68389X1054','ORACLE'),
 ('FR0010307819','LEGRAND'),
 ('FR0012757854','SPIE'),
-
+('LU1829221024','ETF NASDAQ'),
 #()'FR0000131104','FR - BNP'),
 #('FR0000130809','FR - Soc Générale'),
 #('FR0000120404','FR - Accor'),
@@ -138,11 +137,11 @@ valeurs = [
 #('DE0008430026','EU - Munich Re'),
 #('FI0009000681','EU - Nokia'),
 #('NL0013654783','EU - Prosus'),
-
 #('DE0007236101','EU - Siemens'),
 #('IT0005239360','EU - UniCredit'),
 #('DE0007664039','EU - Volkswagen Group'),
 #('DE000A1ML7J1','EU - Vonovia'),
+
 #('US02079K3059','US - Alphabet Class A'),
 #('US02079K1079','US - Alphabet Class C'),
 #('US30303M1027','US - Meta Platforms'),
