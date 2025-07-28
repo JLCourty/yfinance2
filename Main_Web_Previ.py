@@ -146,7 +146,7 @@ valeurs = [
 #('US02079K1079','US - Alphabet Class C'),
 #('US30303M1027','US - Meta Platforms'),
 #('US67066G1040','US - Nvidia'),
-#('US88160R1014','US - Tesla'),
+('US88160R1014','US - Tesla'),
 #('US11135F1012','US - Broadcom'),
 #('US64110L1061','US - Netflix'),
 #('US22160K1051','US - Costco'),
