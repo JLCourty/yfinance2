@@ -6,7 +6,6 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
-
 #FONCTION FORMATAGE EN EUROS
 def format_euro(val):
     return f"{val:,.2f} €".replace(",", " ").replace(".", ",")
@@ -111,7 +110,7 @@ valeurs = [
 #('FR0000127771','FR - Vivendi'),
 #('DE000A1EWWW0','EU - Adidas'),
 ('NL0012969182','Novo Nordisk'),
-#('NL0011794037','EU - Ahold Delhaize'),
+#('NL001179403','novo 2e'),
 #('DE0008404005','EU - Allianz'),
 #('BE0974293251','EU - Anheuser-Busch InBev'),
 #('NL0010273215','EU - ASML Holding'),
