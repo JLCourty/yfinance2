@@ -1,4 +1,4 @@
-import streamlit as st
+uimport streamlit as st
 import pandas as pd
 from datetime import datetime
 from st_aggrid import AgGrid, GridOptionsBuilder
@@ -110,7 +110,7 @@ valeurs = [
 #('FR0000127771','FR - Vivendi'),
 #('DE000A1EWWW0','EU - Adidas'),
 ('NL0012969182','Novo Nordisk'),
-#('NL001179403','novo 2e'),
+('NL001179403','novo 2e'),
 #('DE0008404005','EU - Allianz'),
 #('BE0974293251','EU - Anheuser-Busch InBev'),
 #('NL0010273215','EU - ASML Holding'),
