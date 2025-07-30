@@ -109,9 +109,8 @@ valeurs = [
 #('FR0000124141','FR - Veolia Environnement'),
 #('FR0000125486','FR - Vinci'),
 #('FR0000127771','FR - Vivendi'),
-
 #('DE000A1EWWW0','EU - Adidas'),
-#('NL0012969182','EU - Adyen'),
+('NL0012969182','Novo Nordisk'),
 #('NL0011794037','EU - Ahold Delhaize'),
 #('DE0008404005','EU - Allianz'),
 #('BE0974293251','EU - Anheuser-Busch InBev'),
