@@ -41,7 +41,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
     x_ticker = yf.Ticker(x_code_valeur)
-    data = x_ticker.history(start="2025-06-06")['Close']   # PLANTAGE ICI A LONDRES
+    data = x_ticker.history(start="2025-07-06")['Close']   # PLANTAGE ICI A LONDRES
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}, vérifier la date")
         return
@@ -245,3 +245,4 @@ st.download_button(
     data=csv,
     file_name="portefeuille.csv",
     mime="text/csv")
+
