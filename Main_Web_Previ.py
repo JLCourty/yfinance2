@@ -87,7 +87,7 @@ valeurs = [
 #('FR0000045072','FR - Crédit Agricole'),
 #('FR0000120644','FR - Danone'),
 #('FR0014004L86','FR - Dassault Aviation'),
-#('FR0010908533','FR - Edenred'),
+('FR0010908533','Edenred'),
 #('FR0010208488','FR - Engie'),
 #('FR0000121667','FR - Essilor Luxottica'),
 #('FR0014000MR3','FR - Eurofins Scientific'),
@@ -96,12 +96,12 @@ valeurs = [
 #('FR001400AJ45','FR - Michelin'),
 #('FR0000120693','FR - Pernod Ricard'),
 #('FR0000130577','FR - Publicis'),
-('FR0000131906','FR - Renault'),
+('FR0000131906','Renault'),
 #('FR0000073272','FR - Safran'),
 #('FR0000125007','FR - Saint-Gobain'),
 #('FR0000120578','FR - Sanofi'),
 #('FR0000121972','FR - Schneider Electric'),
-('NL00150001Q9','FR - Stellantis'),
+('NL00150001Q9','Stellantis'),
 #('NL0000226223','FR - ST Microelectronics'),
 #('FR0000051807','FR - Teleperformance'),
 #('FR001400J770','FR - Unibail-Rodamco'),
@@ -266,3 +266,4 @@ if isinstance(selected, list) and selected:
             st.warning(f"Aucune correspondance trouvée pour : {nom_valeur}")
     else:
         st.warning("Champ 'Valeur' non trouvé dans la ligne sélectionnée.")
+
