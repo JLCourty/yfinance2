@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 92300  + 31774
+t_reserves = 92300  + 31774+ 2050
 x_version = "- Version du 2307-2025"
 
 #FORMAT NUMERIQUE EN EURO
@@ -245,6 +245,7 @@ st.download_button(
     data=csv,
     file_name="portefeuille.csv",
     mime="text/csv")
+
 
 
 
