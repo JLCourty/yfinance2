@@ -133,7 +133,7 @@ total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
     #st.warning(f"❌ Erreur inattendue : {e}")
 
 #AFFICHER LE TITRE DES GAINS
-if total_prog > 0:
+if total_prog >= 0:
     st.markdown(
     f"<div style='margin: 0; padding: 0;'>"  f"<p style='margin: 0;            font-size: 24px;'>"
     f"<strong>Total : {format_euro(  round( total_prix+t_reserves)  )} &nbsp;&nbsp; "
@@ -245,6 +245,7 @@ st.download_button(
     data=csv,
     file_name="portefeuille.csv",
     mime="text/csv")
+
 
 
 
