@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 92300  + 31774+ 2050
+t_reserves = 92300  + 31774
 x_version = "- Version du 2307-2025"
 
 #FORMAT NUMERIQUE EN EURO
@@ -97,7 +97,7 @@ valeurs = [
 #'FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),   #  56
 ('US92826C8394', 'VISA',              40, x_cours_dollar),
 ('FR0007054358', 'ETF STOXX 50',    1543, 1),
-('LU3038520774', 'ETF DEFENSE (2)',  360, 1),
+('DEFS.PA',      'ETF DEFENSE (2)',  360, 1),   #LU3038520774
 #'LU1829221024', 'ETF NASDAQ',       130, 1),
 ('FR0010315770', 'ETF MSCI',         305, 1)]
 
@@ -133,10 +133,10 @@ total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
     #st.warning(f"❌ Erreur inattendue : {e}")
 
 #AFFICHER LE TITRE DES GAINS
-if total_prog >= 0:
+if total_prog > 0:
     st.markdown(
     f"<div style='margin: 0; padding: 0;'>"  f"<p style='margin: 0;            font-size: 24px;'>"
-    f"<strong>Total : {format_euro(  round( total_prix+t_reserves)  )} &nbsp; "
+    f"<strong>Total : {format_euro(  round( total_prix+t_reserves)  )} &nbsp;&nbsp; "
     f"<span style='color: green;'>- Gains : {format_euro(total_prog)}</span>" f"</p>"
     f"<p style='margin: 0; font-size: 16px;'>"
     f"Le {x_date_jour} à {t_heure_jour} {x_version}</p>"        f"</div>",
@@ -245,11 +245,3 @@ st.download_button(
     data=csv,
     file_name="portefeuille.csv",
     mime="text/csv")
-
-
-
-
-
-
-
-
