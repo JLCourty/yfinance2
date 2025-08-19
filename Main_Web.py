@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 91388  + 6490
-x_version = "- Version du 18-08-2025"
+t_reserves = 91390 + 2254
+x_version = "- Version du 21-08-2025"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -82,15 +82,14 @@ valeurs = [
 ('FR0014004L86', 'DASSAULT AVIATION',  8, 1),
 ('FR0000121667', 'ESSILOR',           34, 1),
 ('ES0144580Y14', 'IBERDROLA',        712, 1),
-
-
-('FR0010307819','LEGRAND',       20 ,1),
-('FR0010908533','EDENRED',     100 ,1),
-
-('IT0003856405', 'LEONARDO',         142, 1),
-('FR0000121014', 'LVMH (2)',           5, 1),
-('US5949181045', 'MICROSOFT',         48, x_cours_dollar),
-('US64110L1061', 'NETFLIX',           10, x_cours_dollar),
+('FR0010307819','LEGRAND',            20 ,1),
+('FR0010908533','EDENRED',           100 ,1),
+('IT0003856405','LEONARDO',         142, 1),
+('FR0000121014','LVMH (2)',           5, 1),
+('US5949181045','MICROSOFT',         48, x_cours_dollar),
+('US64110L1061','NETFLIX',           10, x_cours_dollar),
+('DK0062498333','NOVO NORDISK',      60, 7.46),
+('KYIV',        'KIYVSTAR',         100,1),
 ('US67066G1040', 'NVDIA',            160, x_cours_dollar),
 ('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
 ('DE0007030009', 'RHEINMETALL',       10, 1),
