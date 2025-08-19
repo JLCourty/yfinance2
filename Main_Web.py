@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 92300  + 31774
-x_version = "- Version du 15-08-2025"
+t_reserves = 91388  + 6490
+x_version = "- Version du 18-08-2025"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -82,6 +82,11 @@ valeurs = [
 ('FR0014004L86', 'DASSAULT AVIATION',  8, 1),
 ('FR0000121667', 'ESSILOR',           34, 1),
 ('ES0144580Y14', 'IBERDROLA',        712, 1),
+
+
+('FR0010307819','LEGRAND',       20 ,1),
+('FR0010908533','EDENRED',     100 ,1),
+
 ('IT0003856405', 'LEONARDO',         142, 1),
 ('FR0000121014', 'LVMH (2)',           5, 1),
 ('US5949181045', 'MICROSOFT',         48, x_cours_dollar),
