@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 91390 + 2254
-x_version = "- Version du 21-08-2025"
+t_reserves = 67900 + 9800
+x_version = "- Version du 03-09-2025"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -25,9 +25,8 @@ x_date_jour = datetime.now().strftime("%d/%m/%Y")
 t_heure_jour = datetime.now().strftime("%H:%M")  # Séparer heures et minutes
 heures, minutes = map(int, t_heure_jour.split(":"))
 heures += 2 # Ajouter 2 heures
-heures %= 24 #Corriger si on dépasse 23h
+heures %= 24 #Modulo
 t_heure_jour = f"{heures:02d}:{minutes:02d}"
-#print(t_heure_jour)  # Donne : 16:25
 
 #CALCULER LE COURS DU DOLLAR
 usd_eur_data = yf.Ticker("EURUSD=X")
@@ -70,40 +69,41 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-('FR0000120404', 'ACCOR',            259, 1),   #214
-#'FR0000120404', 'ACCOR (2)',         45, 1),   # 45
-('NL0000235190', 'AIRBUS',            95, 1),
-('GOOGL',        'ALPHABET',          79, x_cours_dollar),
-('US0231351067', 'AMAZON',            52, x_cours_dollar),
-('NL0010273215', 'ASML',              21, 1),   # 18
-#'NL0010273215', 'ASML (2)',           3, 1),   # 3
-('FR0000131104', 'BNP (2)',           28, 1),
-('US11135F1012', 'BROADCOM',          73, x_cours_dollar),
-('FR0014004L86', 'DASSAULT AVIATION',  8, 1),
-('FR0000121667', 'ESSILOR',           34, 1),
-('ES0144580Y14', 'IBERDROLA',        712, 1),
-('FR0010307819','LEGRAND',            20 ,1),
-('FR0010908533','EDENRED',           100 ,1),
+('FR0000120404','ACCOR',            259, 1),   #214
+#'FR0000120404','ACCOR (2)',         45, 1),   # 45
+('NL0000235190','AIRBUS',            95, 1),
+('GOOGL',       'ALPHABET',          79, x_cours_dollar),
+('US0231351067','AMAZON',            52, x_cours_dollar),
+('NL0010273215','ASML',              21, 1),   # 18
+#'NL0010273215','ASML (2)',           3, 1),   # 3
+('FR0000131104','BNP (2)',           28, 1),
+('US11135F1012','BROADCOM',          73, x_cours_dollar),
+('FR0014004L86','DASSAULT AVIATION',  8, 1),
+('FR0000121667','ESSILOR',           34, 1),
+('ES0144580Y14','IBERDROLA',        712, 1),
+('FR0010307819','LEGRAND (2)',            20 ,1),
+('FR0010908533','EDENRED (2)',           100 ,1),
 ('IT0003856405','LEONARDO',         142, 1),
-('FR0000121014','LVMH (2)',           5, 1),
+('FR0000121014','LVMH (2)',           30, 1),
 ('US5949181045','MICROSOFT',         48, x_cours_dollar),
 ('US64110L1061','NETFLIX',           10, x_cours_dollar),
 ('DK0062498333','NOVO NORDISK',      60, 7.46),
-('KYIV',        'KIYVSTAR',         100,1),
-('US67066G1040', 'NVDIA',            160, x_cours_dollar),
-('US6974351057', 'PALO ALTO',         56, x_cours_dollar),
-('DE0007030009', 'RHEINMETALL',       10, 1),
-('US79466L3024', 'SALESFORCE',        46, x_cours_dollar),
-#'DE0007164600', 'SAP ',              42, 1),   # 34
-('DE0007164600', 'SAP (2)',            8, 1),   # 8
-('FR0000121329', 'THALES',            24, 1),
-('FR0000120271', 'TOTAL ENERGIE',    167, 1),   # 111
-#'FR0000120271', 'TOTAL ENERGIE (2)', 56, 1),   #  56
-('US92826C8394', 'VISA',              40, x_cours_dollar),
-('FR0007054358', 'ETF STOXX 50',    1543, 1),
-('DEFS.PA',      'ETF DEFENSE (2)',  360, 1),   #LU3038520774
-#'LU1829221024', 'ETF NASDAQ',       130, 1),
-('FR0010315770', 'ETF MSCI',         305, 1)]
+('KYIV',        'KIYVSTAR (2)',     100,1),
+('US67066G1040','NVDIA',            160, x_cours_dollar),
+('US6974351057','PALO ALTO',         56, x_cours_dollar),
+('DE0007030009','RHEINMETALL',       10, 1),
+('SAF.PA','SAFRAN',       36, 1),
+('US79466L3024','SALESFORCE',        46, x_cours_dollar),
+#'DE0007164600','SAP ',              42, 1),   # 34
+('DE0007164600','SAP (2)',            8, 1),   # 8
+('FR0000121329','THALES',            24, 1),
+('FR0000120271','TOTAL ENERGIE',    167, 1),   # 111
+#'FR0000120271','TOTAL ENERGIE (2)', 56, 1),   #  56
+('US92826C8394','VISA',              40, x_cours_dollar),
+('FR0007054358','ETF STOXX 50',    1543, 1),
+('DEFS.PA',     'ETF DEFENSE (2)',  360, 1),   #LU3038520774
+#'LU1829221024','ETF NASDAQ',       130, 1),
+('FR0010315770','ETF MSCI',         305, 1)]
 
 #CHARGEMENT DES DONNEES
 for code, nom, qte, devise in valeurs:
