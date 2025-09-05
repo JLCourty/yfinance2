@@ -6,6 +6,7 @@ from st_aggrid.shared import JsCode
 from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
+
 #FONCTION FORMATAGE EN EUROS
 def format_euro(val):
     return f"{val:,.2f} €".replace(",", " ").replace(".", ",")
@@ -65,17 +66,23 @@ def Get_tout(x_code_valeur,x_nom_valeur):
 #CHAINE DES VALEURS FRANCAISES
 valeurs = [
 ('FR0000052292','HERMES'),
-('DE000RENK730','RENK ALLEMAND'),
 ('FR0014003TT8','DASSAULT SYSTEMS'),
 ('US45168D1046','IDEXX'),
 ('US8716071076','SYNOPSYS'),
 ('US68389X1054','ORACLE'),
-('FR0010307819','LEGRAND'),
 ('FR0012757854','SPIE'),
+('DE0007164600','SAP'),
 ('LU1829221024','ETF NASDAQ'),
-#()'FR0000131104','FR - BNP'),
+('DE0006452907','NEMETSCHEK'),
+('BE0003565737','KBC Banque Belge'),
+('IT0005450819','ALMETEX'),
+('DE0007236101','SIEMENS'),
+('SPOT','SPOTIFY (US)')]
+
+#TECHNIP
+
+#('FR0000131104','FR - BNP'),
 #('FR0000130809','FR - Soc Générale'),
-#('FR0000120404','FR - Accor'),
 #('FR0000120073','FR - Air Liquide'),
 #('NL0000235190','FR - Airbus'),
 #('FR0010220475','FR - Alstom'),
@@ -86,31 +93,32 @@ valeurs = [
 #('FR0000120172','FR - Carrefour'),
 #('FR0000045072','FR - Crédit Agricole'),
 #('FR0000120644','FR - Danone'),
-#('FR0014004L86','FR - Dassault Aviation'),
-('FR0010908533','Edenred'),
 #('FR0010208488','FR - Engie'),
 #('FR0000121667','FR - Essilor Luxottica'),
 #('FR0014000MR3','FR - Eurofins Scientific'),
 #('FR0000121485','FR - Kering'),
+
 #('FR0000120321','FR - LOréal'),
 #('FR001400AJ45','FR - Michelin'),
 #('FR0000120693','FR - Pernod Ricard'),
 #('FR0000130577','FR - Publicis'),
-('FR0000131906','Renault'),
+#('FR0000131906','FR - Renault'),
 #('FR0000073272','FR - Safran'),
 #('FR0000125007','FR - Saint-Gobain'),
 #('FR0000120578','FR - Sanofi'),
 #('FR0000121972','FR - Schneider Electric'),
-('NL00150001Q9','Stellantis'),
+#('NL00150001Q9','FR - Stellantis'),
 #('NL0000226223','FR - ST Microelectronics'),
 #('FR0000051807','FR - Teleperformance'),
 #('FR001400J770','FR - Unibail-Rodamco'),
 #('FR0000124141','FR - Veolia Environnement'),
 #('FR0000125486','FR - Vinci'),
 #('FR0000127771','FR - Vivendi'),
+
+#('DE000RENK730','RENK ALLEMAND'),
 #('DE000A1EWWW0','EU - Adidas'),
-('NL0012969182','Novo Nordisk'),
-#'NL001179403','novo 2e'),
+#('NL0012969182','EU - Adyen'),
+#('NL0011794037','EU - Ahold Delhaize'),
 #('DE0008404005','EU - Allianz'),
 #('BE0974293251','EU - Anheuser-Busch InBev'),
 #('NL0010273215','EU - ASML Holding'),
@@ -126,7 +134,6 @@ valeurs = [
 #('IT0003132476','EU - Eni'),
 #('NL0011585146','EU - Ferrari'),
 #('IE00BWT6H894','EU - Flutter Entertainment'),
-#('ES0144580Y14','EU - Iberdrola'),
 #('ES0148396007','EU - Inditex'),
 #('DE0006231004','EU - Infineon Technologies'),
 #('NL0011821202','EU - ING Group'),
@@ -143,10 +150,8 @@ valeurs = [
 #('US02079K3059','US - Alphabet Class A'),
 #('US02079K1079','US - Alphabet Class C'),
 #('US30303M1027','US - Meta Platforms'),
-#('US67066G1040','US - Nvidia'),
-('US88160R1014','US - Tesla'),
-#('US11135F1012','US - Broadcom'),
-#('US64110L1061','US - Netflix'),
+
+#('US88160R1014','US - Tesla'),
 #('US22160K1051','US - Costco'),
 #('US17275R1023','US - Cisco Systems'),
 #('US4581401001','US - Intel Corporation'),
@@ -170,8 +175,7 @@ valeurs = [
 #('US98138H1014','US - Workda'),
 #('US00724F1012','US - Adobe Inc'),
 #('US09857L1089','US - Booking Holdings'),
-#('LU0908500753','ETF STOXX Eur 600'),
-('DE0007164600','SAP')]
+#('LU0908500753','ETF STOXX Eur 600')
 
 #LANCEMENT DE LA FONCTION SUR LA CHAINE DES VALEURS
 for code, nom in valeurs:
@@ -187,8 +191,6 @@ df_sorted = df.sort_values(by="PC_Jour", ascending=False).reset_index(drop=True)
 st.markdown(
         f"<p style='margin-top: 0; margin-bottom: 5px; font-size: 36px;'>"
         f"<strong>📊 Prévisionnel &nbsp;&nbsp; ",        unsafe_allow_html=True    )
-
-
 
 #CONFIGURATION DU TABLEAU
 gb = GridOptionsBuilder.from_dataframe(df_sorted)
@@ -266,4 +268,3 @@ if isinstance(selected, list) and selected:
             st.warning(f"Aucune correspondance trouvée pour : {nom_valeur}")
     else:
         st.warning("Champ 'Valeur' non trouvé dans la ligne sélectionnée.")
-

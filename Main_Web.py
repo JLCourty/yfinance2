@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #CALCULER LA RESERVE
-t_reserves = 67900 + 9800
+t_reserves = 48000 + 9800
 x_version = "- Version du 03-09-2025"
 
 #FORMAT NUMERIQUE EN EURO
@@ -83,7 +83,7 @@ valeurs = [
 ('ES0144580Y14','IBERDROLA',        712, 1),
 ('FR0010307819','LEGRAND (2)',            20 ,1),
 ('FR0010908533','EDENRED (2)',           100 ,1),
-('IT0003856405','LEONARDO',         142, 1),
+('IT0003856405','LEONARDO',         244, 1),
 ('FR0000121014','LVMH (2)',           30, 1),
 ('US5949181045','MICROSOFT',         48, x_cours_dollar),
 ('US64110L1061','NETFLIX',           10, x_cours_dollar),
@@ -92,11 +92,12 @@ valeurs = [
 ('US67066G1040','NVDIA',            160, x_cours_dollar),
 ('US6974351057','PALO ALTO',         56, x_cours_dollar),
 ('DE0007030009','RHEINMETALL',       10, 1),
-('SAF.PA','SAFRAN',       36, 1),
+('SAF.PA'      ,'SAFRAN'     ,       36, 1),
 ('US79466L3024','SALESFORCE',        46, x_cours_dollar),
 #'DE0007164600','SAP ',              42, 1),   # 34
 ('DE0007164600','SAP (2)',            8, 1),   # 8
-('FR0000121329','THALES',            24, 1),
+('FR0000121972','SCHNEIDER'         ,47, 1),
+('FR0000121329','THALES',            47, 1),
 ('FR0000120271','TOTAL ENERGIE',    167, 1),   # 111
 #'FR0000120271','TOTAL ENERGIE (2)', 56, 1),   #  56
 ('US92826C8394','VISA',              40, x_cours_dollar),
