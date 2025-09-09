@@ -8,7 +8,7 @@ import yfinance as yf
 
 #TOTALISER LES RESERVES
 t_reserves = 48000 + 1281
-x_version = "- Version du 11-09-2025"
+x_version = "- Version du 12-09-2025"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -40,7 +40,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
     x_ticker = yf.Ticker(x_code_valeur)
-    data = x_ticker.history(start="2025-06-06")['Close']   # PLANTAGE ICI A LONDRES
+    data = x_ticker.history(start="2025-08-06")['Close']   # PLANTAGE ICI A LONDRES
     if data.empty:
         st.warning(f"Données absentes pour {x_nom_valeur}, vérifier la date")
         return
@@ -50,9 +50,6 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CALCULER LE LIBELLE DE DATE
     t_label_date = "" if x_date_jour == data.index[-1].strftime("%d/%m/%Y") else "Hier"
-
-#   Suite incident Londres
-    #print(x_nom_valeur,t_open,t_close)
 
     # GAINS OU PERTES DU JOUR EN PC **********  OK
     t_jour_pc = (t_close-t_open) / t_open
@@ -119,23 +116,6 @@ df_sorted = df.sort_values(by=["Date", "Jour_PC"], ascending=[True, False]).rese
 #TOTALISER LES 2 INFOS
 total_prix = df["Montant"].sum()
 total_prog = df[df["Date"] != "Hier"]["Jour_Euro"].sum()
-
-#JOURNAL
-#chemin_fichier = "/storage/emulated/0/Download/log.txt"
-#ligne_log =  x_date_jour + " à " + t_heure_jour + "Total_Prog : " + format_euro(total_prix+t_reserves) + " - Jour : " + format_euro(total_prog)
-
-#st.warning("Mon fichier " + "/storage/emulated/0/Download/log.txt")
-# Écriture avec vérification
-#try:
-    #with open(chemin_fichier, "a") as f:
-        #f.write(ligne_log)
-    #st.warning("✅ Fichier écrit avec succès.")
-#except FileNotFoundError:
-    #st.warning("❌ Erreur : Dossier introuvable.")
-#except PermissionError:
-    #st.warning("❌ Erreur : Permission refusée (autorisez l'accès au stockage).")
-#except Exception as e:
-    #st.warning(f"❌ Erreur inattendue : {e}")
 
 #AFFICHER LE TITRE DES GAINS
 if total_prog > 0:
@@ -241,12 +221,12 @@ if isinstance(selected, list) and selected:
     st.json(ligne)
 
 # 🔹 Préparer le DataFrame pour export : trié par Valeur, sans la colonne Date
-df_export = df_sorted.drop(columns=["Date"]).sort_values(by="Valeur")
+#df_export = df_sorted.drop(columns=["Date"]).sort_values(by="Valeur")
 
 # 📤 Téléchargement CSV
-csv = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
-st.download_button(
-    label="📥 Télécharger le tableau (.csv)",
-    data=csv,
-    file_name="portefeuille.csv",
-    mime="text/csv")
+#csv = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
+#st.download_button(
+#    label="📥 Télécharger le tableau (.csv)",
+#    data=csv,
+#    file_name="portefeuille.csv",
+#    mime="text/csv")
