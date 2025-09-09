@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 48000 + 4414
-x_version = "- Version du 09-09-2025"
+t_reserves = 48000 + 1281
+x_version = "- Version du 11-09-2025"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -76,7 +76,7 @@ valeurs = [
 ('US0231351067','AMAZON',            52,x_cours_dollar),
 ('NL0010273215','ASML',              21,1),   # 18
 #'NL0010273215','ASML (2)',           3,1),   # 3
-('FR0000131104','BNP (2)',           28,1),
+('FR0000131104','BNP (2)',           68,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
 ('FR0014004L86','DASSAULT AVIATION',  8,1),
 ('FR0000121667','ESSILOR',           34,1),
