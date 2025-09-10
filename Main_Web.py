@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 48000 + 1281
-x_version = "- Version du 12-09-2025"
+t_reserves = 48000 + 11281
+x_version = "- Version du 11-09-2025"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
