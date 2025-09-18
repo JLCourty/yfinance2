@@ -214,19 +214,9 @@ grid_response = AgGrid(
     containerStyle={"width": "100%"})
 
 # 🔹 Affichage ligne sélectionnée
-selected = grid_response["selected_rows"]
-if isinstance(selected, list) and selected:
-    ligne = selected[0]
-    st.markdown("### ✅ Ligne sélectionnée")
-    st.json(ligne)
+#selected = grid_response["selected_rows"]
+#if isinstance(selected, list) and selected:
+    #ligne = selected[0]
+    #st.markdown("### ✅ Ligne sélectionnée")
+    #st.json(ligne)
 
-# 🔹 Préparer le DataFrame pour export : trié par Valeur, sans la colonne Date
-#df_export = df_sorted.drop(columns=["Date"]).sort_values(by="Valeur")
-
-# 📤 Téléchargement CSV
-#csv = df_export.to_csv(index=False, sep=';').encode('utf-8-sig')
-#st.download_button(
-#    label="📥 Télécharger le tableau (.csv)",
-#    data=csv,
-#    file_name="portefeuille.csv",
-#    mime="text/csv")
