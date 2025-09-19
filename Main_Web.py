@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 48000 + 11281
-x_version = "- Version du 18-09-2025"
+t_reserves = 47436 + 11268
+x_version = "- Version du 20-09-2025"
 
 #FORMAT NUMERIQUE EN EURO
 def format_euro(num_brut):
@@ -208,15 +208,10 @@ grid_response = AgGrid(
     height=hauteur_totale,
     fit_columns_on_grid_load=False,
     enable_enterprise_modules=False,
-    update_mode='SELECTION_CHANGED',
+    #update_mode='SELECTION_CHANGED',
+    update_mode='NO_UPDATE',
     allow_unsafe_jscode=True,
     width='100%',
     containerStyle={"width": "100%"})
 
-# 🔹 Affichage ligne sélectionnée
-#selected = grid_response["selected_rows"]
-#if isinstance(selected, list) and selected:
-    #ligne = selected[0]
-    #st.markdown("### ✅ Ligne sélectionnée")
-    #st.json(ligne)
 
