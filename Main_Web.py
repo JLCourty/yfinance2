@@ -7,10 +7,10 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 47450 + 5680
-x_version = "- Version du 24-09-2025"
+t_reserves = 27200 + 5700
+x_version = "- Version du 26-09-2025"
 
-#FORMAT NUMERIQUE EN EURO
+#FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
     num_brut = round(num_brut)
     num_brut = str("{:,.2f}".format(num_brut).replace(',', ' '))
@@ -71,6 +71,7 @@ valeurs = [
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
 ('US0231351067','AMAZON',            52,x_cours_dollar),
 ('NL0010273215','ASML',              21,1),   # 18
+('GB0009895292','ASTRA ZENECA'     ,79,87.28),
 ('FR0000131104','BNP (2)',           68,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
 ('FR0014004L86','DASSAULT AVIATION',  8,1),
@@ -91,6 +92,7 @@ valeurs = [
 ('US79466L3024','SALESFORCE',        46,x_cours_dollar),
 ('DE0007164600','SAP (2)',            8,1),   # 8
 ('FR0000121972','SCHNEIDER'         ,47,1),
+('DE000ENER6Y0','SIEMENS ENERGY'    ,103  ,1),
 ('FR0000121329','THALES',            47,1),
 ('FR0000120271','TOTAL ENERGIE',    217,1),   # 111
 ('US92826C8394','VISA',              40,x_cours_dollar),
