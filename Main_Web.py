@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 25935 + 5823
-x_version = "- Version du 06-10-2025"
+t_reserves = 16000 + 5886
+x_version = "- Version du 08-10-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -67,6 +67,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
 ('FR0000120404','ACCOR',            259,1),   #214
+('ABBV','ABBVIE',                    50,x_cours_dollar),
 ('NL0000235190','AIRBUS',            95,1),
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
 ('US0231351067','AMAZON',            52,x_cours_dollar),
