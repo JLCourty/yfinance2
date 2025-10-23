@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 16000 + 5886
-x_version = "- Version du 08-10-2025"
+t_reserves = 16059 + 14196
+x_version = "- Version du 25-10-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -66,20 +66,19 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-('FR0000120404','ACCOR',            259,1),   #214
-('ABBV','ABBVIE',                    50,x_cours_dollar),
+('FR0000120404','ACCOR',             259,1),   #214
+('ABBV'        ,'ABBVIE',            50,x_cours_dollar),
 ('NL0000235190','AIRBUS',            95,1),
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
 ('US0231351067','AMAZON',            52,x_cours_dollar),
 ('NL0010273215','ASML',              21,1),   # 18
-('GB0009895292','ASTRA ZENECA'     ,79,87.28),
+('GB0009895292','ASTRA ZENECA'      ,79,87.28),
 ('FR0000131104','BNP (2)',           68,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
 ('FR0014004L86','DASSAULT AVIATION',  8,1),
 ('FR0000121667','ESSILOR',           34,1),
 ('ES0144580Y14','IBERDROLA',        712,1),
 ('FR0010307819','LEGRAND (2)',       20,1),
-('FR0010908533','EDENRED (2)',      340,1),
 ('IT0003856405','LEONARDO',         244,1),
 ('FR0000121014','LVMH (2)',          30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
