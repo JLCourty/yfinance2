@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 16059 + 14196
-x_version = "- Version du 25-10-2025"
+t_reserves = 16100 + 5830
+x_version = "- Version du 30-10-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -24,7 +24,7 @@ x_date_jour = datetime.now().strftime("%d/%m/%Y")
 # HEURE DU JOUR TRUQUEE POUR ANDROID
 t_heure_jour = datetime.now().strftime("%H:%M")  # Séparer heures et minutes
 heures, minutes = map(int, t_heure_jour.split(":"))
-heures += 2 # Ajouter 2 heures
+heures += 1 # Ajouter 2 heures EN 2T2 & SEULE EN HIVER
 heures %= 24 #Modulo
 t_heure_jour = f"{heures:02d}:{minutes:02d}"
 
@@ -68,14 +68,14 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 valeurs = [
 ('FR0000120404','ACCOR',             259,1),   #214
 ('ABBV'        ,'ABBVIE',            50,x_cours_dollar),
-('NL0000235190','AIRBUS',            95,1),
+('NL0000235190','AIRBUS',            120,1),
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
 ('US0231351067','AMAZON',            52,x_cours_dollar),
 ('NL0010273215','ASML',              21,1),   # 18
 ('GB0009895292','ASTRA ZENECA'      ,79,87.28),
 ('FR0000131104','BNP (2)',           68,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
-('FR0014004L86','DASSAULT AVIATION',  8,1),
+('FR0014004L86','DASSAULT AVIATION', 18,1),
 ('FR0000121667','ESSILOR',           34,1),
 ('ES0144580Y14','IBERDROLA',        712,1),
 ('FR0010307819','LEGRAND (2)',       20,1),
