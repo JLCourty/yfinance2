@@ -41,16 +41,16 @@ liste_donnees =[]
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
-    x_ticker = yf.Ticker(x_code_valeur)
+    x_ticker = yf.Ticker(x_code_valeur) #PLANTAGE SUR LE TELEPHONE SEULEMENT
     if not x_ticker.info or "longName" not in x_ticker.info:
-        st.success(f"Le ticker '{x_code_valeur}' est invalide ou introuvable sur Yahoo Finance.")
+        st.success(f"Le ticker '{x_code_valeur}' est introuvable sur Yahoo Finance.")
         return
     else:
         #st.success(f"Ticker valide : {x_ticker.info['longName']}")
         #st.write("Cours " + x_code_valeur)
         data = x_ticker.history(start="2025-08-06")['Close']   # PLANTAGE ICI A LONDRES
         if data.empty:
-            st.warning(f"Données absentes pour {x_nom_valeur}, vérifier la date")
+            st.success(f"Données absentes pour {x_nom_valeur}, vérifier la date")
             return
         else:
             t_open  = data.iloc[-2]
@@ -104,7 +104,7 @@ valeurs = [
 ('FR0000120271','TOTAL ENERGIE',    217,1),
 ('US92826C8394','VISA',              40,x_cours_dollar),
 ('FR0007054358','ETF STOXX 50',    1543,1),
-('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774     DEFS.PA
+#('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774     DEFS.PA
 ('FR0010315770','ETF MSCI',         305,1)]
 
 #CHARGEMENT DES DONNEES
