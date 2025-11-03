@@ -10,7 +10,7 @@ import yfinance as yf
 
 #TOTALISER LES RESERVES
 t_reserves = 16100 + 7080
-x_version = "- Version du 05-11-2025"
+x_version = "- Version du 11-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
