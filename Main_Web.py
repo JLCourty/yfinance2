@@ -41,6 +41,7 @@ liste_donnees =[]
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
+    st.success(f"Ticker '{x_code_valeur}' en cours.")
     x_ticker = yf.Ticker(x_code_valeur) #PLANTAGE SUR LE TELEPHONE SEULEMENT
     if not x_ticker.info or "longName" not in x_ticker.info:
         st.success(f"Le ticker '{x_code_valeur}' est introuvable sur Yahoo Finance.")
