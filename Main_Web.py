@@ -8,7 +8,7 @@ import yfinance as yf
 
 #TOTALISER LES RESERVES
 t_reserves = 16100 + 11180
-x_version = "- Version du 31-10-2025"
+x_version = "- Version du 04-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -93,7 +93,7 @@ valeurs = [
 ('FR0000121972','SCHNEIDER'         ,47,1),
 ('DE000ENER6Y0','SIEMENS ENERGY'    ,103  ,1),
 ('FR0000121329','THALES',            47,1),
-('FR0000120271','TOTAL ENERGIE',    217,1),   # 111
+('FR0000120271','TOTAL ENERGIE',    217,1),
 ('US92826C8394','VISA',              40,x_cours_dollar),
 ('FR0007054358','ETF STOXX 50',    1543,1),
 ('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774
