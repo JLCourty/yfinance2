@@ -41,7 +41,7 @@ liste_donnees =[]
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
-    #st.success(f"Ticker '{x_code_valeur}' en cours.")
+    #st.success(f"Ticker '{x_code_valeur}' en c o urs.")
     x_ticker = yf.Ticker(x_code_valeur) #PLANTAGE SUR LE TELEPHONE SEULEMENT
     if not x_ticker.info or "longName" not in x_ticker.info:
         st.success(f"Le ticker '{x_code_valeur}' est introuvable sur Yahoo Finance.")
@@ -91,7 +91,7 @@ valeurs = [
 ('FR0000121014','LVMH (2)',          30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
 ('US64110L1061','NETFLIX',           10,x_cours_dollar),
-#('DK0062498333','NOVO NORDISK',      120,7.46),    #PLANTAGE
+('DK0062498333','NOVO NORDISK',      120,7.46),    #PLANTAGE
 ('KYIV',        'KIYVSTAR (2)',      100,1),
 ('US67066G1040','NVDIA',            160,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
@@ -105,7 +105,7 @@ valeurs = [
 ('FR0000120271','TOTAL ENERGIE',    217,1),
 ('US92826C8394','VISA',              40,x_cours_dollar),
 ('FR0007054358','ETF STOXX 50',    1543,1),
-('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774     DEFS.PA
+#('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774     DEFS.PA
 ('FR0010315770','ETF MSCI',         305,1)]
 
 #CHARGEMENT DES DONNEES
