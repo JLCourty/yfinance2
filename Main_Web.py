@@ -7,8 +7,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 16100 + 11180
-x_version = "- Version du 04-11-2025"
+t_reserves = 16100 + 7080
+x_version = "- Version du 05-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -39,6 +39,7 @@ liste_donnees =[]
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
+    print("Cours ",x_code_valeur)
     x_ticker = yf.Ticker(x_code_valeur)
     data = x_ticker.history(start="2025-08-06")['Close']   # PLANTAGE ICI A LONDRES
     if data.empty:
