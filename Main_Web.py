@@ -91,7 +91,7 @@ valeurs = [
 ('FR0000121014','LVMH (2)',          30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
 ('US64110L1061','NETFLIX',           10,x_cours_dollar),
-('DK0062498333','NOVO NORDISK',      120,7.46),    #PLANTAGE
+#('DK0062498333','NOVO NORDISK',      120,7.46),    #PLANTAGE
 ('KYIV',        'KIYVSTAR (2)',      100,1),
 ('US67066G1040','NVDIA',            160,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
