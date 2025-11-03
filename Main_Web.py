@@ -10,7 +10,7 @@ import yfinance as yf
 
 #TOTALISER LES RESERVES
 t_reserves = 16100 + 7080
-x_version = "- Version du 11-11-2025"
+x_version = "- Version du 12-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -40,6 +40,11 @@ liste_donnees =[]
 #FONCTION PRINCIPALE DE CALCUL DES DONNEES
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
+#x_code_valeur  ="DEFS.PA"  #MSXI
+#x_ticker = yf.Ticker(x_code_valeur)
+#data = x_ticker.history(period="6mo")
+#print(data)
+
 #   CHERCHER LE TICKER
     #st.success(f"Ticker '{x_code_valeur}' en c o urs.")
     x_ticker = yf.Ticker(x_code_valeur) #PLANTAGE SUR LE TELEPHONE SEULEMENT
@@ -47,9 +52,7 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
         st.success(f"Le ticker '{x_code_valeur}' est introuvable sur Yahoo Finance.")
         return
     else:
-        #st.success(f"Ticker valide : {x_ticker.info['longName']}")
-        #st.write("Cours " + x_code_valeur)
-        data = x_ticker.history(start="2025-08-06")['Close']   # PLANTAGE ICI A LONDRES
+        data = x_ticker.history(start="2025-10-02")['Close']   # PLANTAGE ICI A LONDRES
         if data.empty:
             st.success(f"Données absentes pour {x_nom_valeur}, vérifier la date")
             return
@@ -105,7 +108,7 @@ valeurs = [
 ('FR0000120271','TOTAL ENERGIE',    217,1),
 ('US92826C8394','VISA',              40,x_cours_dollar),
 ('FR0007054358','ETF STOXX 50',    1543,1),
-#('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774     DEFS.PA
+('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774     DEFS.PA
 ('FR0010315770','ETF MSCI',         305,1)]
 
 #CHARGEMENT DES DONNEES
