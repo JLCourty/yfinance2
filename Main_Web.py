@@ -40,6 +40,9 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 #   CHERCHER LE TICKER
     st.write("Cours " + x_code_valeur)
+
+
+
     x_ticker = yf.Ticker(x_code_valeur)
     data = x_ticker.history(start="2025-08-06")['Close']   # PLANTAGE ICI A LONDRES
     if data.empty:
