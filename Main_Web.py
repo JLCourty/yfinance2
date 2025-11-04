@@ -10,7 +10,7 @@ import yfinance as yf
 
 #TOTALISER LES RESERVES
 t_reserves = 16100 + 7080
-x_version = "- Version du 12-11-2025"
+x_version = "- Version du 04-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -40,19 +40,13 @@ liste_donnees =[]
 #FONCTION PRINCIPALE DE CALCUL DES DONNEES
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
-#x_code_valeur  ="DEFS.PA"  #MSXI
-#x_ticker = yf.Ticker(x_code_valeur)
-#data = x_ticker.history(period="6mo")
-#print(data)
-
 #   CHERCHER LE TICKER
-    #st.success(f"Ticker '{x_code_valeur}' en c o urs.")
     x_ticker = yf.Ticker(x_code_valeur) #PLANTAGE SUR LE TELEPHONE SEULEMENT
-    if not x_ticker.info or "longName" not in x_ticker.info:
-        st.success(f"Le ticker '{x_code_valeur}' est introuvable sur Yahoo Finance.")
+    if not x_ticker.info :#or "longName" not in x_ticker.info:
+        st.success(f"Le ticker '{x_nom_valeur}' est introuvable sur YFinance.")
         return
     else:
-        data = x_ticker.history(start="2025-10-02")['Close']   # PLANTAGE ICI A LONDRES
+        data = x_ticker.history(start="2025-10-22")['Close']   # PLANTAGE ICI A LONDRES
         if data.empty:
             st.success(f"Données absentes pour {x_nom_valeur}, vérifier la date")
             return
@@ -85,30 +79,30 @@ valeurs = [
 ('US0231351067','AMAZON',            52,x_cours_dollar),
 ('NL0010273215','ASML',              21,1),   # 18
 ('GB0009895292','ASTRA ZENECA'      ,79,87.28),
-('FR0000131104','BNP (2)',           130,1),
+('FR0000131104','BNP',               130,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
 ('FR0000121667','ESSILOR',           34,1),
-('ES0144580Y14','IBERDROLA',        712,1),
-('FR0010307819','LEGRAND (2)',       20,1),
-('IT0003856405','LEONARDO',         244,1),
-('FR0000121014','LVMH (2)',          30,1),
+('ES0144580Y14','IBERDROLA',         712,1),
+('FR0010307819','LEGRAND',           20,1),
+('IT0003856405','LEONARDO',          244,1),
+('FR0000121014','LVMH',              30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
 ('US64110L1061','NETFLIX',           10,x_cours_dollar),
-('DK0062498333','NOVO NORDISK',      120,7.46),    #PLANTAGE
-('KYIV',        'KIYVSTAR (2)',      100,1),
-('US67066G1040','NVDIA',            160,x_cours_dollar),
+('DK0062498333','NOVO NORDISK',      120,7.47),    #PLANTAGE
+('KYIV',        'KIYVSTAR',          100,1),
+('US67066G1040','NVDIA',             160,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
 ('DE0007030009','RHEINMETALL',       10,1),
 ('SAF.PA'      ,'SAFRAN'     ,       36,1),
 ('US79466L3024','SALESFORCE',        46,x_cours_dollar),
-('DE0007164600','SAP (2)',            8,1),   # 8
+('DE0007164600','SAP',               8,1),   # 8
 ('FR0000121972','SCHNEIDER'         ,47,1),
 ('DE000ENER6Y0','SIEMENS ENERGY'    ,103  ,1),
 ('FR0000121329','THALES',            47,1),
-('FR0000120271','TOTAL ENERGIE',    217,1),
+('FR0000120271','TOTAL ENERGIE',     217,1),
 ('US92826C8394','VISA',              40,x_cours_dollar),
-('FR0007054358','ETF STOXX 50',    1543,1),
-('DEFS.PA',     'ETF DEFENSE (2)',  360,1),   #LU3038520774     DEFS.PA
+('FR0007054358','ETF STOXX 50',      1543,1),
+('DEFS.PA',     'ETF DEFENSE',       360,1),   #LU3038520774     DEFS.PA
 ('FR0010315770','ETF MSCI',         305,1)]
 
 #CHARGEMENT DES DONNEES
