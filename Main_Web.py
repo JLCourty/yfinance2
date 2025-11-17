@@ -9,8 +9,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 16100 + 7080
-x_version = "- Version du 04-11-2025"
+t_reserves = 16100 + 7100
+x_version = "- Version du 17-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -26,7 +26,7 @@ x_date_jour = datetime.now().strftime("%d/%m/%Y")
 # HEURE DU JOUR TRUQUEE POUR ANDROID
 t_heure_jour = datetime.now().strftime("%H:%M")  # Séparer heures et minutes
 heures, minutes = map(int, t_heure_jour.split(":"))
-heures += 1 # Ajouter 2 heures EN 2T2 & SEULE EN HIVER
+heures += 1 # Ajouter 2 heures EN 2T2 & 1 SEULE EN HIVER
 heures %= 24 #Modulo
 t_heure_jour = f"{heures:02d}:{minutes:02d}"
 
@@ -87,7 +87,7 @@ valeurs = [
 ('IT0003856405','LEONARDO',          244,1),
 ('FR0000121014','LVMH',              30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
-('US64110L1061','NETFLIX',           10,x_cours_dollar),
+('US64110L1061','NETFLIX',           100,x_cours_dollar),
 ('DK0062498333','NOVO NORDISK',      120,7.47),    #PLANTAGE
 ('KYIV',        'KIYVSTAR',          100,1),
 ('US67066G1040','NVDIA',             160,x_cours_dollar),
