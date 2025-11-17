@@ -10,7 +10,7 @@ import yfinance as yf
 
 #TOTALISER LES RESERVES
 t_reserves = 16100 + 7100
-x_version = "- Version du 18-11-2025"
+x_version = "- Version du 20-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -87,7 +87,7 @@ valeurs = [
 ('IT0003856405','LEONARDO',          244,1),
 ('FR0000121014','LVMH',              30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
-#('US64110L1061','NETFLIX',           100,x_cours_dollar),
+('US64110L1061','NETFLIX',           100,x_cours_dollar),
 ('DK0062498333','NOVO NORDISK',      120,7.47),    #PLANTAGE
 ('KYIV',        'KIYVSTAR',          100,1),
 ('US67066G1040','NVDIA',             160,x_cours_dollar),
