@@ -1,4 +1,4 @@
-from dis import RETURN_CONST
+#from dis import RETURN_CONST
 
 import streamlit as st
 import pandas as pd
@@ -9,7 +9,7 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 16100 + 7100
+t_reserves = 35730 + 6550
 x_version = "- Version du 20-11-2025"
 
 #FORMAT NUMERIQUE EN EUROS
@@ -81,15 +81,13 @@ valeurs = [
 ('GB0009895292','ASTRA ZENECA'      ,79,87.28),
 ('FR0000131104','BNP',               130,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
-('FR0000121667','ESSILOR',           34,1),
 ('ES0144580Y14','IBERDROLA',         712,1),
 ('FR0010307819','LEGRAND',           20,1),
 ('IT0003856405','LEONARDO',          244,1),
 ('FR0000121014','LVMH',              30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
-('US64110L1061','NETFLIX',           100,x_cours_dollar),
 ('DK0062498333','NOVO NORDISK',      120,7.47),    #PLANTAGE
-('KYIV',        'KIYVSTAR',          100,1),
+('KYIV',        'KIYVSTAR',          300,1),
 ('US67066G1040','NVDIA',             160,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
 ('DE0007030009','RHEINMETALL',       10,1),
@@ -102,7 +100,6 @@ valeurs = [
 ('FR0000120271','TOTAL ENERGIE',     217,1),
 ('US92826C8394','VISA',              40,x_cours_dollar),
 ('FR0007054358','ETF STOXX 50',      1543,1),
-('DEFS.PA',     'ETF DEFENSE',       360,1),   #LU3038520774     DEFS.PA
 ('FR0010315770','ETF MSCI',         305,1)]
 
 #CHARGEMENT DES DONNEES
