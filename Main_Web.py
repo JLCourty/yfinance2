@@ -9,8 +9,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 35730 + 6550
-x_version = "- Version du 02-01-2026"
+t_reserves = 35821 + 1723
+x_version = "- Version du 10-01-2026"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -72,12 +72,12 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-('FR0000120404','ACCOR',             259,1),   #214
+('FR0000120404','ACCOR',             259,1),
 ('ABBV'        ,'ABBVIE',            50,x_cours_dollar),
 ('NL0000235190','AIRBUS',            120,1),
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
 ('US0231351067','AMAZON',            52,x_cours_dollar),
-('NL0010273215','ASML',              21,1),   # 18
+('NL0010273215','ASML',              21,1),
 ('GB0009895292','ASTRA ZENECA'      ,79,87.28),
 ('FR0000131104','BNP',               130,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
@@ -86,7 +86,7 @@ valeurs = [
 ('IT0003856405','LEONARDO',          244,1),
 ('FR0000121014','LVMH',              30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
-('DK0062498333','NOVO NORDISK',      120,7.47),    #PLANTAGE
+('DK0062498333','NOVO NORDISK',      220,7.47),
 ('KYIV',        'KIYVSTAR',          300,1),
 ('US67066G1040','NVDIA',             160,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
