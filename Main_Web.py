@@ -40,22 +40,24 @@ liste_donnees =[]
 #FONCTION PRINCIPALE DE CALCUL DES DONNEES
 def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
-#   CHERCHER LE TICKER
-    x_ticker = yf.Ticker(x_code_valeur) #PLANTAGE SUR LE TELEPHONE SEULEMENT
-    if not x_ticker.info :#or "longName" not in x_ticker.info:
-        st.success(f"Le ticker '{x_nom_valeur}' est introuvable sur YFinance.")
-        return
-    else:
-        data = x_ticker.history(start="2025-10-22")['Close']   # PLANTAGE ICI A LONDRES
-        if data.empty:
-            st.success(f"Données absentes pour {x_nom_valeur}, vérifier la date")
+# CHERCHER LE TICKER
+    x_ticker = yf.Ticker(x_code_valeur)
+
+    try:
+        hist = x_ticker.history(period="2d")  # 2 jours minimum
+        if hist.empty or len(hist) < 2:
+            st.success(f"Le ticker '{x_nom_valeur}' est introuvable ou données insuffisantes.")
             return
-        else:
-            t_open  = data.iloc[-2]
-            t_close = data.iloc[-1]
+
+    except Exception as e:
+        st.error(f"Erreur Yahoo Finance : {e}")
+        return
+
+    t_open = hist.iloc[-2]["Close"]
+    t_close = hist.iloc[-1]["Close"]
 
 #   CALCULER LE LIBELLE DE DATE
-    t_label_date = "" if x_date_jour == data.index[-1].strftime("%d/%m/%Y") else "Hier"
+    t_label_date = "" if x_date_jour == hist.index[-1].strftime("%d/%m/%Y") else "Hier"
 
     # GAINS OU PERTES DU JOUR EN PC **********  OK
     t_jour_pc = (t_close-t_open) / t_open
@@ -72,8 +74,8 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-('FR0000120404','ACCOR',             259,1),
 ('ABBV'        ,'ABBVIE',            50,x_cours_dollar),
+('FR0000120404','ACCOR',             259,1),
 ('NL0000235190','AIRBUS',            120,1),
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
 ('US0231351067','AMAZON',            52,x_cours_dollar),
@@ -81,13 +83,13 @@ valeurs = [
 ('GB0009895292','ASTRA ZENECA'      ,79,87.28),
 ('FR0000131104','BNP',               130,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
-('ES0144580Y14','IBERDROLA',         712,1),
+('ES0144580Y14','IBERDROLA',         730,1),
+('KYIV',        'KIYVSTAR',          300,1),
 ('FR0010307819','LEGRAND',           20,1),
 ('IT0003856405','LEONARDO',          244,1),
 ('FR0000121014','LVMH',              30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
 ('DK0062498333','NOVO NORDISK',      220,7.47),
-('KYIV',        'KIYVSTAR',          300,1),
 ('US67066G1040','NVDIA',             160,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
 ('DE0007030009','RHEINMETALL',       10,1),
@@ -100,7 +102,7 @@ valeurs = [
 ('FR0000120271','TOTAL ENERGIE',     217,1),
 ('US92826C8394','VISA',              40,x_cours_dollar),
 ('FR0007054358','ETF STOXX 50',      1543,1),
-('FR0010315770','ETF MSCI',         305,1)]
+('FR0010315770','ETF MSCI',          305,1)]
 
 #CHARGEMENT DES DONNEES
 for code, nom, qte, devise in valeurs:
