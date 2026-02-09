@@ -9,8 +9,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 35821 + 1723
-x_version = "- Version du 10-01-2026"
+t_reserves = 26572 + 1723
+x_version = "- Version du 09-02-2026"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -44,8 +44,9 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
     x_ticker = yf.Ticker(x_code_valeur)
 
     try:
-        hist = x_ticker.history(period="2d")  # 2 jours minimum
-        if hist.empty or len(hist) < 2:
+        #hist = x_ticker.history(period="2d")  # 2 jours minimum
+        hist = x_ticker.history(period="1d")  # 2 jours minimum
+        if hist.empty:# or len(hist) < 2:
             st.success(f"Le ticker '{x_nom_valeur}' est introuvable ou données insuffisantes.")
             return
 
@@ -53,7 +54,8 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
         st.error(f"Erreur Yahoo Finance : {e}")
         return
 
-    t_open = hist.iloc[-2]["Close"]
+    #t_open = hist.iloc[-2]["Close"]
+    t_open = hist.iloc[-1]["Open"]
     t_close = hist.iloc[-1]["Close"]
 
 #   CALCULER LE LIBELLE DE DATE
@@ -80,7 +82,7 @@ valeurs = [
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
 ('US0231351067','AMAZON',            52,x_cours_dollar),
 ('NL0010273215','ASML',              21,1),
-('GB0009895292','ASTRA ZENECA'      ,79,87.28),
+('GB0009895292','ASTRA ZENECA'      ,79,86.58),
 ('FR0000131104','BNP',               130,1),
 ('US11135F1012','BROADCOM',          73,x_cours_dollar),
 ('ES0144580Y14','IBERDROLA',         730,1),
@@ -89,6 +91,7 @@ valeurs = [
 ('IT0003856405','LEONARDO',          244,1),
 ('FR0000121014','LVMH',              30,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
+('US6516391066','NEWMONT'  ,      107  ,x_cours_dollar)    ,
 ('DK0062498333','NOVO NORDISK',      220,7.47),
 ('US67066G1040','NVDIA',             160,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
@@ -100,7 +103,7 @@ valeurs = [
 ('DE000ENER6Y0','SIEMENS ENERGY'    ,103  ,1),
 ('FR0000121329','THALES',            47,1),
 ('FR0000120271','TOTAL ENERGIE',     217,1),
-('US92826C8394','VISA',              40,x_cours_dollar),
+('IT0005239360','UNI CREDIT'        ,137  ,1),
 ('FR0007054358','ETF STOXX 50',      1543,1),
 ('FR0010315770','ETF MSCI',          305,1)]
 
