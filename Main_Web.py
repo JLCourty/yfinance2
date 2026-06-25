@@ -9,8 +9,8 @@ from streamlit_autorefresh import st_autorefresh
 import yfinance as yf
 
 #TOTALISER LES RESERVES
-t_reserves = 172113 + 1232
-x_version = "- Version du 09-06-2026"
+t_reserves = 102821     + 7306
+x_version = "- Version du 15-06-2026"
 
 #FORMAT NUMERIQUE EN EUROS
 def format_euro(num_brut):
@@ -76,11 +76,11 @@ def Get_tout(x_code_valeur,x_nom_valeur,x_date_jour,x_qte,x_currency):
 
 # LISTE DES VALEURS (code, nom, quantité, devise)
 valeurs = [
-('ABBV'        ,'ABBVIE',            50,x_cours_dollar),
+('ABBV'        ,'ABBVIE',            107,x_cours_dollar),
 ('FR0000120404','ACCOR',             259,1),
 ('NL0000235190','AIRBUS',            120,1),
 ('GOOGL',       'ALPHABET',          79,x_cours_dollar),
-('US0231351067','AMAZON',            52,x_cours_dollar),
+('US0231351067','AMAZON',            100,x_cours_dollar),
 ('NL0010273215','ASML',              21,1),
 ('GB0009895292','ASTRA ZENECA'      ,79,86.58),
 ('FR0000131104','BNP',               130,1),
@@ -89,21 +89,24 @@ valeurs = [
 ('KYIV',        'KIYVSTAR',          300,1),
 ('FR0010307819','LEGRAND',           20,1),
 ('IT0003856405','LEONARDO',          244,1),
-('FR0000121014','LVMH',              30,1),
+('FR0000121014','LVMH',              50,1),
 ('US5949181045','MICROSOFT',         48,x_cours_dollar),
-('US6516391066','NEWMONT'  ,      107  ,x_cours_dollar)    ,
+('US6516391066','NEWMONT'  ,         107  ,x_cours_dollar)    ,
 ('DK0062498333','NOVO NORDISK',      220,7.47),
-('US67066G1040','NVDIA',             160,x_cours_dollar),
+('US67066G1040','NVDIA',             200,x_cours_dollar),
 ('US6974351057','PALO ALTO',         56,x_cours_dollar),
 ('DE0007030009','RHEINMETALL',       10,1),
 ('SAF.PA'      ,'SAFRAN'     ,       36,1),
 ('US79466L3024','SALESFORCE',        46,x_cours_dollar),
-('DE0007164600','SAP',               8,1),   # 8
+('DE0007164600','SAP',               8,1),
 ('FR0000121972','SCHNEIDER'         ,47,1),
 ('DE000ENER6Y0','SIEMENS ENERGY'    ,103  ,1),
 ('FR0000121329','THALES',            47,1),
 ('FR0000120271','TOTAL ENERGIE',     217,1),
 ('IT0005239360','UNI CREDIT'        ,137  ,1),
+('US0258161092','AMERICAN EXPRESS'  ,34  ,x_cours_dollar),
+('US04016X1019','ARGENX'            ,14  ,x_cours_dollar),
+('US09290D1019','BLACK ROCK'        ,11  ,x_cours_dollar),
 ('FR0007054358','ETF STOXX 50',      1543,1),
 ('FR0010315770','ETF MSCI',          305,1)]
 
